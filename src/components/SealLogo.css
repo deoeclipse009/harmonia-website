@@ -1,0 +1,22 @@
+.seal {
+  display: inline-block;
+  flex: none;
+  border-radius: 50%;
+}
+
+/* Real artwork: circular crop that clips the piano legs extending past
+   the red disc. Tune the two variables if a new export shifts the disc. */
+.seal--img {
+  --seal-zoom: 1.05;
+  --seal-y: 46%;
+  overflow: hidden;
+  background: #9c1f2b;
+}
+
+.seal--img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% var(--seal-y);
+  transform: scale(var(--seal-zoom));
+}

@@ -1,0 +1,272 @@
+.edition-hero {
+  padding-top: clamp(40px, 7vw, 64px);
+  padding-bottom: clamp(24px, 4vw, 32px);
+}
+
+.edition-hero__inner {
+  max-width: 780px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-16);
+}
+
+.edition-hero__badges { display: flex; gap: var(--s-8); flex-wrap: wrap; }
+
+.edition-hero h1 {
+  font-size: clamp(2.25rem, 5.5vw, var(--text-heading-lg));
+  line-height: 1.05;
+}
+
+.edition-hero__desc {
+  font-size: var(--text-body-lg);
+  line-height: 1.5;
+  color: var(--fog);
+  max-width: 62ch;
+}
+
+/* ---------- Facts ---------- */
+
+.edition-facts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.edition-facts__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  padding: var(--s-24) var(--s-24) var(--s-24) 0;
+}
+
+.edition-facts__item + .edition-facts__item {
+  padding-left: var(--s-24);
+  border-left: 1px solid var(--border);
+}
+
+.edition-facts__key {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ash);
+}
+
+.edition-facts__val {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--obsidian);
+  line-height: 1.35;
+}
+
+.edition-facts__link {
+  margin-top: var(--s-4);
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  color: var(--accent);
+}
+
+.edition-facts__link:hover { color: var(--accent-deep); }
+
+/* ============================================================
+   Run of show. A single rule runs down the left; the two time
+   markers bookend the seven performances so the shape of the
+   evening reads at a glance.
+   ============================================================ */
+
+.run {
+  position: relative;
+  padding-left: var(--s-32);
+  border-left: 1px solid var(--border);
+}
+
+.run__item {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-16);
+  padding: clamp(12px, 1.8vw, 18px) 0;
+}
+
+/* node on the rule */
+.run__item::before {
+  content: '';
+  position: absolute;
+  left: calc(var(--s-32) * -1 - 4.5px);
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--snow);
+  border: 1px solid var(--mist);
+  transform: translateY(-50%);
+}
+
+.run__item--marker::before {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.run__item--marker {
+  align-items: center;
+  gap: var(--s-12);
+}
+
+.run__time {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  min-width: 64px;
+}
+
+.run__label {
+  font-size: var(--text-body);
+  color: var(--fog);
+}
+
+.run__num {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  color: var(--ash);
+  min-width: 64px;
+}
+
+.run__body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.run__name {
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 2.4vw, 1.5rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--obsidian);
+}
+
+.run__role {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--steel);
+}
+
+.run__cta { margin-top: var(--s-32); }
+
+/* ---------- What the night raised ---------- */
+
+.edition-impact {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(24px, 4vw, 56px);
+  align-items: center;
+  padding: clamp(28px, 4vw, 48px);
+}
+
+.edition-impact__head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-16);
+}
+
+.edition-impact__head h2 {
+  font-size: clamp(1.75rem, 3.6vw, var(--text-heading));
+  line-height: 1.08;
+  max-width: 16ch;
+}
+
+.edition-impact__head p {
+  font-size: var(--text-body-lg);
+  line-height: 1.55;
+  color: var(--mist);
+}
+
+.edition-impact__facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-32) var(--s-24);
+}
+
+.edition-impact__facts li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.edition-impact__v {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 5.5vw, 2.4rem);
+  overflow-wrap: anywhere;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--snow);
+  font-variant-numeric: tabular-nums;
+}
+
+.edition-impact__v--text {
+  font-size: clamp(1rem, 1.8vw, 1.2rem);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.edition-impact__k {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--steel);
+}
+
+/* ---------- Guide book ---------- */
+
+.guidebook {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-32);
+  flex-wrap: wrap;
+  padding: clamp(28px, 4vw, 40px);
+}
+
+.guidebook h2 {
+  font-size: clamp(1.5rem, 3.2vw, var(--text-heading-sm));
+  line-height: 1.15;
+  margin-top: var(--s-8);
+}
+
+.guidebook p {
+  font-size: var(--text-body);
+  line-height: 1.55;
+  color: var(--fog);
+  max-width: 54ch;
+  margin-top: var(--s-8);
+}
+
+@media (max-width: 900px) {
+  .edition-impact { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+  .edition-facts { grid-template-columns: 1fr; }
+  .edition-facts__item {
+    padding-left: 0 !important;
+    border-left: none !important;
+  }
+  .edition-facts__item + .edition-facts__item { border-top: 1px solid var(--border); }
+
+  .run { padding-left: var(--s-24); }
+  .run__item::before { left: calc(var(--s-24) * -1 - 4.5px); }
+  .run__item { flex-direction: column; align-items: flex-start; gap: var(--s-4); }
+  .run__item--marker { flex-direction: row; align-items: center; }
+  .edition-impact__facts { grid-template-columns: 1fr; gap: var(--s-24); }
+}

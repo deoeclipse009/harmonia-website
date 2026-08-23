@@ -1,0 +1,363 @@
+/* ============================================================
+   1 · HERO, typographic. The wordmark carries the section at
+   architectural scale; the finale photograph runs wide beneath
+   it; the earned numbers close on a hairline rule.
+   ============================================================ */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding-top: clamp(20px, 3.4vh, 44px);
+  padding-bottom: clamp(16px, 2.4vh, 32px);
+}
+
+/* halftone field bleeding from the top-left, the one decoration */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  color: rgba(10, 10, 10, 0.22);
+  background-image: radial-gradient(circle, currentColor 1.3px, transparent 1.45px);
+  background-size: 13px 13px;
+  -webkit-mask-image: radial-gradient(42% 52% at 2% 0%, #000 0%, transparent 72%);
+  mask-image: radial-gradient(42% 52% at 2% 0%, #000 0%, transparent 72%);
+}
+
+.hero .container { position: relative; }
+
+.hero__lead {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: clamp(12px, 1.8vh, 24px);
+  margin-bottom: clamp(16px, 2.4vh, 32px);
+}
+
+.hero__badges { display: flex; gap: var(--s-8); flex-wrap: wrap; }
+
+.hero__badge-next {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-color: var(--mist);
+  color: var(--iron);
+}
+
+.pulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex: none;
+  animation: pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.hero__title {
+  display: flex;
+  flex-direction: column;
+  /* vh term keeps the wordmark from crowding out the stats on short laptops */
+  font-size: clamp(2.5rem, min(7.5vw, 9.2vh), 5.5rem);
+}
+
+.hero__title-sub {
+  color: var(--accent);
+  font-size: 0.62em;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.hero__row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--s-32);
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.hero__subtitle {
+  font-size: clamp(0.95rem, 1.7vw, var(--text-body-lg));
+  line-height: 1.5;
+  color: var(--fog);
+  max-width: 52ch;
+}
+
+.hero__actions { display: flex; gap: var(--s-12); flex-wrap: wrap; }
+
+.hero__media { position: relative; min-height: 0; }
+
+.hero__meta {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  letter-spacing: 0.06em;
+  line-height: 1.6;
+  color: var(--ash);
+  margin-top: var(--s-12);
+}
+
+/* ------------------------------------------------------------
+   Above-the-fold hero (tablet and up).
+   The section is exactly one viewport tall and lays out as a
+   column; the photograph is the only flexible row, so it
+   absorbs every height difference and the numbers always land
+   on screen. Below 768px the hero returns to natural flow ,
+   forcing a phone screen to hold all of this would crush it.
+   ------------------------------------------------------------ */
+@media (min-width: 768px) {
+  .hero {
+    min-height: calc(100svh - var(--header-h));
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hero .container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .hero__media {
+    flex: 1 1 0;
+    min-height: clamp(110px, 20vh, 280px);
+    /* cap so unusually tall viewports don't balloon the photograph */
+    max-height: 54vh;
+  }
+
+  .hero__media .fig { height: 100%; }
+}
+
+/* --- earned numbers --- */
+
+.hero__stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin-top: clamp(14px, 2vh, 26px);
+  border-top: 1px solid var(--border);
+  flex: none;
+}
+
+.hero__stats li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: clamp(12px, 1.8vh, 22px) var(--s-24) 0 0;
+}
+
+.hero__stats li + li {
+  padding-left: var(--s-24);
+  border-left: 1px solid var(--border);
+}
+
+.hero__stat-v {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, min(3.4vw, 4.4vh), var(--text-heading));
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--obsidian);
+  font-variant-numeric: tabular-nums;
+}
+
+.hero__stat-k {
+  font-family: var(--font-mono);
+  letter-spacing: 0.12em;
+  font-size: var(--text-caption);
+  font-weight: 500;
+  text-transform: uppercase;
+  color: var(--ash);
+}
+
+/* ============================================================
+   2 · MISSION, the dark chamber
+   ============================================================ */
+
+.mission {
+  display: grid;
+  grid-template-columns: 1fr 0.85fr;
+  gap: clamp(24px, 4vw, 48px);
+  align-items: center;
+  padding: clamp(28px, 4vw, 48px);
+}
+
+.mission::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  color: color-mix(in srgb, var(--accent) 50%, transparent);
+  background-image: radial-gradient(circle, currentColor 1.3px, transparent 1.45px);
+  background-size: 13px 13px;
+  -webkit-mask-image: radial-gradient(55% 75% at 96% 100%, #000 0%, transparent 70%);
+  mask-image: radial-gradient(55% 75% at 96% 100%, #000 0%, transparent 70%);
+}
+
+.mission > * { position: relative; z-index: 1; }
+
+.mission__head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-16);
+}
+
+.mission__head h2 {
+  font-size: clamp(1.9rem, 4vw, var(--text-heading));
+  line-height: 1.05;
+  max-width: 14ch;
+}
+
+.mission__head p {
+  font-size: var(--text-body-lg);
+  line-height: 1.55;
+  color: var(--mist);
+}
+
+.mission__fig { border-color: rgba(255, 255, 255, 0.12); }
+
+/* ============================================================
+   3 · PERFORMERS, the bill. Numbered hairline rows, name at
+   display weight, role in mono. Reads like a printed lineup.
+   ============================================================ */
+
+.bill { border-top: 1px solid var(--obsidian); }
+
+.bill__row {
+  display: grid;
+  grid-template-columns: 64px 1fr auto;
+  align-items: baseline;
+  gap: var(--s-16);
+  padding: clamp(14px, 2vw, 22px) 0;
+  border-bottom: 1px solid var(--border);
+  transition: padding-left 0.18s ease;
+}
+
+.bill__row:hover { padding-left: var(--s-8); }
+
+.bill__num {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  color: var(--accent);
+}
+
+.bill__name {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 3.2vw, 2.1rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  color: var(--obsidian);
+}
+
+.bill__role {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--steel);
+  text-align: right;
+}
+
+.bill__cta { margin-top: var(--s-32); }
+
+/* ============================================================
+   4 · WORDS FROM THE FOUNDER
+   ============================================================ */
+
+.founder {
+  display: grid;
+  grid-template-columns: 0.72fr 1.28fr;
+  gap: clamp(24px, 4.5vw, 64px);
+  align-items: center;
+  padding: clamp(28px, 4.5vw, 56px);
+}
+
+.founder__fig { border-radius: calc(var(--r-card) - 8px); }
+
+.founder__body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-20);
+}
+
+.founder__body h2 {
+  font-size: clamp(1.75rem, 3.6vw, 2.5rem);
+  line-height: 1.08;
+  max-width: 22ch;
+}
+
+.founder__paras {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-16);
+  color: var(--graphite);
+  max-width: 62ch;
+}
+
+.founder__sign {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-top: var(--s-8);
+  border-top: 1px solid var(--mist);
+  min-width: 240px;
+}
+
+.founder__name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-body-lg);
+  color: var(--obsidian);
+}
+
+.founder__role {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--steel);
+}
+
+/* ============================================================
+   5 · PARTNERS
+   ============================================================ */
+
+.logo-strip__more {
+  display: inline-block;
+  margin-top: var(--s-24);
+  font-size: var(--text-body);
+  font-weight: 600;
+  color: var(--iron);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: color 0.16s ease;
+}
+
+.logo-strip__more:hover { color: var(--obsidian); }
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+
+@media (max-width: 900px) {
+  .mission { grid-template-columns: 1fr; }
+  .founder { grid-template-columns: 1fr; }
+  .founder__fig { max-width: 420px; }
+}
+
+@media (max-width: 720px) {
+  .hero__stats { grid-template-columns: repeat(2, 1fr); }
+  .hero__stats li { padding-right: var(--s-16); }
+  .hero__stats li:nth-child(odd) { padding-left: 0; border-left: none; }
+  .hero__stats li:nth-child(n + 3) { border-top: 1px solid var(--border); }
+
+  .bill__row { grid-template-columns: 44px 1fr; }
+  .bill__role { grid-column: 2; text-align: left; }
+}

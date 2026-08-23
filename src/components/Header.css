@@ -1,0 +1,165 @@
+/* Sticky masthead on the white canvas. The backdrop blur and tint keep it
+   legible once content scrolls beneath. */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid color-mix(in srgb, var(--cloud) 65%, transparent);
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--s-24);
+  padding-top: var(--s-12);
+  padding-bottom: var(--s-12);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-12);
+  flex: none;
+  margin-right: auto;
+}
+
+.brand__word {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--obsidian);
+}
+
+/* --- Nav --- */
+
+.main-nav ul {
+  display: flex;
+  align-items: center;
+  gap: var(--s-20);
+}
+
+.main-nav a {
+  display: inline-block;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--iron);
+  padding: var(--s-8) 2px;
+  border-bottom: 2px solid transparent;
+  transition: color 0.16s ease, border-color 0.16s ease;
+}
+
+.main-nav a:hover { color: var(--obsidian); }
+
+.main-nav a.active {
+  color: var(--obsidian);
+  border-bottom-color: var(--accent);
+}
+
+/* --- Actions --- */
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--s-12);
+  flex: none;
+  margin-left: auto;
+}
+
+.lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-8);
+  background: var(--snow);
+  border: 1px solid var(--mist);
+  border-radius: var(--r-pill);
+  padding: 9px 14px;
+  font-size: var(--text-caption);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ash);
+  transition: background-color 0.16s ease;
+}
+
+.lang-toggle:hover { background: var(--subtle); }
+.lang-toggle .is-active { color: var(--obsidian); }
+
+.lang-toggle__sep {
+  width: 1.5px;
+  height: 11px;
+  background: var(--mist);
+}
+
+.header-cta { font-size: 0.9rem; padding: 12px 22px; }
+
+/* --- Mobile --- */
+
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  padding: 0 10px;
+  background: var(--snow);
+  border: 1px solid var(--mist);
+  border-radius: var(--r-pill);
+}
+
+.menu-toggle span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--obsidian);
+}
+
+@media (max-width: 1080px) {
+  .main-nav ul { gap: var(--s-16); }
+  .main-nav a { font-size: 0.84rem; }
+}
+
+@media (max-width: 900px) {
+  .menu-toggle { display: flex; }
+  .header-cta { display: none; }
+
+  .main-nav {
+    position: fixed;
+    left: var(--gutter);
+    right: var(--gutter);
+    top: 72px;
+    background: var(--snow);
+    border: 1px solid var(--border);
+    border-radius: var(--r-card);
+    padding: var(--s-12);
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+    transition: opacity 0.18s ease, transform 0.18s ease;
+  }
+
+  .main-nav.is-open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .main-nav ul { flex-direction: column; align-items: stretch; gap: 0; }
+  .main-nav li + li { border-top: 1px solid var(--border); }
+
+  .main-nav a {
+    display: block;
+    padding: var(--s-16);
+    font-size: var(--text-body);
+    border-radius: var(--r-input);
+    border-bottom: none;
+  }
+
+  .main-nav a.active { background: var(--subtle); }
+  .main-nav a:hover { background: var(--subtle); }
+}

@@ -1,0 +1,116 @@
+.product {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: clamp(24px, 4vw, 56px);
+  align-items: center;
+  padding: clamp(24px, 3.5vw, 40px);
+}
+
+.product__fig { border-radius: calc(var(--r-card) - 12px); }
+
+.product__body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-16);
+}
+
+.product__body h2 {
+  font-size: clamp(1.75rem, 3.6vw, var(--text-heading));
+  line-height: 1.12;
+}
+
+.product__desc {
+  font-size: var(--text-body-lg);
+  line-height: 1.55;
+  color: var(--fog);
+}
+
+.product__prices {
+  display: flex;
+  gap: var(--s-40);
+  padding: var(--s-16) 0;
+  border-top: 1px solid var(--obsidian);
+  border-bottom: 1px solid var(--obsidian);
+  width: 100%;
+}
+
+.product__prices > div { display: flex; flex-direction: column; gap: 2px; }
+
+.product__price-key {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ash);
+}
+
+.product__price {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 600;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.product__price--was {
+  color: var(--ash);
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+}
+
+.product__terms {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-8);
+  font-size: var(--text-body);
+  line-height: 1.55;
+  color: var(--fog);
+}
+
+.product__terms strong { color: var(--obsidian); font-weight: 600; }
+
+.product__actions {
+  display: flex;
+  gap: var(--s-12);
+  flex-wrap: wrap;
+}
+
+.product__pickup {
+  font-size: var(--text-caption);
+  line-height: 1.6;
+  color: var(--ash);
+}
+
+.merch-order {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-32);
+  flex-wrap: wrap;
+}
+
+.merch-order__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-8);
+  margin-top: var(--s-12);
+}
+
+.merch-order__list li {
+  display: flex;
+  gap: var(--s-12);
+  font-size: var(--text-body-lg);
+  color: var(--graphite);
+}
+
+.merch-order__num {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  color: var(--accent);
+  padding-top: 4px;
+}
+
+@media (max-width: 860px) {
+  .product { grid-template-columns: 1fr; }
+}

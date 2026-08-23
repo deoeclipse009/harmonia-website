@@ -1,0 +1,71 @@
+.carousel { position: relative; }
+
+.carousel__rail {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  border-radius: var(--r-card);
+}
+
+.carousel__rail::-webkit-scrollbar { display: none; }
+
+.carousel__rail > * {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+}
+
+/* Arrows sit on the rail, Instagram style */
+.carousel__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: var(--obsidian);
+  font-size: 1.05rem;
+  transition: opacity 0.16s ease, background-color 0.16s ease;
+}
+
+.carousel__arrow:hover { background: #fff; }
+.carousel__arrow--prev { left: 12px; }
+.carousel__arrow--next { right: 12px; }
+
+.carousel__arrow:disabled {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.carousel__dots {
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+  margin-top: var(--s-16);
+}
+
+.carousel__dot {
+  width: 7px;
+  height: 7px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: var(--mist);
+  transition: background-color 0.16s ease, transform 0.16s ease;
+}
+
+.carousel__dot.is-active {
+  background: var(--accent);
+  transform: scale(1.25);
+}
+
+@media (max-width: 640px) {
+  .carousel__arrow { display: none; }
+}

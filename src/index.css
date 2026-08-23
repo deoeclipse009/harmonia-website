@@ -1,0 +1,422 @@
+/* ============================================================
+   Harmonia, design tokens
+   White gallery, black ink. Component language drawn from the
+   references: architectural bold display type with tight
+   tracking, pill-shaped actions, hairline-ring elevation (no
+   shadows), generous vertical breathing, alternating white and
+   near-black chambers, an editorial serif reserved for spoken
+   passages. One chromatic accent, the seal's crimson, for
+   the page's consequential action only.
+   ============================================================ */
+
+:root {
+  /* --- Neutrals (monochrome) --- */
+  --obsidian: #0a0a0a;   /* primary ink, filled buttons, dark chambers */
+  --graphite: #1d1d1f;   /* working ink */
+  --slate: #2c2c2e;      /* dark surface alt */
+  --iron: #48484c;       /* secondary labels */
+  --steel: #6e6e73;      /* supporting metadata */
+  --fog: #6e6e73;        /* muted copy */
+  --ash: #98989d;        /* faint labels */
+  --mist: #d2d2d7;       /* strong hairline */
+  --cloud: #e8e8ed;      /* hairline borders */
+  --paper: #ffffff;      /* page canvas */
+  --snow: #ffffff;       /* card surface */
+  --subtle: #f5f5f7;     /* recessed / alternating surface */
+  --oat: #ececf0;        /* deeper recessed panel */
+
+  /* --- The single accent: seal crimson --- */
+  --accent: #901e24;        /* sampled from the seal artwork */
+  --accent-deep: #72161b;
+  --accent-ink: #ffffff;
+  --accent-wash: #f7ecec;
+
+  /* --- Surfaces --- */
+  --surface-canvas: var(--paper);
+  --surface-card: var(--snow);
+  --surface-subtle: var(--subtle);
+  --surface-dark: #150608;   /* near-black with a maroon undertone */
+  --surface-dark-2: #200a0c;
+
+  --border: var(--cloud);
+  --border-strong: var(--mist);
+  --border-ink: var(--cloud); /* elevation is a hairline ring, never a shadow */
+
+  /* --- Type --- */
+  --font-display: 'Archivo', -apple-system, 'Helvetica Neue', ui-sans-serif, sans-serif;
+  --font: 'Figtree', -apple-system, BlinkMacSystemFont, 'Segoe UI', ui-sans-serif, sans-serif;
+  --font-serif: 'Fraunces', Georgia, ui-serif, serif;
+  --font-mono: 'DM Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  --text-caption: 0.75rem;
+  --text-body: 1rem;
+  --text-body-lg: 1.155rem;
+  --text-serif-lg: 1.28rem;
+  --text-subheading: 1.3rem;
+  --text-heading-sm: 2rem;
+  --text-heading: 2.75rem;
+  --text-heading-lg: 3.75rem;
+  --text-display: 5.5rem;
+
+  /* --- Shape: pills for actions, soft slabs for surfaces --- */
+  --r-badge: 999px;
+  --r-input: 14px;
+  --r-button: 999px;
+  --r-card: 28px;
+  --r-card-lg: 40px;
+  --r-pill: 999px;
+
+  /* --- Space (4px base, generous section rhythm) --- */
+  --s-4: 4px; --s-8: 8px; --s-12: 12px; --s-16: 16px; --s-20: 20px;
+  --s-24: 24px; --s-28: 28px; --s-32: 32px; --s-40: 40px; --s-48: 48px;
+  --s-64: 64px; --s-80: 80px; --s-120: 120px;
+
+  --header-h: 66px;   /* sticky masthead, hero subtracts this */
+  --max-width: 1200px;
+  --gutter: clamp(20px, 5vw, 40px);
+  --section-gap: clamp(72px, 10vw, 112px);
+
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--surface-canvas);
+  color: var(--graphite);
+  font-family: var(--font);
+  font-size: var(--text-body);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; }
+
+/* Architectural display type: heavy weight, tight tracking ,
+   authority comes from weight and scale together. */
+h1, h2, h3, h4 {
+  margin: 0;
+  color: var(--obsidian);
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+p { margin: 0; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+
+::selection { background: var(--accent); color: var(--accent-ink); }
+
+:focus-visible {
+  outline: 2px solid var(--obsidian);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ============================================================
+   Layout primitives
+   ============================================================ */
+
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+}
+
+.section { padding-top: var(--section-gap); padding-bottom: var(--section-gap); }
+
+.section--tight {
+  padding-top: clamp(44px, 6vw, 64px);
+  padding-bottom: clamp(44px, 6vw, 64px);
+}
+
+.section-head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-12);
+  max-width: 680px;
+  margin-bottom: var(--s-40);
+}
+
+.section-head h2 {
+  font-size: clamp(2rem, 4.4vw, var(--text-heading));
+  line-height: 1.05;
+}
+
+.section-head p {
+  font-size: var(--text-body-lg);
+  line-height: 1.5;
+  color: var(--fog);
+}
+
+/* ============================================================
+   Type helpers
+   ============================================================ */
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--steel);
+}
+
+.display {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 8vw, var(--text-display));
+  line-height: 0.96;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+}
+
+.lede {
+  font-size: var(--text-body-lg);
+  line-height: 1.5;
+  color: var(--fog);
+}
+
+/* Spoken/editorial passages, mission, foreword, the founder's words ,
+   read in the serif; chrome stays sans. */
+.prose-serif {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(1.1rem, 2vw, var(--text-serif-lg));
+  line-height: 1.62;
+  letter-spacing: -0.005em;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  letter-spacing: 0.04em;
+}
+
+/* ============================================================
+   Halftone, the seal's dot motif, kept as the one decorative
+   device. Monochrome on white; crimson inside dark chambers.
+   ============================================================ */
+
+.halftone {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle, currentColor 1.3px, transparent 1.45px);
+  background-size: 13px 13px;
+  -webkit-mask-image: radial-gradient(120% 100% at 50% 0%, #000 0%, transparent 68%);
+  mask-image: radial-gradient(120% 100% at 50% 0%, #000 0%, transparent 68%);
+}
+
+/* ============================================================
+   Buttons, every action is a pill
+   ============================================================ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-8);
+  font-family: var(--font);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1;
+  padding: 14px 26px;
+  border-radius: var(--r-pill);
+  border: 1px solid transparent;
+  white-space: nowrap;
+  transition: background-color 0.16s ease, color 0.16s ease,
+    border-color 0.16s ease, transform 0.16s ease, opacity 0.16s ease;
+}
+
+.btn:active { transform: translateY(1px); }
+
+/* Maroon pill, the brand's default strong action */
+.btn-primary {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-color: var(--accent);
+}
+
+.btn-primary:hover { background: var(--accent-deep); border-color: var(--accent-deep); }
+
+/* Black pill, secondary weight, when maroon would compete */
+.btn-ink {
+  background: var(--obsidian);
+  color: var(--snow);
+  border-color: var(--obsidian);
+}
+
+.btn-ink:hover { background: var(--slate); border-color: var(--slate); }
+
+/* Alias of .btn-primary, kept so existing markup stays valid */
+.btn-accent {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-color: var(--accent);
+}
+
+.btn-accent:hover { background: var(--accent-deep); border-color: var(--accent-deep); }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--graphite);
+  border-color: var(--mist);
+}
+
+.btn-ghost:hover { border-color: var(--obsidian); }
+
+.btn-neutral {
+  background: var(--subtle);
+  color: var(--graphite);
+}
+
+.btn-neutral:hover { background: var(--oat); }
+
+.btn-inverse {
+  background: var(--snow);
+  color: var(--obsidian);
+  border-color: var(--snow);
+}
+
+.btn-inverse:hover { background: var(--cloud); }
+
+.btn-pill { border-radius: var(--r-pill); }
+.btn-lg { font-size: 1rem; padding: 17px 32px; }
+.btn[aria-disabled='true'] { opacity: 0.45; pointer-events: none; }
+
+/* ============================================================
+   Badges
+   ============================================================ */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.4;
+  padding: 6px 14px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.badge-accent {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+.badge-filled {
+  background: var(--obsidian);
+  border-color: var(--obsidian);
+  color: var(--snow);
+}
+
+.badge-onDark {
+  border-color: rgba(255, 255, 255, 0.28);
+  background: transparent;
+  color: var(--mist);
+}
+
+/* ============================================================
+   Cards, flat surfaces separated by hairline rings.
+   Never a drop shadow.
+   ============================================================ */
+
+.card {
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-card);
+  padding: var(--s-28);
+}
+
+.card--quiet {
+  background: var(--subtle);
+  border-color: transparent;
+}
+
+.card-dark {
+  position: relative;
+  overflow: hidden;
+  background: var(--surface-dark);
+  border: 1px solid var(--surface-dark);
+  border-radius: var(--r-card-lg);
+  padding: var(--s-28);
+  color: var(--mist);
+}
+
+.card-dark h2, .card-dark h3 { color: var(--snow); }
+
+/* ============================================================
+   Misc
+   ============================================================ */
+
+.rule { height: 1px; background: var(--border); border: 0; margin: 0; }
+
+.sample-flag {
+  font-family: var(--font-mono);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-8);
+  font-size: var(--text-caption);
+  line-height: 1.6;
+  color: var(--ash);
+}
+
+.sample-flag::before {
+  content: '';
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--ash);
+  flex: none;
+}
+
+.table-wrap { overflow-x: auto; }
+
+.skip-link {
+  position: absolute;
+  left: -9999px; top: 0;
+  z-index: 100;
+  background: var(--obsidian);
+  color: var(--snow);
+  padding: var(--s-12) var(--s-20);
+  border-radius: var(--r-pill);
+}
+
+.skip-link:focus { left: var(--s-16); top: var(--s-16); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Page shell: a full-height column so the footer always reaches the bottom
+   of the viewport, even on a short page. */
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+}
+
+.app-shell > main {
+  flex: 1 0 auto;
+}

@@ -1,0 +1,97 @@
+.marquee__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--steel);
+  margin-bottom: var(--s-24);
+}
+
+/* Masked edges so logos dissolve rather than clipping */
+.marquee__viewport {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+}
+
+.marquee__track {
+  display: flex;
+  align-items: center;
+  gap: clamp(40px, 6vw, 72px);
+  width: max-content;
+  padding: var(--s-8) 0;
+  animation: marquee-scroll var(--marquee-duration, 72s) linear infinite;
+  will-change: transform;
+}
+
+/* -50% = exactly one full copy of the list; the loop is seamless.
+   Runs continuously, deliberately no pause on hover. */
+@keyframes marquee-scroll {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+
+.marquee__item {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 54px;
+}
+
+.marquee__item img {
+  max-height: 100%;
+  width: auto;
+  max-width: 150px;
+  object-fit: contain;
+  filter: grayscale(0.85) sepia(0.18);
+  opacity: 0.75;
+  transition: opacity 0.2s ease, filter 0.2s ease;
+}
+
+.marquee__item:hover img {
+  filter: none;
+  opacity: 1;
+}
+
+/* Motion is decorative, hold still and wrap for reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  .marquee__viewport {
+    -webkit-mask-image: none;
+    mask-image: none;
+    overflow-x: auto;
+  }
+
+  .marquee__track {
+    animation: none;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--s-32);
+  }
+
+  .marquee__track li[aria-hidden='true'] { display: none; }
+}
+
+
+/* Touch screens never hover, so the grayscale-until-hover treatment left
+   the logos permanently washed out on phones. Show them in full colour
+   there, and give them more room. */
+@media (hover: none) {
+  .marquee__item img {
+    filter: none;
+    opacity: 1;
+  }
+}
+
+@media (max-width: 640px) {
+  .marquee__viewport {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
+  }
+
+  .marquee__track { gap: 32px; }
+  .marquee__item { height: 62px; }
+  .marquee__item img { max-width: 120px; }
+}

@@ -1,0 +1,226 @@
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: var(--s-24);
+  align-items: start;
+}
+
+/* ---------- Form ---------- */
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-16);
+  padding: clamp(28px, 4vw, 40px);
+}
+
+.contact-form label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-8);
+}
+
+.contact-form label span {
+  font-family: var(--font-mono);
+  letter-spacing: 0.12em;
+  font-size: var(--text-caption);
+  font-weight: 500;
+  text-transform: uppercase;
+  color: var(--fog);
+}
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+  width: 100%;
+  background: var(--snow);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-input);
+  color: var(--graphite);
+  font-family: var(--font);
+  font-size: var(--text-body);
+  line-height: 1.45;
+  padding: var(--s-12) var(--s-16);
+  resize: vertical;
+  transition: border-color 0.16s ease;
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+  color: var(--ash);
+}
+
+.contact-form input:hover,
+.contact-form select:hover,
+.contact-form textarea:hover {
+  border-color: var(--fog);
+}
+
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus {
+  border-color: var(--obsidian);
+  outline: none;
+}
+
+.contact-form button {
+  align-self: flex-start;
+  margin-top: var(--s-4);
+}
+
+.contact-form__note {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  line-height: 1.64;
+  color: var(--ash);
+}
+
+.contact-form__sent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-8);
+}
+
+.contact-form__sent p:first-child {
+  font-size: var(--text-subheading);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--obsidian);
+}
+
+.contact-form__sent-note {
+  font-size: var(--text-body);
+  line-height: 1.45;
+  color: var(--fog);
+}
+
+/* ---------- Aside ---------- */
+
+.contact-aside {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-24);
+  padding: clamp(28px, 4vw, 40px);
+}
+
+.contact-aside > div {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+}
+
+.contact-aside a {
+  font-size: var(--text-body);
+  font-weight: 500;
+  color: var(--obsidian);
+  transition: color 0.16s ease;
+}
+
+.contact-aside a:hover {
+  color: var(--accent);
+}
+
+/* ---------- FAQ ---------- */
+
+.faq-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--s-16);
+  align-items: start;
+}
+
+.faq-item {
+  padding: var(--s-24) var(--s-28);
+}
+
+.faq-item summary {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-12);
+  cursor: pointer;
+  list-style: none;
+  font-size: 1.0625rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--obsidian);
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item summary::before {
+  content: '+';
+  flex: none;
+  width: 18px;
+  font-family: var(--font-mono);
+  color: var(--accent);
+  line-height: 1.5;
+}
+
+.faq-item[open] summary::before {
+  content: '-';
+}
+
+.faq-item p {
+  margin-top: var(--s-12);
+  padding-left: 30px;
+  font-size: var(--text-body);
+  line-height: 1.55;
+  color: var(--fog);
+}
+
+@media (max-width: 860px) {
+  .contact-grid,
+  .faq-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Contact persons (parchment redesign) ---------- */
+
+.persons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s-16);
+}
+
+.person {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--s-24);
+  min-height: 170px;
+  transition: transform 0.16s ease, background-color 0.16s ease;
+}
+
+.person:hover { transform: translateY(-2px); background: var(--snow); }
+
+.person h3 { font-size: var(--text-subheading); }
+
+.person__role {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-top: var(--s-4);
+}
+
+.person__phone {
+  font-size: var(--text-body);
+  color: var(--fog);
+  margin-top: var(--s-8);
+  font-variant-numeric: tabular-nums;
+}
+
+.person__wa {
+  font-weight: 700;
+  font-size: var(--text-body);
+  color: var(--obsidian);
+}
+
+@media (max-width: 720px) {
+  .persons { grid-template-columns: 1fr; }
+  .person { min-height: 0; }
+}

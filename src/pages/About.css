@@ -1,0 +1,505 @@
+.about-mission {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: clamp(24px, 5vw, 56px);
+  padding: clamp(32px, 5vw, 48px);
+}
+
+.about-mission h2 {
+  font-size: clamp(1.75rem, 4vw, var(--text-heading));
+  line-height: 1.28;
+  max-width: 14ch;
+}
+
+.about-mission p {
+  font-size: var(--text-body-lg);
+  line-height: 1.55;
+  color: var(--fog);
+}
+
+/* ---------- Timeline ---------- */
+
+.timeline {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s-16);
+}
+
+.timeline__item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-12);
+}
+
+.timeline__year {
+  font-family: var(--font-mono);
+}
+
+.timeline__item h3 {
+  font-size: var(--text-subheading);
+  line-height: 1.3;
+}
+
+.timeline__item p {
+  font-size: var(--text-body);
+  line-height: 1.45;
+  color: var(--fog);
+}
+
+/* ---------- Family ---------- */
+
+.family {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: clamp(24px, 5vw, 56px);
+  padding: clamp(32px, 5vw, 48px);
+}
+
+.family__head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-16);
+}
+
+.family__head h2 {
+  font-size: clamp(1.75rem, 4vw, var(--text-heading));
+  line-height: 1.28;
+}
+
+.family p {
+  font-size: var(--text-body-lg);
+  line-height: 1.55;
+  color: var(--mist);
+}
+
+/* ---------- Partner CTA ---------- */
+
+.partner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-32);
+  flex-wrap: wrap;
+  padding: clamp(28px, 4vw, 40px);
+}
+
+.partner h2 {
+  font-size: clamp(1.5rem, 3.5vw, var(--text-heading-sm));
+  line-height: 1.3;
+  margin-top: var(--s-8);
+}
+
+.partner p {
+  font-size: var(--text-body);
+  line-height: 1.45;
+  color: var(--fog);
+  margin-top: var(--s-8);
+  max-width: 52ch;
+}
+
+@media (max-width: 860px) {
+  .about-mission,
+  .family {
+    grid-template-columns: 1fr;
+  }
+
+  .timeline {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================
+   Harmonia Family, the committee
+   ============================================================ */
+
+.family-section {
+  border-top: 1px solid var(--border);
+}
+
+.family-intro {
+  display: grid;
+  grid-template-columns: 1fr 0.9fr;
+  gap: clamp(24px, 5vw, 56px);
+  align-items: center;
+  margin-bottom: var(--s-48);
+}
+
+.family-intro h2 {
+  font-size: clamp(1.75rem, 4vw, var(--text-heading));
+  line-height: 1.28;
+  margin-top: var(--s-8);
+}
+
+.family-intro p {
+  font-size: var(--text-body-lg);
+  line-height: 1.55;
+  color: var(--fog);
+  margin-top: var(--s-12);
+  max-width: 46ch;
+}
+
+.crew-group + .crew-group { margin-top: var(--s-40); }
+
+.crew-group__head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-8);
+  padding-bottom: var(--s-12);
+  margin-bottom: var(--s-24);
+  border-bottom: 1px solid var(--border);
+}
+
+.crew-group__head h3 {
+  font-size: 1.0625rem;
+  line-height: 1.3;
+}
+
+.crew-group__count {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  font-weight: 500;
+  color: var(--ash);
+  font-variant-numeric: tabular-nums;
+}
+
+.crew {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--s-20);
+}
+
+.crew__member {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-12);
+}
+
+.crew__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.crew__name {
+  font-size: var(--text-body);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  color: var(--obsidian);
+  text-wrap: balance;
+}
+
+.crew__role {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  line-height: 1.5;
+  color: var(--fog);
+}
+
+.crew__total {
+  font-family: var(--font-mono);
+  letter-spacing: 0.12em;
+  margin-top: var(--s-40);
+  padding-top: var(--s-16);
+  border-top: 1px solid var(--border);
+  font-size: var(--text-caption);
+  font-weight: 500;
+  text-transform: uppercase;
+  color: var(--ash);
+}
+
+@media (max-width: 900px) {
+  .family-intro { grid-template-columns: 1fr; }
+  .crew { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 520px) {
+  .crew { grid-template-columns: repeat(2, 1fr); gap: var(--s-16); }
+}
+
+/* ============================================================
+   Real mission + foreword (parchment redesign)
+   ============================================================ */
+
+.about-mission {
+  display: grid;
+  grid-template-columns: 0.8fr 1.6fr;
+  gap: clamp(24px, 5vw, 56px);
+  padding: clamp(32px, 5vw, 48px);
+}
+
+.about-mission__paras {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-16);
+  color: var(--graphite);
+}
+
+.foreword {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-20);
+  padding: clamp(32px, 5vw, 64px);
+}
+
+.foreword::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  color: color-mix(in srgb, var(--accent) 45%, transparent);
+  background-image: radial-gradient(circle, currentColor 1.3px, transparent 1.45px);
+  background-size: 13px 13px;
+  -webkit-mask-image: radial-gradient(60% 80% at 92% 8%, #000 0%, transparent 70%);
+  mask-image: radial-gradient(60% 80% at 92% 8%, #000 0%, transparent 70%);
+}
+
+.foreword > * { position: relative; z-index: 1; }
+
+.foreword__title {
+  font-size: clamp(1.9rem, 4.4vw, var(--text-heading));
+  line-height: 1.1;
+  font-style: italic;
+  font-weight: 500;
+}
+
+.foreword__paras {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-16);
+  color: var(--mist);
+  max-width: 75ch;
+}
+
+.foreword__sign {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  letter-spacing: 0.08em;
+  color: var(--ash);
+}
+/* ---------- Pitch ---------- */
+.pitch {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: clamp(24px, 5vw, 56px);
+  padding: clamp(32px, 5vw, 48px);
+}
+
+.pitch__head { display: flex; flex-direction: column; gap: var(--s-12); }
+
+.pitch__head h2 {
+  font-size: clamp(1.75rem, 4vw, var(--text-heading));
+  line-height: 1.28;
+  max-width: 16ch;
+}
+
+.pitch p {
+  font-size: var(--text-body-lg);
+  line-height: 1.55;
+  color: var(--fog);
+}
+
+/* ---------- Partner wall ---------- */
+.partner-group + .partner-group { margin-top: var(--s-48); }
+
+.partner-group__head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-8);
+  padding-bottom: var(--s-16);
+  margin-bottom: var(--s-24);
+  border-bottom: 1px solid var(--border);
+}
+
+.partner-group__head h3 {
+  font-size: var(--text-subheading);
+  line-height: 1.3;
+}
+
+.partner-group__count {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  font-weight: 500;
+  color: var(--ash);
+  font-variant-numeric: tabular-nums;
+}
+
+.partner-wall {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--s-16);
+}
+
+.partner-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-12);
+  min-height: 168px;
+  padding: var(--s-24);
+  text-align: center;
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-card);
+  transition: border-color 0.16s ease;
+}
+
+.partner-tile:hover { border-color: var(--border-strong); }
+
+.partner-tile img {
+  width: 100%;
+  max-width: 140px;
+  height: 72px;
+  object-fit: contain;
+}
+
+.partner-tile__name {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--fog);
+}
+
+/* ---------- Impact ---------- */
+.impact {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: clamp(24px, 5vw, 56px);
+  align-items: center;
+  padding: clamp(32px, 5vw, 48px);
+}
+
+.impact__main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-16);
+}
+
+.impact__main h2 {
+  font-size: clamp(1.75rem, 4vw, var(--text-heading));
+  line-height: 1.28;
+  max-width: 16ch;
+}
+
+.impact__main p {
+  font-size: var(--text-body-lg);
+  line-height: 1.55;
+  color: var(--mist);
+}
+
+.impact__facts {
+  display: flex;
+  gap: var(--s-40);
+  padding-top: var(--s-8);
+}
+
+.impact__facts div { display: flex; flex-direction: column; gap: 2px; }
+
+.impact__fact-v {
+  font-size: clamp(1.5rem, 6vw, var(--text-heading));
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--snow);
+  font-variant-numeric: tabular-nums;
+}
+
+.impact__fact-k {
+  font-family: var(--font-mono);
+  letter-spacing: 0.12em;
+  font-size: var(--text-caption);
+  font-weight: 500;
+  text-transform: uppercase;
+  color: var(--steel);
+}
+
+.impact__note {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption) !important;
+  line-height: 1.64;
+  color: var(--steel) !important;
+}
+
+.impact__fig { border-color: rgba(255, 255, 255, 0.1); }
+
+/* ---------- Inquiry ---------- */
+.inquiry {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-24);
+  flex-wrap: wrap;
+  padding: clamp(28px, 4vw, 40px);
+}
+
+.inquiry h2 {
+  font-size: clamp(1.5rem, 3.5vw, var(--text-heading-sm));
+  line-height: 1.3;
+  max-width: 22ch;
+}
+
+@media (max-width: 960px) {
+  .pitch, .impact { grid-template-columns: 1fr; }
+  .partner-wall { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 620px) {
+  .partner-wall { grid-template-columns: repeat(2, 1fr); }
+  .partner-tile { min-height: 140px; padding: var(--s-16); }
+  .impact__facts { gap: var(--s-24); }
+}
+
+.partner-wall-wrap { margin-top: var(--s-40); }
+
+/* ---------- opening image band ---------- */
+
+.about-band {
+  display: grid;
+  grid-template-columns: 1.7fr 1fr 1fr;
+  gap: var(--s-16);
+  align-items: stretch;
+}
+
+.about-band .fig { height: 100%; }
+
+@media (max-width: 860px) {
+  .about-band { grid-template-columns: 1fr 1fr; }
+  .about-band__wide { grid-column: span 2; }
+}
+
+/* The Harmonia Family CTA sat hard against the paragraph above it.
+   Give it real separation rather than relying on the grid gap. */
+.family-intro .btn {
+  margin-top: var(--s-24);
+}
+
+.family-intro > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+
+/* The figures sat in a flex row, so "Rp50,000,000+" pushed the card wider
+   than the screen. A wrapping grid keeps them inside it. */
+.impact__facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--s-24);
+  width: 100%;
+}
+
+.impact__fact-v {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 520px) {
+  .impact__facts { grid-template-columns: 1fr; gap: var(--s-20); }
+}

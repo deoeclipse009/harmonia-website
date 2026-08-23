@@ -1,0 +1,50 @@
+.ph {
+  position: relative;
+  width: 100%;
+  border-radius: var(--r-card);
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  padding: var(--s-16);
+  border: 1px solid var(--border);
+}
+
+/* Monochrome tonal steps. */
+.ph--a { background: linear-gradient(155deg, #ffffff, #ececf0); }
+.ph--b { background: linear-gradient(155deg, #f5f5f7, #d2d2d7); }
+.ph--c { background: linear-gradient(155deg, #ececf0, #aeaeb4); }
+.ph--d { background: linear-gradient(155deg, #2c2c2e, #0a0a0a); border-color: #0a0a0a; }
+.ph--e { background: linear-gradient(155deg, #d2d2d7, #8a8a90); }
+
+.ph__mark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 34%;
+  max-width: 96px;
+  transform: translate(-50%, -50%);
+  color: rgba(10, 10, 10, 0.14);
+}
+
+.ph--c .ph__mark,
+.ph--e .ph__mark { color: rgba(255, 255, 255, 0.45); }
+.ph--d .ph__mark { color: rgba(255, 255, 255, 0.18); }
+
+.ph__label {
+  font-family: var(--font-mono);
+  position: relative;
+  font-size: var(--text-caption);
+  font-weight: 600;
+  line-height: 1.4;
+  padding: 6px 12px;
+  border-radius: var(--r-pill);
+  background: var(--snow);
+  border: 1px solid var(--border);
+  color: var(--graphite);
+}
+
+.ph--d .ph__label {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: var(--mist);
+}
