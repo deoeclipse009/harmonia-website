@@ -1,14 +1,12 @@
-/* Sticky masthead on the white canvas. The backdrop blur and tint keep it
-   legible once content scrolls beneath. */
+/* Sticky masthead on the white canvas. Solid, never glass: content scrolling
+   beneath must not show through. */
 
 .site-header {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: color-mix(in srgb, var(--paper) 88%, transparent);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid color-mix(in srgb, var(--cloud) 65%, transparent);
+  background: var(--paper);
+  border-bottom: 1px solid var(--cloud);
 }
 
 .site-header__inner {
