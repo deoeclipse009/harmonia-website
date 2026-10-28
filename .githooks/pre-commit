@@ -1,0 +1,4 @@
+#!/bin/sh
+# Harmonia has no TypeScript and uses oxlint, not eslint.
+set -e
+npx oxlint src
