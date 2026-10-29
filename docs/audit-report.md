@@ -115,3 +115,43 @@ not run, Step 4.
 - `hello@harmoniafest.id` is invented and may not exist
 - Merch promo is a year expired but written in the present tense, with a live
   order form
+
+---
+
+## Fixed in the retrofit pass, 2026-10-29
+
+Branch `standards-retrofit`. Each verified in the browser before commit.
+
+| Was | Now | Commit |
+|---|---|---|
+| Tell 22, pill buttons | 12px via `--r-button` | `acf00d4` |
+| Tell 23, glass header | solid `--paper` | `acf00d4` |
+| Tell 21, label pills in 9 places | plain mono text | `acf00d4` |
+| og:image, twitter:card, canonical | present | `cd566f3` |
+| One title for 5 routes | per-route, bilingual | `cd566f3` |
+| No robots.txt or sitemap.xml | both, 7 routes | `cd566f3` |
+| No Event schema | JSON-LD from editions.js | `cd566f3` |
+| Logos 7.16 MB | 96 KB WebP, 98.7% smaller | `b8f1ca1` |
+| No error boundary | catches, both languages | `0cfcff5` |
+| No analytics | Vercel Analytics, cookieless | `0cfcff5` |
+| Must-have 1, no Escape or focus trap | both, focus returns to toggle | `168d27f` |
+| Must-have 8, no form error state | per-field, focus moves, input kept | `168d27f` |
+| Must-have 11, FAQ all open at once | shared name | `168d27f` |
+
+Note on the form: `noValidate` was required. The browser's own
+`type="email"` check cancelled submit before `handleSubmit` ran, so no
+custom message could ever appear.
+
+Analytics still needs enabling in the Vercel dashboard before it reports.
+
+### Still open
+
+- Must-have 2 loading states, 3 scroll progress, 6 UTM, 9 confirmation
+  modal, 10 last updated, 12 floating contact
+- Must-have 7: the form still does not send. Needs an endpoint decision
+  (Formspree or Resend), not just code
+- D richness floor against the Custom / Commerce row
+- E, F, H: not run, need `/impeccable`, `21st-ui-review` and a studio
+  design system file absent from this machine
+- J security: Step 4
+- Everything under "Content needing the client" above
