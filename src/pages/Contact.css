@@ -224,3 +224,18 @@
   .persons { grid-template-columns: 1fr; }
   .person { min-height: 0; }
 }
+
+/* Error text sits beside its field, so the message does not depend on
+   colour alone to be understood. */
+.field-error {
+  display: block;
+  margin-top: 6px;
+  font-size: var(--text-caption);
+  line-height: 1.5;
+  color: var(--accent-deep, #72161b);
+  font-weight: 600;
+}
+
+.contact-form [aria-invalid='true'] {
+  border-color: var(--accent-deep, #72161b);
+}
