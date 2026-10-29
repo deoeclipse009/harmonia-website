@@ -5,35 +5,35 @@
 // make logos clickable.
 
 export const sponsors = [
-  { id: 'sp-1', name: 'Bank Mandiri', logo: '/logos/sponsors/1.png', url: '' },
-  { id: 'sp-2', name: 'Dagadu Djokdja', logo: '/logos/sponsors/2.png', url: '' },
-  { id: 'sp-3', name: 'CG Production, Arte Divertente', logo: '/logos/sponsors/3.png', url: '' },
-  { id: 'sp-4', name: 'Wiwied Kembar', logo: '/logos/sponsors/4.png', url: '' },
-  { id: 'sp-5', name: '3ADIKA Art & Science Studio', logo: '/logos/sponsors/5.png', url: '' },
-  { id: 'sp-6', name: 'IXO Transport', logo: '/logos/sponsors/6.png', url: '' },
-  { id: 'sp-7', name: 'Porta by Ambarrukmo', logo: '/logos/sponsors/7.png', url: '' },
-  { id: 'sp-8', name: 'Dolphin Blue Raincoat', logo: '/logos/sponsors/8.png', url: '' },
-  { id: 'sp-9', name: 'Ignite Transport', logo: '/logos/sponsors/9.png', url: '' },
-  { id: 'sp-10', name: 'Happy Bear Preschool Surakarta', logo: '/logos/sponsors/10.png', url: '' },
-  { id: 'sp-11', name: 'Plento Music', logo: '/logos/sponsors/11.png', url: '' },
-  { id: 'sp-12', name: 'Rumah Sakit Akademik UGM', logo: '/logos/sponsors/12.png', url: '' },
-  { id: 'sp-13', name: 'Chapy, Wrapping, Florist, Party & Balloon', logo: '/logos/sponsors/13.png', url: '' },
-  { id: 'sp-14', name: "Maryane's Group", logo: '/logos/sponsors/14.png', url: '' },
+  { id: 'sp-1', name: 'Bank Mandiri', logo: '/logos/sponsors/1.webp', url: '' },
+  { id: 'sp-2', name: 'Dagadu Djokdja', logo: '/logos/sponsors/2.webp', url: '' },
+  { id: 'sp-3', name: 'CG Production, Arte Divertente', logo: '/logos/sponsors/3.webp', url: '' },
+  { id: 'sp-4', name: 'Wiwied Kembar', logo: '/logos/sponsors/4.webp', url: '' },
+  { id: 'sp-5', name: '3ADIKA Art & Science Studio', logo: '/logos/sponsors/5.webp', url: '' },
+  { id: 'sp-6', name: 'IXO Transport', logo: '/logos/sponsors/6.webp', url: '' },
+  { id: 'sp-7', name: 'Porta by Ambarrukmo', logo: '/logos/sponsors/7.webp', url: '' },
+  { id: 'sp-8', name: 'Dolphin Blue Raincoat', logo: '/logos/sponsors/8.webp', url: '' },
+  { id: 'sp-9', name: 'Ignite Transport', logo: '/logos/sponsors/9.webp', url: '' },
+  { id: 'sp-10', name: 'Happy Bear Preschool Surakarta', logo: '/logos/sponsors/10.webp', url: '' },
+  { id: 'sp-11', name: 'Plento Music', logo: '/logos/sponsors/11.webp', url: '' },
+  { id: 'sp-12', name: 'Rumah Sakit Akademik UGM', logo: '/logos/sponsors/12.webp', url: '' },
+  { id: 'sp-13', name: 'Chapy, Wrapping, Florist, Party & Balloon', logo: '/logos/sponsors/13.webp', url: '' },
+  { id: 'sp-14', name: "Maryane's Group", logo: '/logos/sponsors/14.webp', url: '' },
 ]
 
 export const communityPartners = [
-  { id: 'co-1', name: 'OIA, Office of International Affairs UGM', logo: '/logos/community/1.png', url: '' },
-  { id: 'co-2', name: 'Jazz Kota Baru', logo: '/logos/community/2.png', url: '' },
-  { id: 'co-3', name: 'Virtuoso Music Course', logo: '/logos/community/3.png', url: '' },
-  { id: 'co-4', name: 'Sekolah Tumbuh', logo: '/logos/community/4.png', url: '' },
-  { id: 'co-5', name: 'Hagios School of Life', logo: '/logos/community/5.png', url: '' },
-  { id: 'co-6', name: 'SMA Regina Pacis Surakarta', logo: '/logos/community/6.png', url: '' },
+  { id: 'co-1', name: 'OIA, Office of International Affairs UGM', logo: '/logos/community/1.webp', url: '' },
+  { id: 'co-2', name: 'Jazz Kota Baru', logo: '/logos/community/2.webp', url: '' },
+  { id: 'co-3', name: 'Virtuoso Music Course', logo: '/logos/community/3.webp', url: '' },
+  { id: 'co-4', name: 'Sekolah Tumbuh', logo: '/logos/community/4.webp', url: '' },
+  { id: 'co-5', name: 'Hagios School of Life', logo: '/logos/community/5.webp', url: '' },
+  { id: 'co-6', name: 'SMA Regina Pacis Surakarta', logo: '/logos/community/6.webp', url: '' },
 ]
 
 export const mediaPartners = [
-  { id: 'me-1', name: 'Area Jogja', logo: '/logos/media/1.png', url: '' },
-  { id: 'me-2', name: 'RBTV', logo: '/logos/media/2.png', url: '' },
-  { id: 'me-3', name: 'Info Konser Jogja', logo: '/logos/media/3.png', url: '' },
+  { id: 'me-1', name: 'Area Jogja', logo: '/logos/media/1.webp', url: '' },
+  { id: 'me-2', name: 'RBTV', logo: '/logos/media/2.webp', url: '' },
+  { id: 'me-3', name: 'Info Konser Jogja', logo: '/logos/media/3.webp', url: '' },
 ]
 
 export const partnerGroups = [
