@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
+import { Analytics } from '@vercel/analytics/react'
 import { useLanguage } from './i18n/LanguageContext.jsx'
 import Header from './components/Header.jsx'
 import Footer from './components/Footer.jsx'
@@ -90,6 +91,7 @@ export default function App() {
         </Routes>
       </main>
       <Footer />
+      <Analytics />
     </div>
   )
 }
