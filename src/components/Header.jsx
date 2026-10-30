@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useLanguage } from '../i18n/LanguageContext.jsx'
 import { activeEdition } from '../data/editions.js'
@@ -25,6 +25,49 @@ export default function Header() {
 
   const close = () => setOpen(false)
 
+  const navRef = useRef(null)
+  const toggleRef = useRef(null)
+
+  // While the panel is open it owns the keyboard: Escape closes it and
+  // returns focus to the button that opened it, and Tab cycles inside
+  // rather than wandering into the page behind.
+  useEffect(() => {
+    if (!open) return undefined
+
+    const items = () =>
+      navRef.current
+        ? Array.from(navRef.current.querySelectorAll('a[href]'))
+        : []
+
+    items()[0]?.focus()
+
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setOpen(false)
+        toggleRef.current?.focus()
+        return
+      }
+      if (e.key !== 'Tab') return
+
+      const focusable = [...items(), toggleRef.current].filter(Boolean)
+      if (focusable.length === 0) return
+
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault()
+        last.focus()
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault()
+        first.focus()
+      }
+    }
+
+    document.addEventListener('keydown', onKeyDown)
+    return () => document.removeEventListener('keydown', onKeyDown)
+  }, [open])
+
   return (
     <header className="site-header">
       <div className="container site-header__inner">
@@ -33,7 +76,12 @@ export default function Header() {
           <span className="brand__word">Harmonia</span>
         </NavLink>
 
-        <nav className={`main-nav ${open ? 'is-open' : ''}`} aria-label="Primary">
+        <nav
+          ref={navRef}
+          id="primary-nav"
+          className={`main-nav ${open ? 'is-open' : ''}`}
+          aria-label="Primary"
+        >
           <ul>
             {links.map((l) => (
               <li key={l.to}>
@@ -77,10 +125,12 @@ export default function Header() {
           )}
 
           <button
+            ref={toggleRef}
             type="button"
             className="menu-toggle"
             aria-label="Toggle menu"
             aria-expanded={open}
+            aria-controls="primary-nav"
             onClick={() => setOpen((v) => !v)}
           >
             <span />
