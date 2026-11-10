@@ -1,75 +1,134 @@
-/* Ticketing. Seat states are told apart by fill and pattern, never by hue:
-   available is an outline, selected is solid ink, sold is grey with a
-   strike through it. */
+/* Ticketing. One text family, sentence case, and a single accent that is
+   kept for the main button. Seat states are told apart by fill and pattern,
+   never by hue: available is an outline, selected is solid ink, sold is
+   grey with a strike through it. */
 
-.tix-head { display: flex; flex-direction: column; gap: var(--s-12); margin-bottom: var(--s-32); }
-.tix-head h1 { font-size: clamp(2rem, 5vw, var(--text-heading)); line-height: 1.05; }
-.tix-head__lede { font-size: var(--text-body-lg); color: var(--fog); max-width: 60ch; }
-
-.tix-draft {
-  font-family: var(--font-mono);
-  font-size: var(--text-caption);
-  line-height: 1.64;
-  color: var(--graphite, #1d1d1f);
-  background: var(--subtle);
-  border: 1px dashed var(--border-strong);
-  border-radius: var(--r-input);
-  padding: var(--s-12) var(--s-16);
-  max-width: 72ch;
+.tix {
+  padding: clamp(28px, 5vw, 56px) 0 var(--s-80);
+  font-family: var(--font);
+  color: var(--graphite);
 }
 
-.tix-steps {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--s-8) var(--s-24);
-  list-style: none;
-  padding: 0 0 var(--s-16);
-  margin: 0 0 var(--s-16);
-  border-bottom: 1px solid var(--border);
-  font-family: var(--font-mono);
-  font-size: var(--text-caption);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--ash);
+.tix h1, .tix h2 { font-family: var(--font-display); color: var(--obsidian); letter-spacing: -0.02em; }
+.tix h2 { font-size: 1.25rem; line-height: 1.25; font-weight: 700; }
+.tix-quiet { font-size: 0.9375rem; line-height: 1.5; color: var(--fog); }
+
+.tix-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
-.tix-steps li[aria-current='step'] { color: var(--obsidian); font-weight: 500; }
-.tix-steps li[aria-current='step'] span { color: var(--accent); }
 
-.tix-notice { min-height: 1.6em; margin-bottom: var(--s-12); font-weight: 600; color: var(--accent-deep); }
+/* ---------- Opening: what it is, what it costs, why it matters ---------- */
+.tix-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(24px, 4vw, 56px);
+  align-items: center;
+  margin-bottom: var(--s-48);
+}
+.tix-hero__text { display: flex; flex-direction: column; gap: var(--s-12); }
+.tix-hero h1 { font-size: clamp(2.5rem, 6vw, 4rem); line-height: 1; font-weight: 800; }
+.tix-hero__lede { font-size: var(--text-body-lg); line-height: 1.5; max-width: 44ch; }
+.tix-hero__price {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--obsidian);
+  font-variant-numeric: tabular-nums;
+  margin-top: var(--s-4);
+}
+.tix-hero__fact { font-size: 0.9375rem; line-height: 1.5; color: var(--fog); max-width: 52ch; }
+.tix-hero__photo { border-radius: 20px; overflow: hidden; }
 
+.tix-title { font-size: clamp(1.75rem, 4vw, 2.25rem); line-height: 1.1; font-weight: 800; margin-bottom: var(--s-24); }
+
+/* ---------- Progress ---------- */
+.tix-progress { margin-bottom: var(--s-8); }
+.tix-progress p { font-size: 0.9375rem; font-weight: 600; color: var(--obsidian); margin-bottom: var(--s-8); }
+.tix-progress__track { height: 3px; background: var(--cloud); border-radius: 2px; overflow: hidden; }
+.tix-progress__track span { display: block; height: 100%; background: var(--obsidian); transition: width 0.25s ease; }
+
+.tix-notice { min-height: 1.5em; margin: var(--s-12) 0; font-weight: 600; color: var(--accent-deep); }
+
+/* ---------- Layout ---------- */
 .tix-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 320px;
-  gap: var(--s-24);
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: clamp(24px, 4vw, 48px);
   align-items: start;
 }
-.tix-main { min-width: 0; display: flex; flex-direction: column; gap: var(--s-16); }
+.tix-main { min-width: 0; display: flex; flex-direction: column; gap: var(--s-32); }
+.tix-block { display: flex; flex-direction: column; gap: var(--s-12); }
 
-/* ---------- Best available ---------- */
-.tix-best h2, .tix-summary h2, .tix-pay h2 { font-size: var(--text-subheading); line-height: 1.2; }
-.tix-best { display: flex; flex-direction: column; gap: var(--s-12); }
-.tix-best__row { display: flex; flex-wrap: wrap; gap: var(--s-12); align-items: flex-end; }
-.tix-best label { display: flex; flex-direction: column; gap: var(--s-8); }
-.tix-best label span {
-  font-family: var(--font-mono);
-  font-size: var(--text-caption);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--fog);
-}
-.tix-best select, .tix-best input {
-  background: var(--snow);
+/* ---------- How many ---------- */
+.tix-qty { display: flex; flex-wrap: wrap; gap: var(--s-8); }
+.tix-qty button {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--r-button);
   border: 1px solid var(--border-strong);
-  border-radius: var(--r-input);
+  background: var(--snow);
+  color: var(--obsidian);
   font-family: var(--font);
-  font-size: var(--text-body);
-  padding: var(--s-12) var(--s-16);
-  min-height: 46px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.12s ease, border-color 0.12s ease;
 }
-.tix-best input { width: 96px; }
+.tix-qty button:hover { border-color: var(--obsidian); }
+.tix-qty button[aria-pressed='true'] { background: var(--obsidian); border-color: var(--obsidian); color: var(--snow); }
+
+/* ---------- Price list ---------- */
+.tix-tiers { list-style: none; margin: 0; padding: 0; }
+.tix-tiers li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: var(--s-16);
+  padding: var(--s-16) 0;
+  border-top: 1px solid var(--cloud);
+}
+.tix-tiers li:last-child { border-bottom: 1px solid var(--cloud); }
+.tix-tiers__name { font-weight: 700; color: var(--obsidian); }
+.tix-tiers__price { font-weight: 700; color: var(--obsidian); font-variant-numeric: tabular-nums; }
+.tix-tiers li.is-current .tix-btn-quiet { background: var(--obsidian); border-color: var(--obsidian); color: var(--snow); }
+
+/* Secondary actions are outlines, so the one solid button in view is the
+   one that moves the order forward. */
+.tix-btn-quiet {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 18px;
+  border-radius: var(--r-button);
+  border: 1px solid var(--border-strong);
+  background: transparent;
+  color: var(--obsidian);
+  font-family: var(--font);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.12s ease, background-color 0.12s ease;
+}
+.tix-btn-quiet:hover { border-color: var(--obsidian); }
+.tix-btn-quiet:disabled { color: var(--ash); border-color: var(--cloud); cursor: not-allowed; }
 
 /* ---------- Seat plan ---------- */
-.seatmap { --seat: 30px; --gap: 5px; display: flex; flex-direction: column; gap: var(--s-12); }
+.seatmap {
+  --seat: 30px;
+  --gap: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-16);
+  background: var(--subtle);
+  border-radius: 20px;
+  padding: var(--s-20);
+}
 
 .seatmap__legend {
   display: flex;
@@ -78,46 +137,32 @@
   list-style: none;
   padding: 0;
   margin: 0;
-  font-size: var(--text-caption);
-  color: var(--fog);
+  font-size: 0.875rem;
+  color: var(--graphite);
 }
 .seatmap__legend li { display: flex; align-items: center; gap: var(--s-8); }
-.seatmap__help { font-size: var(--text-caption); color: var(--ash); }
 
 .seatmap__scroll { overflow-x: auto; padding-bottom: var(--s-8); }
 .seatmap__plan { display: flex; flex-direction: column; gap: var(--gap); width: max-content; margin: 0 auto; }
 
 .seatmap__stage {
   text-align: center;
-  font-family: var(--font-mono);
-  font-size: var(--text-caption);
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--snow);
-  background: var(--obsidian, #0a0a0a);
-  border-radius: 6px 6px 22px 22px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--fog);
+  border: 1px solid var(--border-strong);
+  border-bottom: none;
+  background: var(--snow);
+  border-radius: 12px 12px 0 0;
   padding: var(--s-8);
-  margin-bottom: var(--s-12);
+  margin: 0 26px var(--s-12);
 }
 
-.seatmap__tier {
-  font-family: var(--font-mono);
-  font-size: var(--text-caption);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--steel);
-  margin-top: var(--s-12);
-}
+.seatmap__tier { font-size: 0.875rem; color: var(--fog); margin-top: var(--s-12); font-variant-numeric: tabular-nums; }
+.seatmap__tier strong { color: var(--obsidian); font-weight: 700; }
 
 .seatmap__row { display: flex; align-items: center; gap: var(--gap); }
-.seatmap__rowlabel {
-  width: 20px;
-  text-align: center;
-  font-family: var(--font-mono);
-  font-size: var(--text-caption);
-  color: var(--ash);
-  flex: none;
-}
+.seatmap__rowlabel { width: 20px; text-align: center; font-size: 0.8125rem; font-weight: 600; color: var(--fog); flex: none; }
 
 .seat {
   flex: none;
@@ -128,25 +173,20 @@
   justify-content: center;
   padding: 0;
   background: var(--snow);
-  border: 1.5px solid var(--obsidian, #0a0a0a);
+  border: 1.5px solid var(--obsidian);
   border-radius: 8px 8px 4px 4px;
-  color: var(--obsidian, #0a0a0a);
-  font-family: var(--font-mono);
+  color: var(--obsidian);
+  font-family: var(--font);
   font-size: 0.6875rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
   line-height: 1;
   cursor: pointer;
   transition: background-color 0.12s ease, transform 0.12s ease;
 }
 .seat--aisle { margin-right: 26px; }
 .seat:hover { background: var(--oat); transform: translateY(-1px); }
-
-.seat.is-selected {
-  background: var(--obsidian, #0a0a0a);
-  color: var(--snow);
-  font-weight: 500;
-}
-.seat.is-selected:hover { background: var(--obsidian, #0a0a0a); }
-
+.seat.is-selected, .seat.is-selected:hover { background: var(--obsidian); color: var(--snow); }
 .seat.is-sold {
   border-color: var(--mist);
   background:
@@ -155,84 +195,165 @@
   cursor: not-allowed;
 }
 .seat.is-sold:hover { transform: none; }
-
 .seat--sample { width: 20px; height: 20px; cursor: default; pointer-events: none; }
 
-/* ---------- Summary ---------- */
+/* ---------- Order summary: the one framed surface on the page ---------- */
 .tix-summary {
   position: sticky;
   top: calc(var(--header-h) + var(--s-16));
   display: flex;
   flex-direction: column;
-  gap: var(--s-16);
+  gap: var(--s-12);
+  background: var(--snow);
+  border: 1px solid var(--border-strong);
+  border-radius: 20px;
+  padding: var(--s-24);
 }
-.tix-empty { color: var(--fog); }
 .tix-lines { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--s-8); }
 .tix-lines li { display: flex; justify-content: space-between; gap: var(--s-16); font-variant-numeric: tabular-nums; }
-.tix-lines strong { font-family: var(--font-mono); font-weight: 500; }
+.tix-lines strong { color: var(--obsidian); font-weight: 700; }
 .tix-total {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
   padding-top: var(--s-12);
-  border-top: 1px solid var(--obsidian, #0a0a0a);
+  border-top: 1px solid var(--cloud);
   font-variant-numeric: tabular-nums;
 }
-.tix-total strong { font-family: var(--font-display); font-size: 1.5rem; }
-.tix-summary .btn:disabled { background: var(--cloud); color: var(--ash); cursor: not-allowed; }
+.tix-total strong { font-family: var(--font-display); font-size: 1.625rem; font-weight: 800; color: var(--obsidian); }
+.tix-cta { width: 100%; margin-top: var(--s-4); font-variant-numeric: tabular-nums; }
+.tix-cta:disabled { background: var(--cloud); border-color: var(--cloud); color: var(--fog); cursor: not-allowed; }
+.tix-cause { font-size: 0.875rem; line-height: 1.5; color: var(--fog); padding-top: var(--s-12); border-top: 1px solid var(--cloud); }
 
-.tix-timer {
-  font-family: var(--font-mono);
-  font-size: var(--text-caption);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--fog);
+/* ---------- Details and payment ---------- */
+.tix-form { gap: var(--s-20); max-width: 560px; }
+.tix-form label { display: flex; flex-direction: column; gap: var(--s-8); }
+.tix-form label > span:first-child { font-size: 0.9375rem; font-weight: 600; color: var(--obsidian); }
+.tix-form input {
+  width: 100%;
+  min-height: 48px;
+  background: var(--snow);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-button);
+  color: var(--obsidian);
+  font-family: var(--font);
+  font-size: 1rem;
+  padding: var(--s-12) var(--s-16);
+  transition: border-color 0.12s ease;
 }
-.tix-timer strong { color: var(--accent); font-size: 1rem; font-variant-numeric: tabular-nums; }
-
+.tix-form input:hover { border-color: var(--fog); }
+.tix-form input:focus { border-color: var(--obsidian); outline: none; }
+.tix-form input[aria-invalid='true'] { border-color: var(--accent-deep); }
+.tix-error { font-size: 0.875rem; font-weight: 600; color: var(--accent-deep); }
+.tix-timer { font-weight: 600; color: var(--obsidian); font-variant-numeric: tabular-nums; }
 .tix-actions { display: flex; flex-wrap: wrap; gap: var(--s-12); align-items: center; }
-.contact-form .tix-actions button { margin-top: 0; }
-.tix-pay { display: flex; flex-direction: column; gap: var(--s-16); }
 
 /* ---------- Tickets ---------- */
-.tix-done { display: flex; flex-direction: column; gap: var(--s-16); }
-.tix-done h2 { font-size: var(--text-heading-sm); }
-.tix-ordercode strong { font-family: var(--font-mono); font-weight: 500; }
-.tix-tickets { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: var(--s-16); }
-.tix-ticket { display: flex; justify-content: space-between; align-items: center; gap: var(--s-16); }
-.tix-ticket__seat { font-family: var(--font-display); font-size: 2.5rem; font-weight: 700; line-height: 1; margin: var(--s-4) 0 var(--s-8); }
-.tix-ticket__code { font-family: var(--font-mono); font-size: var(--text-caption); color: var(--fog); margin-top: var(--s-8); overflow-wrap: anywhere; }
-.tix-ticket img { flex: none; }
+.tix-done { display: flex; flex-direction: column; gap: var(--s-24); }
+.tix-done h2 { font-size: clamp(1.75rem, 4vw, 2.25rem); font-weight: 800; margin-bottom: var(--s-8); }
+.tix-tickets { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: var(--s-16); }
 
-/* ---------- Dialog and tools ---------- */
+.tix-ticket {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  background: var(--snow);
+  border: 1px solid var(--obsidian);
+  border-radius: 16px;
+  overflow: hidden;
+}
+.tix-ticket__body { padding: var(--s-20); display: flex; flex-direction: column; gap: var(--s-4); }
+.tix-ticket__event { font-weight: 700; color: var(--obsidian); }
+.tix-ticket__seat {
+  font-family: var(--font-display);
+  font-size: 2.75rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--obsidian);
+  margin: var(--s-8) 0;
+}
+.tix-ticket__seat span { display: block; font-family: var(--font); font-size: 0.875rem; font-weight: 600; color: var(--fog); margin-bottom: var(--s-4); }
+.tix-ticket__stub {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-8);
+  padding: var(--s-16);
+  border-left: 1.5px dashed var(--obsidian);
+  width: 164px;
+}
+/* The two notches where a paper ticket would tear. */
+.tix-ticket__stub::before, .tix-ticket__stub::after {
+  content: '';
+  position: absolute;
+  left: -9px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 1px solid var(--obsidian);
+}
+.tix-ticket__stub::before { top: -9px; }
+.tix-ticket__stub::after { bottom: -9px; }
+.tix-ticket__code { font-family: var(--font-mono); font-size: 0.6875rem; color: var(--fog); text-align: center; overflow-wrap: anywhere; }
+
+/* ---------- Dialog and test tools ---------- */
 .tix-dialog {
   border: 1px solid var(--border-strong);
-  border-radius: var(--r-card);
-  padding: var(--s-28);
+  border-radius: 20px;
+  padding: var(--s-24);
   max-width: min(440px, calc(100vw - 32px));
   margin: auto;
+  font-family: var(--font);
 }
 .tix-dialog::backdrop { background: rgba(10, 10, 10, 0.55); }
-.tix-dialog h2 { font-size: var(--text-subheading); margin-bottom: var(--s-8); }
+.tix-dialog h2 { margin-bottom: var(--s-8); }
 .tix-dialog p { color: var(--fog); margin-bottom: var(--s-20); }
 
-.tix-tools { margin-top: var(--s-48); padding-top: var(--s-16); border-top: 1px dashed var(--border-strong); }
-.tix-tools summary { cursor: pointer; font-family: var(--font-mono); font-size: var(--text-caption); letter-spacing: 0.12em; text-transform: uppercase; color: var(--fog); margin-bottom: var(--s-12); }
+.tix-tools { margin-top: var(--s-64); font-size: 0.875rem; color: var(--fog); }
+.tix-tools summary { cursor: pointer; margin-bottom: var(--s-12); }
+
+/* ---------- Phone: the total and the button never leave the screen ---------- */
+.tix-bar { display: none; }
 
 @media (max-width: 900px) {
+  .tix-hero { grid-template-columns: minmax(0, 1fr); margin-bottom: var(--s-32); }
+  .tix-hero__photo { order: -1; }
   .tix-grid { grid-template-columns: minmax(0, 1fr); }
+  .tix-summary { position: static; }
+  .tix-summary .tix-cta, .tix-summary .tix-cta + .tix-quiet { display: none; }
   /* Bigger seats for fingers. The plan scrolls sideways instead of forcing
      a pinch-zoom. */
-  .seatmap { --seat: 38px; --gap: 6px; }
+  .seatmap { --seat: 38px; --gap: 6px; padding: var(--s-16); border-radius: 16px; }
   .seat { font-size: 0.75rem; }
-  .tix-summary { position: sticky; top: auto; bottom: 0; border-radius: var(--r-card) var(--r-card) 0 0; z-index: 5; }
+
+  .tix--withbar { padding-bottom: 120px; }
+  .tix-bar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s-12);
+    background: var(--snow);
+    border-top: 1px solid var(--border-strong);
+    padding: var(--s-12) var(--gutter, 20px) calc(var(--s-12) + env(safe-area-inset-bottom));
+  }
+  .tix-bar p { display: flex; flex-direction: column; min-width: 0; line-height: 1.3; }
+  .tix-bar p strong { color: var(--obsidian); }
+  .tix-bar p span { font-size: 0.8125rem; color: var(--fog); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .tix-bar .btn { flex: none; font-variant-numeric: tabular-nums; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .seat { transition: none; }
+  .seat, .tix-progress__track span { transition: none; }
   .seat:hover { transform: none; }
 }
 
 @media print {
-  .site-header, .site-footer, .tix-steps, .tix-noprint, .tix-notice, .skip-link { display: none !important; }
+  .site-header, .site-footer, .tix-progress, .tix-noprint, .tix-notice, .skip-link, .tix-title { display: none !important; }
 }

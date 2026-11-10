@@ -2,39 +2,54 @@ import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 import QRCode from 'qrcode'
 import { useLanguage } from '../i18n/LanguageContext.jsx'
 import { ticketing } from '../data/ticketing.js'
+import { latestPastEdition } from '../data/editions.js'
+import { photographer } from '../data/gallery.js'
+import Figure from '../components/Figure.jsx'
 import * as api from '../ticketing/api.js'
-import './Contact.css'
 import './Tickets.css'
 
 const COPY = {
   id: {
-    kicker: 'Pratinjau internal',
-    title: 'Tiket Harmonia 2027',
-    lede: 'Pilih kursi, isi data, bayar, lalu terima e-tiket.',
-    draft:
-      'Prototipe internal. Denah kursi dan harga masih draf, dan pembayaran hanya simulasi. Tidak ada uang yang berpindah.',
-    steps: ['Kursi', 'Data', 'Bayar', 'Tiket'],
-    stage: 'Panggung',
-    mapLabel: 'Denah kursi',
+    title: 'Harmonia 2027',
+    lede: 'Konser musik amal untuk anak-anak Indonesia. Pilih kursimu, bayar, dan tiketmu langsung jadi.',
+    proof: (n) => `Edisi 2025 terjual ${n} tiket.`,
+    cause: "Sebagian hasil penjualan tiket disalurkan ke SOS Children's Villages Indonesia.",
+    when: 'Tanggal dan tempat diumumkan menyusul.',
+    from: (p) => `Mulai ${p}`,
+    photoAlt: 'Seluruh penampil Harmonia 2025 di atas panggung.',
+    photoBy: 'Foto oleh',
+    steps: ['Pilih kursi', 'Data pemesan', 'Pembayaran', 'Tiket'],
+    stepOf: (i, n, label) => `Langkah ${i} dari ${n}: ${label}`,
+    qtyTitle: 'Berapa orang?',
+    tierTitle: 'Pilih kategori',
+    tierHelp: 'Kami pilihkan kursi terbaik yang masih bersebelahan. Kamu bisa menggantinya di denah.',
+    rows: (a, b) => (a === b ? `Baris ${a}` : `Baris ${a} sampai ${b}`),
+    left: (n) => (n === 0 ? 'Habis' : `Sisa ${n} kursi`),
+    choose: 'Pilih',
+    mapTitle: 'Denah kursi',
     mapHelp: 'Gunakan tombol panah untuk berpindah kursi, lalu Enter atau Spasi untuk memilih.',
+    stage: 'Panggung',
     row: 'Baris',
     seat: 'kursi',
+    seatWord: 'Kursi',
     available: 'Tersedia',
     selected: 'Dipilih',
     sold: 'Terjual',
-    bestTitle: 'Pilihkan kursi terbaik',
-    bestTier: 'Kategori',
-    bestQty: 'Jumlah',
-    bestGo: 'Pilihkan',
-    noBlock: 'Tidak ada kursi berdampingan sebanyak itu di kategori ini. Coba jumlah lebih sedikit atau kategori lain.',
+    noBlock: 'Tidak ada kursi bersebelahan sebanyak itu di kategori ini. Coba jumlah lebih sedikit atau kategori lain.',
     summary: 'Pesananmu',
-    none: 'Belum ada kursi yang dipilih.',
+    none: 'Belum ada kursi dipilih.',
     total: 'Total',
-    next: 'Lanjut ke data pemesan',
+    noFees: 'Tanpa biaya tambahan.',
+    holdNote: (m) => `Kursi ditahan ${m} menit setelah kamu lanjut.`,
+    next: (t) => `Lanjut, ${t}`,
+    nextNone: 'Pilih kursi dulu',
+    count: (n) => `${n} kursi`,
     limit: (n) => `Maksimal ${n} kursi per pesanan.`,
     taken: 'Sebagian kursi baru saja terjual. Denah sudah diperbarui, silakan pilih lagi.',
-    expired: 'Waktu habis, kursi dilepas kembali. Silakan pilih lagi.',
-    timer: 'Kursi ditahan selama',
+    expired: 'Waktu habis dan kursi dilepas kembali. Silakan pilih lagi.',
+    timer: (clock) => `Kursimu ditahan ${clock} lagi.`,
+    detailsTitle: 'Data pemesan',
+    detailsHelp: 'Nama ini tercetak di tiket.',
     name: 'Nama lengkap',
     email: 'Email',
     phone: 'Nomor WhatsApp',
@@ -45,51 +60,64 @@ const COPY = {
     errEmailBad: 'Alamat email ini belum lengkap, contoh: nama@email.com',
     errPhone: 'Tulis nomor WhatsApp, contoh: 081234567890',
     payTitle: 'Pembayaran',
-    simulated: 'Simulasi. Belum ada gateway pembayaran yang terhubung, jadi tombol di bawah hanya menandai pesanan sebagai lunas.',
-    payGo: 'Simulasikan pembayaran berhasil',
-    back: 'Kembali',
-    doneTitle: 'Pesanan tercatat',
-    doneLede: 'Tunjukkan kode QR ini di pintu masuk. Satu tiket untuk satu kursi.',
-    order: 'Kode pesanan',
-    print: 'Cetak atau simpan PDF',
-    another: 'Buat pesanan lain',
-    noEmail: 'Prototipe ini belum mengirim email. Tiket hanya tampil di halaman ini.',
+    payBody: 'Pembayaran online belum diaktifkan. Untuk uji coba, tombol di bawah menandai pesanan ini lunas. Tidak ada uang yang berpindah.',
+    payGo: (t) => `Tandai lunas, ${t}`,
+    back: 'Ubah data',
+    doneTitle: 'Tiketmu sudah jadi',
+    doneLede: 'Tunjukkan kode QR di pintu masuk. Satu tiket untuk satu kursi.',
+    order: (code) => `Kode pesanan ${code}`,
+    noEmail: 'Simpan halaman ini sebagai PDF. Pengiriman tiket lewat email belum aktif.',
+    print: 'Simpan sebagai PDF',
+    another: 'Pesan lagi',
     dialogTitle: 'Batalkan pesanan ini?',
     dialogBody: 'Kursi yang kamu pilih akan dilepas dan bisa dibeli orang lain.',
     dialogYes: 'Lepas kursi',
     dialogNo: 'Lanjutkan pesanan',
-    tools: 'Alat prototipe',
+    tools: 'Alat uji',
     seed: 'Tandai 40 kursi acak sebagai terjual',
     reset: 'Hapus semua data uji',
   },
   en: {
-    kicker: 'Internal preview',
-    title: 'Harmonia 2027 Tickets',
-    lede: 'Pick seats, enter your details, pay, then receive your e-ticket.',
-    draft:
-      'Internal prototype. The seat plan and prices are drafts, and payment is simulated. No money moves.',
-    steps: ['Seats', 'Details', 'Pay', 'Ticket'],
-    stage: 'Stage',
-    mapLabel: 'Seat plan',
+    title: 'Harmonia 2027',
+    lede: 'A charity concert for the children of Indonesia. Pick your seats, pay, and your tickets are ready straight away.',
+    proof: (n) => `The 2025 edition sold ${n} tickets.`,
+    cause: "Part of every ticket sale goes to SOS Children's Villages Indonesia.",
+    when: 'Date and venue to be announced.',
+    from: (p) => `From ${p}`,
+    photoAlt: 'The full Harmonia 2025 cast on stage.',
+    photoBy: 'Photo by',
+    steps: ['Choose seats', 'Your details', 'Payment', 'Tickets'],
+    stepOf: (i, n, label) => `Step ${i} of ${n}: ${label}`,
+    qtyTitle: 'How many people?',
+    tierTitle: 'Choose a category',
+    tierHelp: 'We pick the best seats still side by side. You can change them on the plan.',
+    rows: (a, b) => (a === b ? `Row ${a}` : `Rows ${a} to ${b}`),
+    left: (n) => (n === 0 ? 'Sold out' : `${n} seats left`),
+    choose: 'Choose',
+    mapTitle: 'Seat plan',
     mapHelp: 'Use the arrow keys to move between seats, then Enter or Space to select.',
+    stage: 'Stage',
     row: 'Row',
     seat: 'seat',
+    seatWord: 'Seat',
     available: 'Available',
     selected: 'Selected',
     sold: 'Sold',
-    bestTitle: 'Pick the best seats for me',
-    bestTier: 'Category',
-    bestQty: 'How many',
-    bestGo: 'Pick seats',
     noBlock: 'There are not that many seats side by side in this category. Try fewer seats or another category.',
     summary: 'Your order',
-    none: 'No seats selected yet.',
+    none: 'No seats chosen yet.',
     total: 'Total',
-    next: 'Continue to your details',
+    noFees: 'No extra fees.',
+    holdNote: (m) => `Seats are held for ${m} minutes once you continue.`,
+    next: (t) => `Continue, ${t}`,
+    nextNone: 'Choose seats first',
+    count: (n) => (n === 1 ? '1 seat' : `${n} seats`),
     limit: (n) => `At most ${n} seats per order.`,
     taken: 'Some of those seats were just sold. The plan is updated, please choose again.',
     expired: 'Time ran out and the seats were released. Please choose again.',
-    timer: 'Seats held for',
+    timer: (clock) => `Your seats are held for another ${clock}.`,
+    detailsTitle: 'Your details',
+    detailsHelp: 'This name is printed on the tickets.',
     name: 'Full name',
     email: 'Email',
     phone: 'WhatsApp number',
@@ -100,26 +128,28 @@ const COPY = {
     errEmailBad: 'That address looks incomplete, for example: name@email.com',
     errPhone: 'Enter a WhatsApp number, for example: 081234567890',
     payTitle: 'Payment',
-    simulated: 'Simulated. No payment gateway is connected yet, so the button below only marks the order as paid.',
-    payGo: 'Simulate a successful payment',
-    back: 'Back',
-    doneTitle: 'Order recorded',
-    doneLede: 'Show this QR code at the door. One ticket per seat.',
-    order: 'Order code',
-    print: 'Print or save as PDF',
-    another: 'Place another order',
-    noEmail: 'This prototype does not send email yet. Tickets appear on this page only.',
+    payBody: 'Online payment is not switched on yet. For testing, the button below marks this order as paid. No money moves.',
+    payGo: (t) => `Mark as paid, ${t}`,
+    back: 'Edit details',
+    doneTitle: 'Your tickets are ready',
+    doneLede: 'Show the QR code at the door. One ticket per seat.',
+    order: (code) => `Order code ${code}`,
+    noEmail: 'Save this page as a PDF. Sending tickets by email is not switched on yet.',
+    print: 'Save as PDF',
+    another: 'Order again',
     dialogTitle: 'Cancel this order?',
     dialogBody: 'The seats you chose will be released and other people can buy them.',
     dialogYes: 'Release seats',
     dialogNo: 'Keep my order',
-    tools: 'Prototype tools',
+    tools: 'Test tools',
     seed: 'Mark 40 random seats as sold',
     reset: 'Clear all test data',
   },
 }
 
 const STEPS = ['seats', 'details', 'pay', 'done']
+const DEFAULT_TIER = 'middle'
+const DEFAULT_QTY = 2
 
 function tierName(tier, lang) {
   return lang === 'id' ? tier.nameId : tier.nameEn
@@ -139,11 +169,11 @@ function SeatMap({ c, lang, sold, selected, onToggle }) {
       ArrowDown: [1, 0],
     }[e.key]
     if (!delta) return
-    e.preventDefault()
     // Read the seat from the event, not from state, so a fast key press
     // straight after focusing never acts on a stale seat.
     const match = (e.target.id || '').replace('seat-', '').match(/^([A-Z]+)(\d+)$/)
     if (!match) return
+    e.preventDefault()
     const rowIndex = Math.min(
       rows.length - 1,
       Math.max(0, rows.findIndex((r) => r.label === match[1]) + delta[0]),
@@ -156,18 +186,18 @@ function SeatMap({ c, lang, sold, selected, onToggle }) {
   }
 
   return (
-    <div className="seatmap card">
+    <div className="seatmap">
       <ul className="seatmap__legend" aria-hidden="true">
         <li><span className="seat seat--sample" />{c.available}</li>
         <li><span className="seat seat--sample is-selected" />{c.selected}</li>
         <li><span className="seat seat--sample is-sold" />{c.sold}</li>
       </ul>
-      <p className="seatmap__help" id="seatmap-help">{c.mapHelp}</p>
+      <p className="tix-sr" id="seatmap-help">{c.mapHelp}</p>
       <div className="seatmap__scroll">
         <div
           className="seatmap__plan"
           role="group"
-          aria-label={c.mapLabel}
+          aria-label={c.mapTitle}
           aria-describedby="seatmap-help"
           onKeyDown={onKeyDown}
         >
@@ -180,7 +210,7 @@ function SeatMap({ c, lang, sold, selected, onToggle }) {
               <Fragment key={row.label}>
                 {startsTier && (
                   <p className="seatmap__tier">
-                    {tierName(tier, lang)}, {api.formatIDR(tier.price)}
+                    <strong>{tierName(tier, lang)}</strong> {api.formatIDR(tier.price)}
                   </p>
                 )}
                 <div className="seatmap__row">
@@ -225,14 +255,14 @@ export default function Tickets() {
   const { lang } = useLanguage()
   const c = COPY[lang]
 
-  const seatById = useMemo(
-    () => new Map(api.buildSeats(ticketing).map((s) => [s.id, s])),
-    [],
-  )
+  const allSeats = useMemo(() => api.buildSeats(ticketing), [])
+  const seatById = useMemo(() => new Map(allSeats.map((s) => [s.id, s])), [allSeats])
 
   const [step, setStep] = useState('seats')
   const [sold, setSold] = useState(() => new Set())
   const [selected, setSelected] = useState([])
+  const [tierId, setTierId] = useState(DEFAULT_TIER)
+  const [qty, setQty] = useState(DEFAULT_QTY)
   const [hold, setHold] = useState(null)
   const [now, setNow] = useState(() => Date.now())
   const [notice, setNotice] = useState('')
@@ -240,8 +270,6 @@ export default function Tickets() {
   const [errors, setErrors] = useState({})
   const [order, setOrder] = useState(null)
   const [qr, setQr] = useState({})
-  const [bestTier, setBestTier] = useState(ticketing.tiers[0].id)
-  const [bestQty, setBestQty] = useState(2)
   const dialogRef = useRef(null)
 
   async function refresh() {
@@ -250,7 +278,8 @@ export default function Tickets() {
     return availability
   }
 
-  // Pick up where the buyer left off if they reload mid-order.
+  // Resume an order in progress after a reload. Otherwise open with a
+  // sensible pair of seats already chosen, so the page never starts blank.
   useEffect(() => {
     let alive = true
     api.getAvailability().then((availability) => {
@@ -260,6 +289,8 @@ export default function Tickets() {
         setSelected(availability.hold.seatIds)
         setHold(availability.hold)
         setStep('details')
+      } else {
+        setSelected(api.pickBest(ticketing, availability.sold, DEFAULT_TIER, DEFAULT_QTY))
       }
     })
     return () => {
@@ -305,8 +336,30 @@ export default function Tickets() {
   }, [order])
 
   const total = api.orderTotal(ticketing, selected)
+  const totalText = api.formatIDR(total)
   const remaining = hold ? Math.max(0, hold.expiresAt - now) : 0
   const clock = `${Math.floor(remaining / 60000)}:${String(Math.floor((remaining % 60000) / 1000)).padStart(2, '0')}`
+  const stepIndex = STEPS.indexOf(step)
+
+  // Real counts from the inventory, so "seats left" is never invented.
+  const tiers = ticketing.tiers.map((tier) => {
+    const rows = ticketing.rows.filter((r) => r.tier === tier.id)
+    const left = allSeats.filter((s) => s.tier === tier.id && !sold.has(s.id)).length
+    return { ...tier, first: rows[0].label, last: rows[rows.length - 1].label, left }
+  })
+  const lowestPrice = Math.min(...ticketing.tiers.map((t) => t.price))
+
+  function choose(nextTier, nextQty) {
+    setTierId(nextTier)
+    setQty(nextQty)
+    const block = api.pickBest(ticketing, [...sold], nextTier, nextQty)
+    if (block.length === 0) {
+      setNotice(c.noBlock)
+      return
+    }
+    setNotice('')
+    setSelected(block)
+  }
 
   function toggle(id) {
     if (selected.includes(id)) {
@@ -320,17 +373,6 @@ export default function Tickets() {
     }
     setNotice('')
     setSelected([...selected, id])
-  }
-
-  function pickBest() {
-    const qty = Math.min(ticketing.maxSeatsPerOrder, Math.max(1, Number(bestQty) || 1))
-    const block = api.pickBest(ticketing, [...sold], bestTier, qty)
-    if (block.length === 0) {
-      setNotice(c.noBlock)
-      return
-    }
-    setNotice('')
-    setSelected(block)
   }
 
   async function continueToDetails() {
@@ -397,23 +439,28 @@ export default function Tickets() {
     window.scrollTo(0, 0)
   }
 
+  async function backToSeats() {
+    const availability = await refresh()
+    setHold(null)
+    setErrors({})
+    setOrder(null)
+    setQr({})
+    setTierId(DEFAULT_TIER)
+    setQty(DEFAULT_QTY)
+    setSelected(api.pickBest(ticketing, availability.sold, DEFAULT_TIER, DEFAULT_QTY))
+    setStep('seats')
+    window.scrollTo(0, 0)
+  }
+
   async function cancelOrder() {
     dialogRef.current?.close()
     await api.releaseHold()
-    setHold(null)
-    setSelected([])
-    setErrors({})
-    setStep('seats')
-    refresh()
+    backToSeats()
   }
 
   function startOver() {
-    setOrder(null)
-    setQr({})
-    setSelected([])
     setBuyer({ name: '', email: '', phone: '' })
-    setStep('seats')
-    window.scrollTo(0, 0)
+    backToSeats()
   }
 
   const lines = selected.map((id) => {
@@ -421,48 +468,93 @@ export default function Tickets() {
     return { id, tier: tierName(tier, lang), price: api.formatIDR(tier.price) }
   })
 
-  const orderLines = (
-    <>
-      <ul className="tix-lines">
-        {lines.map((line) => (
-          <li key={line.id}>
-            <span>
-              <strong>{line.id}</strong> {line.tier}
-            </span>
-            <span>{line.price}</span>
-          </li>
-        ))}
-      </ul>
-      <p className="tix-total">
-        <span>{c.total}</span>
-        <strong>{api.formatIDR(total)}</strong>
-      </p>
-    </>
+  const summary = (
+    <aside className="tix-summary">
+      <h2>{c.summary}</h2>
+      {selected.length === 0 ? (
+        <p className="tix-quiet">{c.none}</p>
+      ) : (
+        <>
+          <ul className="tix-lines">
+            {lines.map((line) => (
+              <li key={line.id}>
+                <span>
+                  {c.seatWord} <strong>{line.id}</strong>, {line.tier}
+                </span>
+                <span>{line.price}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="tix-total">
+            <span>{c.total}</span>
+            <strong>{totalText}</strong>
+          </p>
+          <p className="tix-quiet">{c.noFees}</p>
+        </>
+      )}
+      {step === 'seats' && (
+        <>
+          <button
+            type="button"
+            className="btn btn-primary btn-lg tix-cta"
+            disabled={selected.length === 0}
+            onClick={continueToDetails}
+          >
+            {selected.length === 0 ? c.nextNone : c.next(totalText)}
+          </button>
+          <p className="tix-quiet">{c.holdNote(ticketing.holdMinutes)}</p>
+        </>
+      )}
+      <p className="tix-cause">{c.cause}</p>
+    </aside>
   )
 
   const timer = hold && (
     <p className="tix-timer" role="timer">
-      {c.timer} <strong>{clock}</strong>
+      {c.timer(clock)}
     </p>
   )
 
   return (
-    <section className="section tix">
+    <section className={`tix${step === 'seats' ? ' tix--withbar' : ''}`}>
       <div className="container">
-        <header className="tix-head">
-          <p className="eyebrow">{c.kicker}</p>
-          <h1>{c.title}</h1>
-          <p className="tix-head__lede">{c.lede}</p>
-          {ticketing.draft && <p className="tix-draft">{c.draft}</p>}
-        </header>
+        {step === 'seats' && (
+          <header className="tix-hero">
+            <div className="tix-hero__text">
+              <h1>{c.title}</h1>
+              <p className="tix-hero__lede">{c.lede}</p>
+              <p className="tix-hero__price">{c.from(api.formatIDR(lowestPrice))}</p>
+              <p className="tix-hero__fact">{c.when}</p>
+              <p className="tix-hero__fact">
+                {c.proof(latestPastEdition.ticketsSold)} {c.cause}
+              </p>
+            </div>
+            <Figure
+              src="/photos/hero-band.jpg"
+              alt={c.photoAlt}
+              ratio="16 / 10"
+              priority
+              credit={`${c.photoBy} ${photographer}`}
+              className="tix-hero__photo"
+            />
+          </header>
+        )}
 
-        <ol className="tix-steps">
-          {c.steps.map((label, i) => (
-            <li key={label} aria-current={STEPS[i] === step ? 'step' : undefined}>
-              <span>{i + 1}</span> {label}
-            </li>
-          ))}
-        </ol>
+        {step !== 'seats' && <h1 className="tix-title">{c.title}</h1>}
+
+        <div className="tix-progress">
+          <p>{c.stepOf(stepIndex + 1, STEPS.length, c.steps[stepIndex])}</p>
+          <div
+            className="tix-progress__track"
+            role="progressbar"
+            aria-valuemin={1}
+            aria-valuemax={STEPS.length}
+            aria-valuenow={stepIndex + 1}
+            aria-label={c.stepOf(stepIndex + 1, STEPS.length, c.steps[stepIndex])}
+          >
+            <span style={{ width: `${((stepIndex + 1) / STEPS.length) * 100}%` }} />
+          </div>
+        </div>
 
         <p className="tix-notice" role="status" aria-live="polite">
           {notice}
@@ -471,61 +563,69 @@ export default function Tickets() {
         {step === 'seats' && (
           <div className="tix-grid">
             <div className="tix-main">
-              <div className="tix-best card">
-                <h2>{c.bestTitle}</h2>
-                <div className="tix-best__row">
-                  <label htmlFor="tix-best-tier">
-                    <span>{c.bestTier}</span>
-                    <select
-                      id="tix-best-tier"
-                      value={bestTier}
-                      onChange={(e) => setBestTier(e.target.value)}
+              <div className="tix-block">
+                <h2>{c.qtyTitle}</h2>
+                <div className="tix-qty">
+                  {Array.from({ length: ticketing.maxSeatsPerOrder }, (_, i) => i + 1).map((n) => (
+                    <button
+                      key={n}
+                      type="button"
+                      aria-pressed={qty === n}
+                      aria-label={c.count(n)}
+                      onClick={() => choose(tierId, n)}
                     >
-                      {ticketing.tiers.map((t) => (
-                        <option key={t.id} value={t.id}>
-                          {tierName(t, lang)}, {api.formatIDR(t.price)}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
-                  <label htmlFor="tix-best-qty">
-                    <span>{c.bestQty}</span>
-                    <input
-                      id="tix-best-qty"
-                      type="number"
-                      inputMode="numeric"
-                      min={1}
-                      max={ticketing.maxSeatsPerOrder}
-                      value={bestQty}
-                      onChange={(e) => setBestQty(e.target.value)}
-                    />
-                  </label>
-                  <button type="button" className="btn btn-ink" onClick={pickBest}>
-                    {c.bestGo}
-                  </button>
+                      {n}
+                    </button>
+                  ))}
                 </div>
               </div>
-              <SeatMap c={c} lang={lang} sold={sold} selected={selected} onToggle={toggle} />
-            </div>
 
-            <aside className="tix-summary card">
-              <h2>{c.summary}</h2>
-              {selected.length === 0 ? <p className="tix-empty">{c.none}</p> : orderLines}
-              <button
-                type="button"
-                className="btn btn-primary btn-lg"
-                disabled={selected.length === 0}
-                onClick={continueToDetails}
-              >
-                {c.next}
-              </button>
-            </aside>
+              <div className="tix-block">
+                <h2>{c.tierTitle}</h2>
+                <p className="tix-quiet">{c.tierHelp}</p>
+                <ul className="tix-tiers">
+                  {tiers.map((tier) => (
+                    <li key={tier.id} className={tier.id === tierId ? 'is-current' : undefined}>
+                      <div>
+                        <p className="tix-tiers__name">{tierName(tier, lang)}</p>
+                        <p className="tix-quiet">
+                          {c.rows(tier.first, tier.last)}
+                          {/* A count only when it is news: a full section
+                              saying "100 seats left" is noise, not urgency. */}
+                          {tier.left <= 20 && `, ${c.left(tier.left)}`}
+                        </p>
+                      </div>
+                      <p className="tix-tiers__price">{api.formatIDR(tier.price)}</p>
+                      <button
+                        type="button"
+                        className="tix-btn-quiet"
+                        disabled={tier.left === 0}
+                        aria-label={`${c.choose} ${tierName(tier, lang)}, ${api.formatIDR(tier.price)}`}
+                        onClick={() => choose(tier.id, qty)}
+                      >
+                        {c.choose}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="tix-block">
+                <h2>{c.mapTitle}</h2>
+                <SeatMap c={c} lang={lang} sold={sold} selected={selected} onToggle={toggle} />
+              </div>
+            </div>
+            {summary}
           </div>
         )}
 
         {step === 'details' && (
           <div className="tix-grid">
-            <form className="contact-form card tix-main" noValidate onSubmit={submitDetails}>
+            <form className="tix-main tix-form" noValidate onSubmit={submitDetails}>
+              <div>
+                <h2>{c.detailsTitle}</h2>
+                <p className="tix-quiet">{c.detailsHelp}</p>
+              </div>
               {timer}
               {[
                 ['name', c.name, 'text', 'name'],
@@ -544,7 +644,7 @@ export default function Tickets() {
                     aria-describedby={errors[field] ? `tix-err-${field}` : undefined}
                   />
                   {errors[field] && (
-                    <span className="field-error" id={`tix-err-${field}`}>
+                    <span className="tix-error" id={`tix-err-${field}`}>
                       {errors[field]}
                     </span>
                   )}
@@ -556,89 +656,88 @@ export default function Tickets() {
                 </button>
                 <button
                   type="button"
-                  className="btn btn-ink"
+                  className="tix-btn-quiet"
                   onClick={() => dialogRef.current?.showModal()}
                 >
                   {c.cancel}
                 </button>
               </div>
             </form>
-            <aside className="tix-summary card">
-              <h2>{c.summary}</h2>
-              {orderLines}
-            </aside>
+            {summary}
           </div>
         )}
 
         {step === 'pay' && (
           <div className="tix-grid">
-            <div className="tix-pay card tix-main">
-              {timer}
+            <div className="tix-main tix-form">
               <h2>{c.payTitle}</h2>
-              <p className="tix-draft">{c.simulated}</p>
+              {timer}
+              <p>{c.payBody}</p>
               <div className="tix-actions">
                 <button type="button" className="btn btn-primary btn-lg" onClick={pay}>
-                  {c.payGo}
+                  {c.payGo(totalText)}
                 </button>
-                <button type="button" className="btn btn-ink" onClick={() => setStep('details')}>
+                <button type="button" className="tix-btn-quiet" onClick={() => setStep('details')}>
                   {c.back}
                 </button>
                 <button
                   type="button"
-                  className="btn btn-ink"
+                  className="tix-btn-quiet"
                   onClick={() => dialogRef.current?.showModal()}
                 >
                   {c.cancel}
                 </button>
               </div>
             </div>
-            <aside className="tix-summary card">
-              <h2>{c.summary}</h2>
-              {orderLines}
-            </aside>
+            {summary}
           </div>
         )}
 
         {step === 'done' && order && (
           <div className="tix-done">
-            <h2>{c.doneTitle}</h2>
-            <p>{c.doneLede}</p>
-            <p className="tix-ordercode">
-              {c.order}: <strong>{order.code}</strong>, {c.total.toLowerCase()}{' '}
-              {api.formatIDR(order.total)}
-            </p>
+            <div>
+              <h2>{c.doneTitle}</h2>
+              <p>{c.doneLede}</p>
+              <p className="tix-quiet">
+                {c.order(order.code)}, {c.total.toLowerCase()} {api.formatIDR(order.total)}
+              </p>
+            </div>
             <div className="tix-tickets">
               {order.seats.map((s) => {
                 const tier = api.tierOf(ticketing, seatById.get(s.id).tier)
                 return (
-                  <article className="tix-ticket card" key={s.id}>
-                    <div>
-                      <p className="eyebrow">{ticketing.eventName}</p>
-                      <p className="tix-ticket__seat">{s.id}</p>
+                  <article className="tix-ticket" key={s.id}>
+                    <div className="tix-ticket__body">
+                      <p className="tix-ticket__event">{ticketing.eventName}</p>
+                      <p className="tix-ticket__seat">
+                        <span>{c.seatWord}</span> {s.id}
+                      </p>
                       <p>
                         {tierName(tier, lang)}, {api.formatIDR(s.price)}
                       </p>
                       <p>{order.buyer.name}</p>
+                    </div>
+                    <div className="tix-ticket__stub">
+                      {qr[s.id] && (
+                        <img
+                          src={qr[s.id]}
+                          width="112"
+                          height="112"
+                          alt={`QR ${c.seat} ${s.id}, ${s.ticketCode}`}
+                        />
+                      )}
                       <p className="tix-ticket__code">{s.ticketCode}</p>
                     </div>
-                    {qr[s.id] && (
-                      <img
-                        src={qr[s.id]}
-                        width="120"
-                        height="120"
-                        alt={`QR ${c.seat} ${s.id}, ${s.ticketCode}`}
-                      />
-                    )}
                   </article>
                 )
               })}
             </div>
-            <p className="tix-draft">{c.noEmail}</p>
+            <p className="tix-quiet tix-noprint">{c.noEmail}</p>
             <div className="tix-actions tix-noprint">
               <button type="button" className="btn btn-primary" onClick={() => window.print()}>
                 {c.print}
               </button>
-              <button type="button" className="btn btn-ink" onClick={startOver}>
+              <button type="button" className="tix-btn-quiet" onClick={startOver}>
                 {c.another}
               </button>
             </div>
@@ -652,7 +751,7 @@ export default function Tickets() {
             <button type="button" className="btn btn-primary" onClick={cancelOrder}>
               {c.dialogYes}
             </button>
-            <button type="button" className="btn btn-ink" onClick={() => dialogRef.current?.close()}>
+            <button type="button" className="tix-btn-quiet" onClick={() => dialogRef.current?.close()}>
               {c.dialogNo}
             </button>
           </div>
@@ -663,7 +762,7 @@ export default function Tickets() {
           <div className="tix-actions">
             <button
               type="button"
-              className="btn btn-ink"
+              className="tix-btn-quiet"
               onClick={async () => {
                 await api.seedDemoSales(ticketing, 40)
                 const availability = await refresh()
@@ -675,14 +774,10 @@ export default function Tickets() {
             </button>
             <button
               type="button"
-              className="btn btn-ink"
+              className="tix-btn-quiet"
               onClick={async () => {
                 await api.resetAll()
-                setHold(null)
-                setSelected([])
-                setOrder(null)
-                setStep('seats')
-                refresh()
+                backToSeats()
               }}
             >
               {c.reset}
@@ -690,6 +785,18 @@ export default function Tickets() {
           </div>
         </details>
       </div>
+
+      {step === 'seats' && selected.length > 0 && (
+        <div className="tix-bar tix-noprint">
+          <p>
+            <strong>{c.count(selected.length)}</strong>
+            <span>{selected.join(', ')}</span>
+          </p>
+          <button type="button" className="btn btn-primary" onClick={continueToDetails}>
+            {c.next(totalText)}
+          </button>
+        </div>
+      )}
     </section>
   )
 }
