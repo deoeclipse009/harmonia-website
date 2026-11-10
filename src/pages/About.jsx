@@ -13,7 +13,7 @@ export default function About() {
 
   return (
     <>
-      <PageHero kicker={a.kicker} title={a.title} lede={a.lede} />
+      <PageHero title={a.title} lede={a.lede} />
 
       {/* Three plates before any prose: the room, the stage, the cause. */}
       <section className="section--tight">
@@ -58,7 +58,6 @@ export default function About() {
       <section className="section--tight">
         <div className="container">
           <div className="foreword card-dark">
-            <span className="badge badge-onDark">{a.forewordEyebrow}</span>
             <h2 className="foreword__title">{a.forewordTitle}</h2>
             <div className="foreword__paras prose-serif">
               {a.forewordParas.map((para) => (
@@ -73,13 +72,12 @@ export default function About() {
       <section className="section">
         <div className="container">
           <div className="section-head">
-            <span className="eyebrow">{a.historyEyebrow}</span>
             <h2>{a.historyTitle}</h2>
           </div>
           <ol className="timeline">
             {a.history.map((item) => (
-              <li key={item.name} className="timeline__item card">
-                <span className="badge timeline__year">{item.year}</span>
+              <li key={item.name} className="timeline__item">
+                <p className="timeline__year">{item.year}</p>
                 <h3>{item.name}</h3>
                 <p>{item.desc}</p>
               </li>
@@ -93,7 +91,6 @@ export default function About() {
         <div className="container">
           <div className="family-intro">
             <div>
-              <span className="eyebrow">{a.familyEyebrow}</span>
               <h2>{a.familyTitle}</h2>
               <p>{a.familyBody}</p>
               <Link className="btn btn-primary" to="/lineup">
@@ -118,7 +115,6 @@ export default function About() {
       <section className="section" id="partners">
         <div className="container">
           <div className="section-head">
-            <span className="eyebrow">{t.sponsorsImpact.sponsorsEyebrow}</span>
             <h2>{t.sponsorsImpact.sponsorsTitle}</h2>
           </div>
         </div>
@@ -149,7 +145,6 @@ export default function About() {
         <div className="container">
           <div className="impact card-dark">
             <div className="impact__main">
-              <span className="badge badge-onDark">{t.sponsorsImpact.impactEyebrow}</span>
               <h2>{t.sponsorsImpact.impactTitle}</h2>
               <p>{t.sponsorsImpact.impactBody}</p>
               <div className="impact__facts">
@@ -187,7 +182,6 @@ export default function About() {
         <div className="container">
           <div className="partner card">
             <div>
-              <span className="eyebrow">{a.partnerEyebrow}</span>
               <h2>{a.partnerTitle}</h2>
               <p>{a.partnerBody}</p>
             </div>

@@ -19,21 +19,31 @@
 
 /* ---------- Timeline ---------- */
 
-.timeline {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--s-16);
-}
+.timeline { list-style: none; margin: 0; padding: 0; }
 
+/* A dated list, in order. Three equal boxes said nothing about sequence. */
 .timeline__item {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--s-12);
+  display: grid;
+  grid-template-columns: 160px minmax(0, 1fr);
+  column-gap: var(--s-32);
+  row-gap: var(--s-4);
+  padding: var(--s-24) 0;
+  border-top: 1px solid var(--border);
 }
+.timeline__item:last-child { border-bottom: 1px solid var(--border); }
+.timeline__item h3, .timeline__item p:not(.timeline__year) { grid-column: 2; }
 
 .timeline__year {
-  font-family: var(--font-mono);
+  grid-row: 1 / span 2;
+  font-weight: 600;
+  color: var(--obsidian);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 640px) {
+  .timeline__item { grid-template-columns: minmax(0, 1fr); }
+  .timeline__item h3, .timeline__item p:not(.timeline__year) { grid-column: 1; }
+  .timeline__year { grid-row: auto; }
 }
 
 .timeline__item h3 {
@@ -200,13 +210,11 @@
 
 .crew__total {
   font-family: var(--font-mono);
-  letter-spacing: 0.12em;
   margin-top: var(--s-40);
   padding-top: var(--s-16);
   border-top: 1px solid var(--border);
   font-size: var(--text-caption);
   font-weight: 500;
-  text-transform: uppercase;
   color: var(--ash);
 }
 
@@ -246,24 +254,11 @@
   padding: clamp(32px, 5vw, 64px);
 }
 
-.foreword::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  color: color-mix(in srgb, var(--accent) 45%, transparent);
-  background-image: radial-gradient(circle, currentColor 1.3px, transparent 1.45px);
-  background-size: 13px 13px;
-  -webkit-mask-image: radial-gradient(60% 80% at 92% 8%, #000 0%, transparent 70%);
-  mask-image: radial-gradient(60% 80% at 92% 8%, #000 0%, transparent 70%);
-}
-
 .foreword > * { position: relative; z-index: 1; }
 
 .foreword__title {
   font-size: clamp(1.9rem, 4.4vw, var(--text-heading));
   line-height: 1.1;
-  font-style: italic;
   font-weight: 500;
 }
 
@@ -413,10 +408,8 @@
 
 .impact__fact-k {
   font-family: var(--font-mono);
-  letter-spacing: 0.12em;
   font-size: var(--text-caption);
   font-weight: 500;
-  text-transform: uppercase;
   color: var(--steel);
 }
 

@@ -53,11 +53,8 @@ export default function Edition() {
       <section className="edition-hero">
         <div className="container">
           <div className="edition-hero__inner">
-            <div className="edition-hero__badges">
-              <span className="badge badge-accent">{e.kicker}</span>
-              <span className="badge">{t.home.statusPastLabel}</span>
-            </div>
             <h1>{edition.name}</h1>
+            <p className="edition-hero__status">{t.home.statusPastLabel}</p>
             <p className="edition-hero__desc">{e.description}</p>
           </div>
         </div>
@@ -96,7 +93,6 @@ export default function Edition() {
       <section className="section">
         <div className="container">
           <div className="section-head">
-            <span className="eyebrow">{e.runEyebrow}</span>
             <h2>{e.runTitle}</h2>
           </div>
 
@@ -133,7 +129,6 @@ export default function Edition() {
         <div className="container">
           <div className="edition-impact card-dark">
             <div className="edition-impact__head">
-              <span className="badge badge-onDark">{e.impactEyebrow}</span>
               <h2>{e.impactTitle}</h2>
               <p>{e.impactBody}</p>
             </div>
@@ -172,7 +167,6 @@ export default function Edition() {
         <div className="container">
           <div className="guidebook card">
             <div>
-              <span className="eyebrow">{e.guideEyebrow}</span>
               <h2>{e.guideTitle}</h2>
               <p>{e.guideBody}</p>
             </div>

@@ -155,3 +155,37 @@ Analytics still needs enabling in the Vercel dashboard before it reports.
   design system file absent from this machine
 - J security: Step 4
 - Everything under "Content needing the client" above
+
+---
+
+## Retrofit round 2, 2026-11-11: tailoring pass
+
+Branch `retrofit-tailoring`. The first audit missed tell 09: every small
+label above a heading counts, pill or not. Deo's choices at Gate R: two font
+families, plain rows instead of three-card rows, 16px and 20px corners.
+
+| Was | Now |
+|---|---|
+| Tell 09/21, 28 labels above headings on every page | removed. Three carried information and were kept as plain text: gallery role, timeline date, edition status |
+| 20 uppercase letterspaced caption rules | sentence case |
+| Craft 2, four font families | Archivo for headings, Figtree for text. Fraunces and DM Mono no longer loaded |
+| Tell 18, serif italic foreword title | upright, heading family |
+| Tell 08, history as three equal cards | dated rows with faint dividers |
+| Tell 05, accent left stripe on the lineup note | hairline top rule |
+| Tell 32, 28px and 40px card corners | 16px and 20px |
+| Dot-grid decoration in five places | removed |
+
+Checked in a real browser at 375px on home, about, edition, lineup and
+gallery: no sideways overflow, no uppercase text, two font families, no
+label above any heading, no render errors.
+
+Edition facts were already plain divided rows, so they were left alone.
+
+### Still open
+
+- Must-haves 2, 3, 6, 9, 10, 12, and 7 (the contact form still sends nothing)
+- D richness floor against the Custom / Commerce row
+- H studio design system file, absent from this machine
+- J security, Step 4
+- Copy: the hero and About lines are the organisation's own wording and
+  were not rewritten. The founder's words are still a placeholder

@@ -70,7 +70,7 @@ export default function Contact() {
 
   return (
     <>
-      <PageHero kicker={c.kicker} title={c.title} lede={c.lede} />
+      <PageHero title={c.title} lede={c.lede} />
 
       <section className="section contact-section">
         <div className="container contact-grid">
@@ -184,7 +184,6 @@ export default function Contact() {
       <section className="section faq-section">
         <div className="container">
           <div className="section-head">
-            <p className="eyebrow">{c.faqEyebrow}</p>
             <h2>{c.faqTitle}</h2>
           </div>
           <div className="faq-list">

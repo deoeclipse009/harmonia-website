@@ -7,7 +7,6 @@ export default function NotFound() {
 
   return (
     <PageHero
-      kicker="404"
       title={lang === 'id' ? 'Halaman tidak ditemukan' : 'Page not found'}
       lede={
         lang === 'id'
