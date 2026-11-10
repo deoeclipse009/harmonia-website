@@ -357,3 +357,27 @@
 @media print {
   .site-header, .site-footer, .tix-progress, .tix-noprint, .tix-notice, .skip-link, .tix-title { display: none !important; }
 }
+
+/* ---------- Additions for the real system ---------- */
+.tix-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s-12); }
+.seatmap__seats { display: flex; gap: var(--gap); flex: 1; justify-content: center; }
+.seatmap__stage { margin: 0 26px var(--s-16); }
+.tix-skeleton { height: 64px; margin-top: var(--s-12); border-radius: 12px; background: var(--subtle); }
+.tix-good { font-size: 0.875rem; font-weight: 600; color: var(--obsidian); }
+.tix-inline { display: flex; gap: var(--s-8); }
+.tix-inline input { flex: 1; min-width: 0; }
+.tix-fieldset { border: 0; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--s-12); }
+.tix-fieldset legend { font-family: var(--font-display); font-weight: 700; font-size: 1.0625rem; color: var(--obsidian); padding: 0; }
+.tix-btn-small { min-height: 36px; padding: 6px 12px; margin-left: var(--s-12); }
+a.tix-btn-quiet { text-decoration: none; }
+
+.tix-pay { display: grid; grid-template-columns: auto 1fr; gap: var(--s-8) var(--s-24); margin: 0; padding: var(--s-16) 0; border-top: 1px solid var(--cloud); border-bottom: 1px solid var(--cloud); }
+.tix-pay dt { color: var(--fog); }
+.tix-pay dd { margin: 0; color: var(--obsidian); font-variant-numeric: tabular-nums; display: flex; align-items: center; flex-wrap: wrap; }
+.tix-qris h3, .tix-proof h3 { font-family: var(--font-display); font-size: 1.0625rem; font-weight: 700; color: var(--obsidian); }
+.tix-qris img { display: block; width: min(280px, 100%); margin-top: var(--s-8); border: 1px solid var(--cloud); border-radius: 12px; }
+.tix-proof { display: flex; flex-direction: column; gap: var(--s-16); }
+.tix-proof__preview { max-width: 220px; border: 1px solid var(--cloud); border-radius: 12px; }
+.tix-form input[type='file'] { padding: var(--s-8); min-height: 0; }
+.tix-terms { margin-top: var(--s-16); color: var(--fog); white-space: pre-line; }
+.tix-terms summary { cursor: pointer; font-weight: 600; color: var(--obsidian); margin-bottom: var(--s-8); }

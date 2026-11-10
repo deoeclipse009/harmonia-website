@@ -387,3 +387,5 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .app-shell > main {
   flex: 1 0 auto;
 }
+
+.route-loading { min-height: 60vh; }

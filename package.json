@@ -8,10 +8,12 @@
     "build": "vite build",
     "lint": "oxlint",
     "preview": "vite preview",
-    "test": "node src/ticketing/api.test.mjs"
+    "test": "node server/core.test.mjs"
   },
   "dependencies": {
+    "@libsql/client": "^0.18.0",
     "@vercel/analytics": "^2.0.1",
+    "jsqr": "^1.4.0",
     "qrcode": "^1.5.4",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",

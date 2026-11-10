@@ -6,3 +6,5 @@ dist
 .env*
 shots
 graphify-out
+.data
+!.env.example

@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
-import { useEffect } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import { Analytics } from '@vercel/analytics/react'
 import { useLanguage } from './i18n/LanguageContext.jsx'
 import Header from './components/Header.jsx'
@@ -12,7 +12,11 @@ import Gallery from './pages/Gallery.jsx'
 import Merch from './pages/Merch.jsx'
 import Contact from './pages/Contact.jsx'
 import NotFound from './pages/NotFound.jsx'
-import Tickets from './pages/Tickets.jsx'
+
+// Ticketing loads on demand, so the public pages do not carry its code.
+const Tickets = lazy(() => import('./pages/Tickets.jsx'))
+const ETicket = lazy(() => import('./pages/ETicket.jsx'))
+const Panel = lazy(() => import('./pages/Panel.jsx'))
 
 const SITE = 'Harmonia'
 const ORIGIN = 'https://harmoniafest.vercel.app'
@@ -50,6 +54,10 @@ function RouteMeta() {
     let title
     if (entry) {
       title = pathname === '/' ? entry[lang] : `${entry[lang]} | ${SITE}`
+    } else if (pathname.startsWith('/e-tiket/')) {
+      title = `E-tiket | ${SITE}`
+    } else if (pathname.startsWith('/panel')) {
+      title = `Panel | ${SITE}`
     } else if (pathname.startsWith('/edition/')) {
       title = `Harmonia 2025 | ${SITE}`
     } else {
@@ -69,7 +77,7 @@ function RouteMeta() {
     link.href = `${ORIGIN}${pathname}`
 
     let robots = document.querySelector('meta[name="robots"]')
-    if (pathname === TICKETS_PREVIEW) {
+    if (pathname === TICKETS_PREVIEW || pathname.startsWith('/e-tiket/') || pathname.startsWith('/panel')) {
       if (!robots) {
         robots = document.createElement('meta')
         robots.name = 'robots'
@@ -93,6 +101,7 @@ export default function App() {
       </a>
       <Header />
       <main id="main">
+        <Suspense fallback={<div className="route-loading" aria-busy="true" />}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
@@ -106,8 +115,11 @@ export default function App() {
           <Route path="/merch" element={<Merch />} />
           <Route path="/contact" element={<Contact />} />
           <Route path={TICKETS_PREVIEW} element={<Tickets />} />
+          <Route path="/e-tiket/:token" element={<ETicket />} />
+          <Route path="/panel" element={<Panel />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        </Suspense>
       </main>
       <Footer />
       <Analytics />

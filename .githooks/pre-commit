@@ -1,5 +1,5 @@
 #!/bin/sh
 # Harmonia has no TypeScript and uses oxlint, not eslint.
 set -e
-npx oxlint src
+npx oxlint src server shared api
 npm test --silent
