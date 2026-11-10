@@ -1,0 +1,238 @@
+/* Ticketing. Seat states are told apart by fill and pattern, never by hue:
+   available is an outline, selected is solid ink, sold is grey with a
+   strike through it. */
+
+.tix-head { display: flex; flex-direction: column; gap: var(--s-12); margin-bottom: var(--s-32); }
+.tix-head h1 { font-size: clamp(2rem, 5vw, var(--text-heading)); line-height: 1.05; }
+.tix-head__lede { font-size: var(--text-body-lg); color: var(--fog); max-width: 60ch; }
+
+.tix-draft {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  line-height: 1.64;
+  color: var(--graphite, #1d1d1f);
+  background: var(--subtle);
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--r-input);
+  padding: var(--s-12) var(--s-16);
+  max-width: 72ch;
+}
+
+.tix-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-8) var(--s-24);
+  list-style: none;
+  padding: 0 0 var(--s-16);
+  margin: 0 0 var(--s-16);
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ash);
+}
+.tix-steps li[aria-current='step'] { color: var(--obsidian); font-weight: 500; }
+.tix-steps li[aria-current='step'] span { color: var(--accent); }
+
+.tix-notice { min-height: 1.6em; margin-bottom: var(--s-12); font-weight: 600; color: var(--accent-deep); }
+
+.tix-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: var(--s-24);
+  align-items: start;
+}
+.tix-main { min-width: 0; display: flex; flex-direction: column; gap: var(--s-16); }
+
+/* ---------- Best available ---------- */
+.tix-best h2, .tix-summary h2, .tix-pay h2 { font-size: var(--text-subheading); line-height: 1.2; }
+.tix-best { display: flex; flex-direction: column; gap: var(--s-12); }
+.tix-best__row { display: flex; flex-wrap: wrap; gap: var(--s-12); align-items: flex-end; }
+.tix-best label { display: flex; flex-direction: column; gap: var(--s-8); }
+.tix-best label span {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fog);
+}
+.tix-best select, .tix-best input {
+  background: var(--snow);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-input);
+  font-family: var(--font);
+  font-size: var(--text-body);
+  padding: var(--s-12) var(--s-16);
+  min-height: 46px;
+}
+.tix-best input { width: 96px; }
+
+/* ---------- Seat plan ---------- */
+.seatmap { --seat: 30px; --gap: 5px; display: flex; flex-direction: column; gap: var(--s-12); }
+
+.seatmap__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-8) var(--s-24);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: var(--text-caption);
+  color: var(--fog);
+}
+.seatmap__legend li { display: flex; align-items: center; gap: var(--s-8); }
+.seatmap__help { font-size: var(--text-caption); color: var(--ash); }
+
+.seatmap__scroll { overflow-x: auto; padding-bottom: var(--s-8); }
+.seatmap__plan { display: flex; flex-direction: column; gap: var(--gap); width: max-content; margin: 0 auto; }
+
+.seatmap__stage {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--snow);
+  background: var(--obsidian, #0a0a0a);
+  border-radius: 6px 6px 22px 22px;
+  padding: var(--s-8);
+  margin-bottom: var(--s-12);
+}
+
+.seatmap__tier {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--steel);
+  margin-top: var(--s-12);
+}
+
+.seatmap__row { display: flex; align-items: center; gap: var(--gap); }
+.seatmap__rowlabel {
+  width: 20px;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  color: var(--ash);
+  flex: none;
+}
+
+.seat {
+  flex: none;
+  width: var(--seat);
+  height: var(--seat);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: var(--snow);
+  border: 1.5px solid var(--obsidian, #0a0a0a);
+  border-radius: 8px 8px 4px 4px;
+  color: var(--obsidian, #0a0a0a);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.12s ease, transform 0.12s ease;
+}
+.seat--aisle { margin-right: 26px; }
+.seat:hover { background: var(--oat); transform: translateY(-1px); }
+
+.seat.is-selected {
+  background: var(--obsidian, #0a0a0a);
+  color: var(--snow);
+  font-weight: 500;
+}
+.seat.is-selected:hover { background: var(--obsidian, #0a0a0a); }
+
+.seat.is-sold {
+  border-color: var(--mist);
+  background:
+    linear-gradient(to top right, transparent calc(50% - 1px), var(--steel) calc(50% - 1px), var(--steel) calc(50% + 1px), transparent calc(50% + 1px)),
+    var(--cloud);
+  cursor: not-allowed;
+}
+.seat.is-sold:hover { transform: none; }
+
+.seat--sample { width: 20px; height: 20px; cursor: default; pointer-events: none; }
+
+/* ---------- Summary ---------- */
+.tix-summary {
+  position: sticky;
+  top: calc(var(--header-h) + var(--s-16));
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-16);
+}
+.tix-empty { color: var(--fog); }
+.tix-lines { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--s-8); }
+.tix-lines li { display: flex; justify-content: space-between; gap: var(--s-16); font-variant-numeric: tabular-nums; }
+.tix-lines strong { font-family: var(--font-mono); font-weight: 500; }
+.tix-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-top: var(--s-12);
+  border-top: 1px solid var(--obsidian, #0a0a0a);
+  font-variant-numeric: tabular-nums;
+}
+.tix-total strong { font-family: var(--font-display); font-size: 1.5rem; }
+.tix-summary .btn:disabled { background: var(--cloud); color: var(--ash); cursor: not-allowed; }
+
+.tix-timer {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fog);
+}
+.tix-timer strong { color: var(--accent); font-size: 1rem; font-variant-numeric: tabular-nums; }
+
+.tix-actions { display: flex; flex-wrap: wrap; gap: var(--s-12); align-items: center; }
+.contact-form .tix-actions button { margin-top: 0; }
+.tix-pay { display: flex; flex-direction: column; gap: var(--s-16); }
+
+/* ---------- Tickets ---------- */
+.tix-done { display: flex; flex-direction: column; gap: var(--s-16); }
+.tix-done h2 { font-size: var(--text-heading-sm); }
+.tix-ordercode strong { font-family: var(--font-mono); font-weight: 500; }
+.tix-tickets { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: var(--s-16); }
+.tix-ticket { display: flex; justify-content: space-between; align-items: center; gap: var(--s-16); }
+.tix-ticket__seat { font-family: var(--font-display); font-size: 2.5rem; font-weight: 700; line-height: 1; margin: var(--s-4) 0 var(--s-8); }
+.tix-ticket__code { font-family: var(--font-mono); font-size: var(--text-caption); color: var(--fog); margin-top: var(--s-8); overflow-wrap: anywhere; }
+.tix-ticket img { flex: none; }
+
+/* ---------- Dialog and tools ---------- */
+.tix-dialog {
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-card);
+  padding: var(--s-28);
+  max-width: min(440px, calc(100vw - 32px));
+  margin: auto;
+}
+.tix-dialog::backdrop { background: rgba(10, 10, 10, 0.55); }
+.tix-dialog h2 { font-size: var(--text-subheading); margin-bottom: var(--s-8); }
+.tix-dialog p { color: var(--fog); margin-bottom: var(--s-20); }
+
+.tix-tools { margin-top: var(--s-48); padding-top: var(--s-16); border-top: 1px dashed var(--border-strong); }
+.tix-tools summary { cursor: pointer; font-family: var(--font-mono); font-size: var(--text-caption); letter-spacing: 0.12em; text-transform: uppercase; color: var(--fog); margin-bottom: var(--s-12); }
+
+@media (max-width: 900px) {
+  .tix-grid { grid-template-columns: minmax(0, 1fr); }
+  /* Bigger seats for fingers. The plan scrolls sideways instead of forcing
+     a pinch-zoom. */
+  .seatmap { --seat: 38px; --gap: 6px; }
+  .seat { font-size: 0.75rem; }
+  .tix-summary { position: sticky; top: auto; bottom: 0; border-radius: var(--r-card) var(--r-card) 0 0; z-index: 5; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .seat { transition: none; }
+  .seat:hover { transform: none; }
+}
+
+@media print {
+  .site-header, .site-footer, .tix-steps, .tix-noprint, .tix-notice, .skip-link { display: none !important; }
+}

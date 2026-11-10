@@ -12,9 +12,14 @@ import Gallery from './pages/Gallery.jsx'
 import Merch from './pages/Merch.jsx'
 import Contact from './pages/Contact.jsx'
 import NotFound from './pages/NotFound.jsx'
+import Tickets from './pages/Tickets.jsx'
 
 const SITE = 'Harmonia'
 const ORIGIN = 'https://harmoniafest.vercel.app'
+
+// Unlisted while the ticketing system is being built: not in the nav, not in
+// the sitemap, and marked noindex below.
+const TICKETS_PREVIEW = '/tiket-2027-pratinjau'
 
 // One title per destination. Without this every route shares the static
 // title in index.html, so search results and a row of browser tabs all
@@ -29,6 +34,7 @@ const TITLES = {
   '/gallery': { id: 'Galeri', en: 'Gallery' },
   '/merch': { id: 'Merchandise', en: 'Merchandise' },
   '/contact': { id: 'Kontak', en: 'Contact' },
+  [TICKETS_PREVIEW]: { id: 'Tiket (pratinjau)', en: 'Tickets (preview)' },
 }
 
 function RouteMeta() {
@@ -61,6 +67,18 @@ function RouteMeta() {
       document.head.appendChild(link)
     }
     link.href = `${ORIGIN}${pathname}`
+
+    let robots = document.querySelector('meta[name="robots"]')
+    if (pathname === TICKETS_PREVIEW) {
+      if (!robots) {
+        robots = document.createElement('meta')
+        robots.name = 'robots'
+        document.head.appendChild(robots)
+      }
+      robots.content = 'noindex, nofollow'
+    } else if (robots) {
+      robots.remove()
+    }
   }, [pathname, lang])
 
   return null
@@ -87,6 +105,7 @@ export default function App() {
           <Route path="/sponsors-impact" element={<Navigate to="/about#partners" replace />} />
           <Route path="/merch" element={<Merch />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path={TICKETS_PREVIEW} element={<Tickets />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
