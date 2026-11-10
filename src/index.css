@@ -45,10 +45,10 @@
   /* --- Type --- */
   --font-display: 'Archivo', -apple-system, 'Helvetica Neue', ui-sans-serif, sans-serif;
   --font: 'Figtree', -apple-system, BlinkMacSystemFont, 'Segoe UI', ui-sans-serif, sans-serif;
-  --font-serif: 'Fraunces', Georgia, ui-serif, serif;
-  --font-mono: 'DM Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --font-serif: var(--font);
+  --font-mono: var(--font);
 
-  --text-caption: 0.75rem;
+  --text-caption: 0.8125rem;
   --text-body: 1rem;
   --text-body-lg: 1.155rem;
   --text-serif-lg: 1.28rem;
@@ -62,8 +62,8 @@
   --r-badge: 999px;
   --r-input: 14px;
   --r-button: 12px;
-  --r-card: 28px;
-  --r-card-lg: 40px;
+  --r-card: 16px;
+  --r-card-lg: 20px;
   --r-pill: 999px;
 
   /* --- Space (4px base, generous section rhythm) --- */
@@ -168,8 +168,6 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   font-size: var(--text-caption);
   font-weight: 500;
   line-height: 1.6;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
   color: var(--steel);
 }
 
@@ -201,21 +199,6 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   font-family: var(--font-mono);
   font-size: var(--text-caption);
   letter-spacing: 0.04em;
-}
-
-/* ============================================================
-   Halftone, the seal's dot motif, kept as the one decorative
-   device. Monochrome on white; crimson inside dark chambers.
-   ============================================================ */
-
-.halftone {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background-image: radial-gradient(circle, currentColor 1.3px, transparent 1.45px);
-  background-size: 13px 13px;
-  -webkit-mask-image: radial-gradient(120% 100% at 50% 0%, #000 0%, transparent 68%);
-  mask-image: radial-gradient(120% 100% at 50% 0%, #000 0%, transparent 68%);
 }
 
 /* ============================================================
@@ -308,8 +291,6 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   font-size: var(--text-caption);
   font-weight: 500;
   line-height: 1.6;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
   color: var(--steel);
 }
 

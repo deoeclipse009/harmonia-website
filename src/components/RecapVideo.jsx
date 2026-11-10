@@ -42,7 +42,6 @@ export default function RecapVideo() {
   if (!videoUrl) {
     return (
       <div className="recap recap--empty card">
-        <span className="eyebrow">{r.eyebrow}</span>
         <h2>{r.title}</h2>
         <p>{r.soon}</p>
       </div>
@@ -86,7 +85,6 @@ export default function RecapVideo() {
         />
       </div>
       <figcaption className="recap__caption">
-        <span className="eyebrow">{r.eyebrow}</span>
         <span className="recap__title">{playing ? r.playingTitle : r.title}</span>
       </figcaption>
     </figure>

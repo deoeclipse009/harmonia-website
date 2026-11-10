@@ -62,7 +62,7 @@ export default function Lineup() {
 
   return (
     <>
-      <PageHero kicker={pf.kicker} title={pf.title} lede={pf.lede} />
+      <PageHero title={pf.title} lede={pf.lede} />
 
       {/* ---------- The artists lead the page ---------- */}
       <section className="section--tight">
@@ -98,7 +98,6 @@ export default function Lineup() {
         <div className="container">
           <div className="programme card-dark">
             <div className="programme__head">
-              <span className="badge badge-onDark">{pf.programEyebrow}</span>
               <h2>{pf.programTitle}</h2>
             </div>
             <div className="table-wrap">
@@ -132,7 +131,6 @@ export default function Lineup() {
         <div className="container">
           <div className="crew-intro">
             <div>
-              <span className="eyebrow">{a.familyEyebrow}</span>
               <h2>{a.familyTitle}</h2>
               <p>{a.familyBody}</p>
             </div>

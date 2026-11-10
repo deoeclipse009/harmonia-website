@@ -20,10 +20,7 @@
 }
 
 .error-boundary__mark {
-  font-family: 'DM Mono', ui-monospace, monospace;
-  font-size: 0.75rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-weight: 700;
   color: #901e24;
   margin: 0 0 8px;
 }

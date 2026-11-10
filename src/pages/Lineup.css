@@ -42,8 +42,6 @@
 .performer__role {
   font-family: var(--font-mono);
   font-size: var(--text-caption);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
   color: var(--accent);
 }
 
@@ -69,9 +67,8 @@
 .performers__others {
   margin-top: var(--s-32);
   padding: var(--s-16) var(--s-24);
-  border-left: 3px solid var(--accent);
+  border-top: 1px solid var(--border);
   font-family: var(--font-display);
-  font-style: italic;
   font-size: 1.05rem;
   line-height: 1.6;
   color: var(--fog);
@@ -107,8 +104,6 @@
   font-family: var(--font-mono);
   font-size: var(--text-caption);
   font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
   color: var(--steel);
   padding: 0 var(--s-24) var(--s-12) 0;
   border-bottom: 1px solid rgba(250, 246, 235, 0.16);
@@ -205,8 +200,6 @@
   border-top: 1px solid var(--border);
   font-size: var(--text-caption);
   font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
   color: var(--ash);
 }
 

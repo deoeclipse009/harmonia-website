@@ -40,8 +40,6 @@
 .product__price-key {
   font-family: var(--font-mono);
   font-size: var(--text-caption);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
   color: var(--ash);
 }
 
@@ -114,3 +112,5 @@
 @media (max-width: 860px) {
   .product { grid-template-columns: 1fr; }
 }
+
+.merch-order__title { font-size: var(--text-subheading); line-height: 1.25; }

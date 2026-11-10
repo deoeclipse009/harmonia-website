@@ -94,7 +94,6 @@ export default function Home() {
               credit={`${t.home.photoCredit} ${photographer}`}
             />
             <div className="founder__body">
-              <span className="eyebrow">{t.home.founderEyebrow}</span>
               <h2>{t.home.founderTitle}</h2>
               <div className="founder__paras prose-serif">
                 {t.home.founderParas.map((para) => (
@@ -115,7 +114,6 @@ export default function Home() {
         <div className="container">
           <div className="mission card-dark">
             <div className="mission__head">
-              <span className="badge badge-onDark">{t.home.missionEyebrow}</span>
               <h2>{t.home.missionTitle}</h2>
               <p>{t.home.missionBody}</p>
               <Link className="btn btn-inverse" to="/about#partners">
@@ -135,7 +133,6 @@ export default function Home() {
       <section className="section">
         <div className="container">
           <div className="section-head">
-            <span className="eyebrow">{t.home.performersEyebrow}</span>
             <h2>{t.home.performersTitle}</h2>
           </div>
           <ol className="bill">

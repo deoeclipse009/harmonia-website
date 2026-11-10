@@ -15,7 +15,7 @@ export default function Gallery() {
 
   return (
     <>
-      <PageHero kicker={g.kicker} title={g.title} lede={g.lede}>
+      <PageHero title={g.title} lede={g.lede}>
         <p className="gallery-credit">
           {galleryCount} {lang === 'id' ? 'foto' : 'photos'} &middot; {t.home.photoCredit}{' '}
           <strong>{photographer}</strong>
@@ -35,8 +35,8 @@ export default function Gallery() {
           <div className="container">
             <div className="gallery-set__head">
               <div>
-                <span className="eyebrow">{lang === 'id' ? set.roleId : set.roleEn}</span>
                 <h2>{lang === 'en' && set.titleEn ? set.titleEn : set.title}</h2>
+                <p className="gallery-set__role">{lang === 'id' ? set.roleId : set.roleEn}</p>
               </div>
               <span className="gallery-set__count">
                 {set.photos.length} {lang === 'id' ? 'foto' : 'photos'}
@@ -64,7 +64,6 @@ export default function Gallery() {
         <div className="container">
           <div className="ig-highlights card">
             <div>
-              <span className="eyebrow">{g.highlightsEyebrow}</span>
               <h2>{g.highlightsTitle}</h2>
               <p>{g.highlightsBody}</p>
             </div>

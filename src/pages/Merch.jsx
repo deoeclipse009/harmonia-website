@@ -12,7 +12,7 @@ export default function Merch() {
 
   return (
     <>
-      <PageHero kicker={m.kicker} title={m.title} lede={m.lede} />
+      <PageHero title={m.title} lede={m.lede} />
 
       <section className="section--tight">
         <div className="container">
@@ -67,7 +67,7 @@ export default function Merch() {
         <div className="container">
           <div className="merch-order card--quiet card">
             <div>
-              <span className="eyebrow">{m.orderTitle}</span>
+              <h2 className="merch-order__title">{m.orderTitle}</h2>
               <ol className="merch-order__list">
                 {m.orderWays.map((w, i) => (
                   <li key={w}>

@@ -11,19 +11,6 @@
   padding-bottom: clamp(16px, 2.4vh, 32px);
 }
 
-/* halftone field bleeding from the top-left, the one decoration */
-.hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  color: rgba(10, 10, 10, 0.22);
-  background-image: radial-gradient(circle, currentColor 1.3px, transparent 1.45px);
-  background-size: 13px 13px;
-  -webkit-mask-image: radial-gradient(42% 52% at 2% 0%, #000 0%, transparent 72%);
-  mask-image: radial-gradient(42% 52% at 2% 0%, #000 0%, transparent 72%);
-}
-
 .hero .container { position: relative; }
 
 .hero__lead {
@@ -167,10 +154,8 @@
 
 .hero__stat-k {
   font-family: var(--font-mono);
-  letter-spacing: 0.12em;
   font-size: var(--text-caption);
   font-weight: 500;
-  text-transform: uppercase;
   color: var(--ash);
 }
 
@@ -184,18 +169,6 @@
   gap: clamp(24px, 4vw, 48px);
   align-items: center;
   padding: clamp(28px, 4vw, 48px);
-}
-
-.mission::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  color: color-mix(in srgb, var(--accent) 50%, transparent);
-  background-image: radial-gradient(circle, currentColor 1.3px, transparent 1.45px);
-  background-size: 13px 13px;
-  -webkit-mask-image: radial-gradient(55% 75% at 96% 100%, #000 0%, transparent 70%);
-  mask-image: radial-gradient(55% 75% at 96% 100%, #000 0%, transparent 70%);
 }
 
 .mission > * { position: relative; z-index: 1; }
@@ -258,8 +231,6 @@
 .bill__role {
   font-family: var(--font-mono);
   font-size: var(--text-caption);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
   color: var(--steel);
   text-align: right;
 }
@@ -320,8 +291,6 @@
 .founder__role {
   font-family: var(--font-mono);
   font-size: var(--text-caption);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
   color: var(--steel);
 }
 

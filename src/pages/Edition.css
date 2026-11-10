@@ -49,8 +49,6 @@
 .edition-facts__key {
   font-family: var(--font-mono);
   font-size: var(--text-caption);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
   color: var(--ash);
 }
 
@@ -154,8 +152,6 @@
 .run__role {
   font-family: var(--font-mono);
   font-size: var(--text-caption);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
   color: var(--steel);
 }
 
@@ -222,8 +218,6 @@
 .edition-impact__k {
   font-family: var(--font-mono);
   font-size: var(--text-caption);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
   color: var(--steel);
 }
 
@@ -270,3 +264,5 @@
   .run__item--marker { flex-direction: row; align-items: center; }
   .edition-impact__facts { grid-template-columns: 1fr; gap: var(--s-24); }
 }
+
+.edition-hero__status { font-size: var(--text-body); font-weight: 600; color: var(--fog); }
