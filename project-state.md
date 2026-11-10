@@ -1,5 +1,5 @@
-Stage: audit
-Next: Deo approves Gate 3 to publish the tailoring pass; then must-haves batch
+Stage: build-4
+Next: Deo creates Turso database and sets Vercel env vars (docs/ticketing.md), then checks seat rows in /panel
 
 # Harmonia
 
@@ -9,3 +9,6 @@ Next: Deo approves Gate 3 to publish the tailoring pass; then must-haves batch
 - Decisions: buttons 12px, cards 16/20px, header solid, Archivo + Figtree only, no labels above headings, package row Custom / Commerce.
 - Ticketing needs from Deo: real hall seat plan, real prices, then backend or payment gateway.
 - Read docs/audit-report.md for every check and what is open.
+- Ticketing: real backend built and tested locally on branch `ticketing-prototype`. Not deployed. Read docs/ticketing.md first.
+- Local panel login: user `admin`, password in `.env.local` (ADMIN_PASSWORD).
+- Local dev server for this copy: launch config `harmonia-developer`, port 5180.

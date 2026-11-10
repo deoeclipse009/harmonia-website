@@ -53,8 +53,10 @@ export function StaffOrder({ channel }) {
   const [busy, setBusy] = useState(false)
   const invitation = channel === 'invitation'
 
-  async function open(id) {
-    setDone(null)
+  // `keep` leaves the last confirmation on screen while the plan refreshes,
+  // so staff still have the link to the tickets they just issued.
+  async function open(id, keep = false) {
+    if (!keep) setDone(null)
     setSelected([])
     if (!id) {
       setSection(null)
@@ -75,7 +77,7 @@ export function StaffOrder({ channel }) {
       setNotice('')
       setSelected([])
       setBuyer({ name: '', email: '', phone: '' })
-      open(section.id)
+      open(section.id, true)
     } else {
       setNotice(res.error === 'invalid' ? 'Nama wajib diisi, dan email harus lengkap jika diisi.' : message(res))
       if (res.error === 'taken') open(section.id)
