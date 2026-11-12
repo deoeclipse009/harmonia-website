@@ -1,15 +1,19 @@
 // Run with: npm test
 // Exercises the rules against a real SQLite file, the same engine as production.
 import assert from 'node:assert/strict'
-import { mkdtempSync, rmSync } from 'node:fs'
-import { tmpdir } from 'node:os'
+import { mkdirSync, rmSync } from 'node:fs'
 import { join } from 'node:path'
 import { createClient } from '@libsql/client'
 import { migrate } from './db.js'
 import * as core from './core.js'
 import { handle } from './handler.js'
 
-const dir = mkdtempSync(join(tmpdir(), 'harmonia-test-'))
+// A fixed, git-ignored folder, wiped at the start rather than the end: on
+// Windows libSQL keeps the file open until the process exits, so it can't be
+// deleted from inside the run that used it.
+const dir = join(import.meta.dirname, '..', '.data', 'test')
+rmSync(dir, { recursive: true, force: true })
+mkdirSync(dir, { recursive: true })
 const db = createClient({ url: `file:${join(dir, 'test.db')}` })
 await migrate(db)
 
@@ -168,5 +172,4 @@ assert.equal((await call({ action: 'nope' })).status, 404)
 assert.equal(core.readSession(adminLogin.token, env.SESSION_SECRET, now + 13 * 60 * MIN), null, 'sessions end')
 
 db.close()
-rmSync(dir, { recursive: true, force: true })
 console.log('ticketing server: all checks passed')
