@@ -496,3 +496,39 @@
 @media (max-width: 520px) {
   .impact__facts { grid-template-columns: 1fr; gap: var(--s-20); }
 }
+
+/* Moved from the old Home.css when the home page was rebuilt: About still
+   uses the mission block. */
+.mission {
+  display: grid;
+  grid-template-columns: 1fr 0.85fr;
+  gap: clamp(24px, 4vw, 48px);
+  align-items: center;
+  padding: clamp(28px, 4vw, 48px);
+}
+
+.mission > * { position: relative; z-index: 1; }
+
+.mission__head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-16);
+}
+
+.mission__head h2 {
+  font-size: clamp(1.9rem, 4vw, var(--text-heading));
+  line-height: 1.05;
+  max-width: 14ch;
+}
+
+.mission__head p {
+  font-size: var(--text-body-lg);
+  line-height: 1.55;
+  color: var(--mist);
+}
+
+.mission__fig { border-color: rgba(255, 255, 255, 0.12); }
+@media (max-width: 900px) {
+  .mission { grid-template-columns: 1fr; }
+}

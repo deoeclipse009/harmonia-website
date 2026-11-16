@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import { useLanguage } from '../i18n/LanguageContext.jsx'
 import { activeEdition } from '../data/editions.js'
 import SealLogo from './SealLogo.jsx'
@@ -7,8 +7,12 @@ import './Header.css'
 
 const isUpcoming = activeEdition.status === 'upcoming'
 
+// Pages drawn on the dark stage background get the dark header.
+const DARK_PAGES = new Set(['/'])
+
 export default function Header() {
   const { lang, toggleLang, t } = useLanguage()
+  const { pathname } = useLocation()
   const [open, setOpen] = useState(false)
 
   const nav = t.common.nav
@@ -69,7 +73,7 @@ export default function Header() {
   }, [open])
 
   return (
-    <header className="site-header">
+    <header className={`site-header${DARK_PAGES.has(pathname) ? ' site-header--dark' : ''}`}>
       <div className="container site-header__inner">
         <NavLink to="/" className="brand" aria-label="Harmonia" onClick={close}>
           <SealLogo size={34} />

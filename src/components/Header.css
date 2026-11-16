@@ -161,3 +161,19 @@
   .main-nav a.active { background: var(--subtle); }
   .main-nav a:hover { background: var(--subtle); }
 }
+
+/* Dark header for pages on the dark stage background. Re-maps the tokens
+   the header already uses, so every part follows without its own rule. */
+.site-header--dark {
+  --paper: #150608;
+  --snow: #22090d;
+  --subtle: #2c0d12;
+  --obsidian: #f3ebe4;
+  --iron: rgba(243, 235, 228, 0.72);
+  --ash: rgba(243, 235, 228, 0.45);
+  --mist: rgba(243, 235, 228, 0.18);
+  --cloud: rgba(243, 235, 228, 0.1);
+  --border: rgba(243, 235, 228, 0.12);
+  color: #f3ebe4;
+}
+.site-header--dark .brand__word { color: #f3ebe4; }

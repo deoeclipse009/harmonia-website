@@ -1,5 +1,5 @@
-Stage: build-4
-Next: Jorge tries the scanner on a phone (`npm run dev:phone`); Deo creates Turso database and sets Vercel env vars (docs/ticketing.md), then checks seat rows and sends the real hall plan
+Stage: build-1
+Next: Gate 2 for phase 1 (home page in Blend). On OK: commit, then phase 2 rolls the dark look out to About, Edition, Lineup, Gallery, Merch, Contact, 404 (tickets and panel stay light)
 
 # Harmonia
 
