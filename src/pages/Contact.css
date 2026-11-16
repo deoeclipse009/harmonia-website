@@ -115,7 +115,7 @@
 }
 
 .contact-aside a:hover {
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
 /* ---------- FAQ ---------- */
@@ -152,7 +152,7 @@
   flex: none;
   width: 18px;
   font-family: var(--font-mono);
-  color: var(--accent);
+  color: var(--accent-text);
   line-height: 1.5;
 }
 
@@ -199,7 +199,7 @@
 .person__role {
   font-family: var(--font-mono);
   font-size: var(--text-caption);
-  color: var(--accent);
+  color: var(--accent-text);
   margin-top: var(--s-4);
 }
 

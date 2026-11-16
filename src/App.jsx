@@ -76,8 +76,13 @@ function RouteMeta() {
     }
     link.href = `${ORIGIN}${pathname}`
 
+    // The ticket flow and the panel stay light (forms and seat maps read
+    // better there); every other page sits on the dark stage.
+    const working = pathname === TICKETS_PREVIEW || pathname.startsWith('/e-tiket/') || pathname.startsWith('/panel')
+    document.documentElement.classList.toggle('theme-stage', !working)
+
     let robots = document.querySelector('meta[name="robots"]')
-    if (pathname === TICKETS_PREVIEW || pathname.startsWith('/e-tiket/') || pathname.startsWith('/panel')) {
+    if (working) {
       if (!robots) {
         robots = document.createElement('meta')
         robots.name = 'robots'

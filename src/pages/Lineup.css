@@ -42,7 +42,7 @@
 .performer__role {
   font-family: var(--font-mono);
   font-size: var(--text-caption);
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
 .performer__note {
@@ -302,8 +302,8 @@
   transition: color 0.16s ease;
 }
 
-.performer__members li a:hover .performer__member-name { color: var(--accent); }
-.performer__members li a:hover .performer__member-ig { color: var(--accent); }
+.performer__members li a:hover .performer__member-name { color: var(--accent-text); }
+.performer__members li a:hover .performer__member-ig { color: var(--accent-text); }
 
 .performer__member-name {
   font-size: var(--text-caption);

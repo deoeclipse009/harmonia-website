@@ -1,5 +1,5 @@
-Stage: build-1
-Next: Gate 2 for phase 1 (home page in Blend). On OK: commit, then phase 2 rolls the dark look out to About, Edition, Lineup, Gallery, Merch, Contact, 404 (tickets and panel stay light)
+Stage: build-2
+Next: Gate 2 for phase 2 (stage theme on every page but tickets and panel). On OK: commit, then the audit (docs/audit-report.md re-run, Lighthouse) before any deploy
 
 # Harmonia
 

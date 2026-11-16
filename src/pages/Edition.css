@@ -64,10 +64,10 @@
   margin-top: var(--s-4);
   font-family: var(--font-mono);
   font-size: var(--text-caption);
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
-.edition-facts__link:hover { color: var(--accent-deep); }
+.edition-facts__link:hover { color: var(--accent-text); }
 
 /* ============================================================
    Run of show. A single rule runs down the left; the two time
@@ -118,7 +118,7 @@
   font-size: var(--text-caption);
   font-weight: 500;
   letter-spacing: 0.08em;
-  color: var(--accent);
+  color: var(--accent-text);
   min-width: 64px;
 }
 

@@ -30,6 +30,7 @@
   --accent-deep: #72161b;
   --accent-ink: #ffffff;
   --accent-wash: #f7ecec;
+  --accent-text: var(--accent);   /* accent used as text; blush on the dark stage */
 
   /* --- Surfaces --- */
   --surface-canvas: var(--paper);
@@ -294,7 +295,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   color: var(--steel);
 }
 
-.badge-accent { color: var(--accent); }
+.badge-accent { color: var(--accent-text); }
 
 .badge-filled { color: var(--obsidian); }
 
@@ -389,3 +390,48 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 }
 
 .route-loading { min-height: 60vh; }
+
+/* ============================================================
+   Stage theme (docs/design-decisions.md, Blend). Every page except the
+   ticket flow and the panel. App.jsx sets the class on <html>; the
+   tokens are re-mapped here so existing components follow without
+   their own dark rules. Ink becomes the warm cream, surfaces become
+   maroon-black, hairlines become translucent cream.
+   ============================================================ */
+html.theme-stage {
+  --obsidian: #f3ebe4;
+  --graphite: #e9dfd8;
+  --slate: #3a1418;
+  --iron: rgba(243, 235, 228, 0.78);
+  --steel: rgba(243, 235, 228, 0.62);
+  --fog: rgba(243, 235, 228, 0.62);
+  --ash: rgba(243, 235, 228, 0.45);
+  --mist: rgba(243, 235, 228, 0.2);
+  --cloud: rgba(243, 235, 228, 0.1);
+  --paper: #150608;
+  --snow: #22090d;
+  --subtle: #1c070a;
+  --oat: #2c0d12;
+  --accent-wash: #3a1015;
+  --accent-text: #e8a3a7;
+  --surface-dark: #22090d;
+  --surface-dark-2: #2c0d12;
+  --r-card: 20px;
+  --r-card-lg: 24px;
+  background: #150608;
+  color-scheme: dark;
+}
+/* Already-dark blocks used --snow and --mist as their light text. */
+html.theme-stage .card-dark,
+html.theme-stage .site-footer {
+  --snow: #f3ebe4;
+  --mist: rgba(243, 235, 228, 0.75);
+}
+html.theme-stage .card-dark { border-color: rgba(243, 235, 228, 0.08); }
+html.theme-stage .site-footer { background: #000; }
+/* Photos get the softer stage corners. */
+html.theme-stage .fig,
+html.theme-stage .fig img { border-radius: 16px; }
+html.theme-stage .recap__stage { background: #000; }
+html.theme-stage .carousel__arrow { background: rgba(34, 9, 13, 0.88); }
+html.theme-stage .carousel__arrow:hover { background: #2c0d12; }
