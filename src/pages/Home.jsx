@@ -87,10 +87,10 @@ export default function Home() {
             {id ? 'Edisi berikutnya sedang disiapkan. Tanggal diumumkan segera.' : 'The next edition is in the works. Date announced soon.'}
           </p>
           <div className="home-hero__actions">
-            <Link className="home-btn home-btn--main" to={`/edition/${ed.slug}`}>
-              {relive} <span aria-hidden="true">→</span>
+            <Link className="home-btn home-btn--main" to="/tiket">
+              {t.common.tickets} <span aria-hidden="true">→</span>
             </Link>
-            <Link className="home-btn home-btn--line" to="/about">{id ? 'Tentang Harmonia' : 'About Harmonia'}</Link>
+            <Link className="home-btn home-btn--line" to={`/edition/${ed.slug}`}>{relive}</Link>
           </div>
         </div>
       </section>
@@ -225,8 +225,8 @@ export default function Home() {
       <section className="home-close">
         <div className="container">
           <h2>{id ? 'Sampai jumpa di 2027.' : 'See you in 2027.'}</h2>
-          <Link className="home-btn home-btn--main" to={`/edition/${ed.slug}`}>
-            {relive} <span aria-hidden="true">→</span>
+          <Link className="home-btn home-btn--main" to="/tiket">
+            {t.common.tickets} <span aria-hidden="true">→</span>
           </Link>
         </div>
       </section>

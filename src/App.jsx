@@ -23,7 +23,7 @@ const ORIGIN = 'https://harmoniafest.vercel.app'
 
 // Unlisted while the ticketing system is being built: not in the nav, not in
 // the sitemap, and marked noindex below.
-const TICKETS_PREVIEW = '/tiket-2027-pratinjau'
+const TICKETS = '/tiket'
 
 // One title per destination. Without this every route shares the static
 // title in index.html, so search results and a row of browser tabs all
@@ -38,7 +38,7 @@ const TITLES = {
   '/gallery': { id: 'Galeri', en: 'Gallery' },
   '/merch': { id: 'Merchandise', en: 'Merchandise' },
   '/contact': { id: 'Kontak', en: 'Contact' },
-  [TICKETS_PREVIEW]: { id: 'Tiket (pratinjau)', en: 'Tickets (preview)' },
+  [TICKETS]: { id: 'Beli Tiket', en: 'Buy Tickets' },
 }
 
 function RouteMeta() {
@@ -78,11 +78,13 @@ function RouteMeta() {
 
     // The ticket flow and the panel stay light (forms and seat maps read
     // better there); every other page sits on the dark stage.
-    const working = pathname === TICKETS_PREVIEW || pathname.startsWith('/e-tiket/') || pathname.startsWith('/panel')
+    const working = pathname === TICKETS || pathname.startsWith('/e-tiket/') || pathname.startsWith('/panel')
     document.documentElement.classList.toggle('theme-stage', !working)
 
+    // Personal e-tickets and the organiser panel stay out of search.
+    const hidden = pathname.startsWith('/e-tiket/') || pathname.startsWith('/panel')
     let robots = document.querySelector('meta[name="robots"]')
-    if (working) {
+    if (hidden) {
       if (!robots) {
         robots = document.createElement('meta')
         robots.name = 'robots'
@@ -119,7 +121,8 @@ export default function App() {
           <Route path="/sponsors-impact" element={<Navigate to="/about#partners" replace />} />
           <Route path="/merch" element={<Merch />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path={TICKETS_PREVIEW} element={<Tickets />} />
+          <Route path={TICKETS} element={<Tickets />} />
+          <Route path="/tiket-2027-pratinjau" element={<Navigate to={TICKETS} replace />} />
           <Route path="/e-tiket/:token" element={<ETicket />} />
           <Route path="/panel" element={<Panel />} />
           <Route path="*" element={<NotFound />} />

@@ -1,11 +1,9 @@
 import { useState, useEffect, useRef } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useLanguage } from '../i18n/LanguageContext.jsx'
-import { activeEdition } from '../data/editions.js'
 import SealLogo from './SealLogo.jsx'
 import './Header.css'
 
-const isUpcoming = activeEdition.status === 'upcoming'
 
 
 export default function Header() {
@@ -22,6 +20,8 @@ export default function Header() {
     { to: '/edition/harmonia-2025', label: nav.edition },
     { to: '/lineup', label: nav.lineup },
     { to: '/gallery', label: nav.gallery },
+    // On phones the header button is hidden, so tickets sit in the menu.
+    { to: '/tiket', label: t.common.tickets, phoneOnly: true },
   ]
 
   const close = () => setOpen(false)
@@ -85,7 +85,7 @@ export default function Header() {
         >
           <ul>
             {links.map((l) => (
-              <li key={l.to}>
+              <li key={l.to} className={l.phoneOnly ? 'main-nav__phone' : undefined}>
                 <NavLink to={l.to} end={l.to === '/'} onClick={close}>
                   {l.label}
                 </NavLink>
@@ -106,24 +106,9 @@ export default function Header() {
             <span className={lang === 'en' ? 'is-active' : ''}>EN</span>
           </button>
 
-          {isUpcoming ? (
-            <a
-              className="btn btn-accent header-cta"
-              href={activeEdition.ticketUrl}
-              target="_blank"
-              rel="noreferrer"
-            >
-              {t.common.tickets}
-            </a>
-          ) : (
-            <NavLink
-              to={`/edition/${activeEdition.slug}`}
-              className="btn btn-accent header-cta"
-              onClick={close}
-            >
-              {t.common.recap}
-            </NavLink>
-          )}
+          <NavLink to="/tiket" className="btn btn-accent header-cta" onClick={close}>
+            {t.common.tickets}
+          </NavLink>
 
           <button
             ref={toggleRef}

@@ -161,3 +161,7 @@
   .main-nav a.active { background: var(--subtle); }
   .main-nav a:hover { background: var(--subtle); }
 }
+
+@media (min-width: 901px) {
+  .main-nav__phone { display: none; }
+}

@@ -5,7 +5,7 @@ import { useLanguage } from '../i18n/LanguageContext.jsx'
 import { call, clock, formatIDR, serverNow, shrinkImage } from '../ticketing/client.js'
 import './Tickets.css'
 
-const BUY_PATH = '/tiket-2027-pratinjau'
+const BUY_PATH = '/tiket'
 
 const COPY = {
   id: {
