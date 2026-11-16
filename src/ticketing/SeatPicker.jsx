@@ -3,8 +3,9 @@ import { ROW_LETTERS } from '../../shared/seats.js'
 
 // Seat plan for one section. States differ by fill and pattern, never by
 // hue: available is an outline, selected is solid ink, unavailable is grey
-// with a strike through it.
-export default function SeatPicker({ rows, blocked = [], taken = [], selected, onToggle, labels, allowBlocked = false }) {
+// with a strike through it. `side` lines the rows up the way the section
+// sits in the hall: side sections hug the centre aisle.
+export default function SeatPicker({ rows, blocked = [], taken = [], selected, onToggle, labels, allowBlocked = false, side = 'center' }) {
   const [focusId, setFocusId] = useState('A1')
   const off = new Set([...taken, ...(allowBlocked ? [] : blocked)])
 
@@ -31,7 +32,7 @@ export default function SeatPicker({ rows, blocked = [], taken = [], selected, o
       </ul>
       <p className="tix-sr" id="seatmap-help">{labels.help}</p>
       <div className="seatmap__scroll">
-        <div className="seatmap__plan" role="group" aria-label={labels.title} aria-describedby="seatmap-help" onKeyDown={onKeyDown}>
+        <div className={`seatmap__plan seatmap__plan--${side}`} role="group" aria-label={labels.title} aria-describedby="seatmap-help" onKeyDown={onKeyDown}>
           <div className="seatmap__stage">{labels.stage}</div>
           {rows.map((count, r) => (
             <div className="seatmap__row" key={ROW_LETTERS[r]}>

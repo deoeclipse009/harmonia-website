@@ -111,6 +111,7 @@ function publicCategory(cat, taken, now) {
     price: cat.price,
     maxPerOrder: cat.max_per_order,
     description: cat.description,
+    rows: cat.rows,
     saleStart: cat.sale_start,
     saleEnd: cat.sale_end,
     total,

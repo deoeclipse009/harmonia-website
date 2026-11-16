@@ -197,6 +197,90 @@
 .seat.is-sold:hover { transform: none; }
 .seat--sample { width: 20px; height: 20px; cursor: default; pointer-events: none; }
 
+/* Rows sit the way the section sits in the hall: side sections hug the
+   centre aisle, centre sections are centred. */
+.seatmap__seats { display: flex; gap: var(--gap); flex: 1; }
+.seatmap__plan--center .seatmap__seats { justify-content: center; }
+.seatmap__plan--left .seatmap__seats { justify-content: flex-end; }
+.seatmap__plan--right .seatmap__seats { justify-content: flex-start; }
+
+/* ---------- Hall map: every section in its place ---------- */
+.hall {
+  --dot: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-12);
+  background: var(--subtle);
+  border-radius: 20px;
+  padding: var(--s-20);
+  margin-bottom: var(--s-24);
+}
+.hall__stage {
+  margin: 0 12% var(--s-8);
+  text-align: center;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--fog);
+  border: 1px solid var(--border-strong);
+  border-bottom: none;
+  background: var(--snow);
+  border-radius: 12px 12px 0 0;
+  padding: var(--s-8);
+}
+.hall__tier {
+  display: grid;
+  grid-template-columns: 1fr 1.25fr 1fr;
+  gap: var(--s-8);
+  align-items: end;
+}
+/* The balcony is its own floor: a line above it says so without a label. */
+.hall__tier--pp2 { border-top: 1px dashed var(--border-strong); padding-top: var(--s-12); }
+.hall__side { display: flex; flex-direction: column; gap: var(--s-8); min-width: 0; }
+
+.hall__block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 44px;
+  padding: 10px;
+  background: var(--snow);
+  border: 1.5px solid var(--obsidian);
+  border-radius: 12px;
+  color: var(--obsidian);
+  font-family: var(--font);
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.12s ease, transform 0.12s ease;
+}
+.hall__block:hover { background: var(--oat); transform: translateY(-1px); }
+.hall__block:focus-visible { outline: 2px solid var(--obsidian); outline-offset: 2px; }
+.hall__block.is-closed { border-color: var(--mist); background: var(--cloud); color: var(--steel); cursor: not-allowed; transform: none; }
+
+/* Each row of seats drawn as dots, so the block has the section's shape. */
+.hall__rows { display: flex; flex-direction: column; gap: 2px; overflow: hidden; }
+.hall__row {
+  height: var(--dot);
+  width: min(100%, calc(var(--n) * (var(--dot) + 2px)));
+  background: radial-gradient(circle, currentColor 45%, transparent 50%) 0 0 / calc(var(--dot) + 2px) var(--dot) repeat-x;
+  opacity: 0.55;
+}
+.hall__block--center .hall__rows { align-items: center; }
+.hall__block--left .hall__rows { align-items: flex-end; }
+.hall__block--right .hall__rows { align-items: flex-start; }
+
+.hall__name { font-size: 0.8125rem; font-weight: 700; line-height: 1.2; overflow-wrap: anywhere; }
+.hall__meta { display: flex; flex-direction: column; font-size: 0.75rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.hall__note { font-weight: 500; color: var(--fog); }
+.hall__block.is-closed .hall__note { color: var(--steel); }
+.hall__note-foot { margin: 0; font-size: 0.8125rem; }
+
+@media (max-width: 560px) {
+  .hall { --dot: 3px; padding: var(--s-12); }
+  .hall__tier { gap: 6px; grid-template-columns: 1fr 1.15fr 1fr; }
+  .hall__block { padding: 8px 6px; }
+  .hall__name { font-size: 0.75rem; }
+}
+
 /* ---------- Order summary: the one framed surface on the page ---------- */
 .tix-summary {
   position: sticky;
@@ -360,7 +444,6 @@
 
 /* ---------- Additions for the real system ---------- */
 .tix-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s-12); }
-.seatmap__seats { display: flex; gap: var(--gap); flex: 1; justify-content: center; }
 .seatmap__stage { margin: 0 26px var(--s-16); }
 .tix-skeleton { height: 64px; margin-top: var(--s-12); border-radius: 12px; background: var(--subtle); }
 .tix-good { font-size: 0.875rem; font-weight: 600; color: var(--obsidian); }

@@ -5,6 +5,8 @@ import { latestPastEdition } from '../data/editions.js'
 import { photographer } from '../data/gallery.js'
 import Figure from '../components/Figure.jsx'
 import SeatPicker from '../ticketing/SeatPicker.jsx'
+import HallMap from '../ticketing/HallMap.jsx'
+import { sideOf } from '../../shared/hall.js'
 import { call, clock, draftToken, formatIDR, serverNow } from '../ticketing/client.js'
 import './Tickets.css'
 
@@ -20,6 +22,9 @@ const COPY = {
     steps: ['Pilih kategori', 'Pilih kursi', 'Data pemesan'],
     stepOf: (i, n, label) => `Langkah ${i} dari ${n}: ${label}`,
     catTitle: 'Kategori tiket',
+    mapTitle: 'Pilih bagian di denah',
+    mapNote: 'Denah perkiraan dari poster 2025. Ketuk satu bagian untuk melihat kursinya.',
+    listTitle: 'Atau pilih dari daftar',
     status: { not_started: 'Belum dibuka', sold_out: 'Habis', ended: 'Penjualan berakhir' },
     left: (n) => `Sisa ${n} kursi`,
     choose: 'Pilih kursi',
@@ -86,6 +91,9 @@ const COPY = {
     steps: ['Choose a category', 'Choose seats', 'Your details'],
     stepOf: (i, n, label) => `Step ${i} of ${n}: ${label}`,
     catTitle: 'Ticket categories',
+    mapTitle: 'Pick a section on the plan',
+    mapNote: 'Approximate plan, based on the 2025 poster. Tap a section to see its seats.',
+    listTitle: 'Or choose from the list',
     status: { not_started: 'Not open yet', sold_out: 'Sold out', ended: 'Sales ended' },
     left: (n) => `${n} seats left`,
     choose: 'Choose seats',
@@ -421,7 +429,15 @@ export default function Tickets() {
 
         {step === 'category' && (
           <div className="tix-block">
-            <h2>{c.catTitle}</h2>
+            <h2>{c.mapTitle}</h2>
+            <HallMap
+              sections={categories}
+              onOpen={openCategory}
+              disabled={busy}
+              formatPrice={formatIDR}
+              labels={{ stage: c.seat.stage, status: c.status, left: c.left, mapNote: c.mapNote }}
+            />
+            <h2>{c.listTitle}</h2>
             <ul className="tix-tiers">
               {categories.map((cat) => (
                 <li key={cat.id}>
@@ -471,6 +487,7 @@ export default function Tickets() {
                   selected={selected}
                   onToggle={toggle}
                   labels={c.seat}
+                  side={sideOf(section.name)}
                 />
               </div>
             </div>

@@ -8,7 +8,8 @@ import { message, time } from './util.js'
 export default function Scanner() {
   const videoRef = useRef(null)
   const lastRef = useRef({ code: '', at: 0 })
-  const [camera, setCamera] = useState('off') // off | on | blocked
+  // Browsers only give the camera to https pages (and localhost).
+  const [camera, setCamera] = useState(window.isSecureContext ? 'off' : 'insecure') // off | on | blocked | insecure
   const [result, setResult] = useState(null)
   const [manual, setManual] = useState('')
   const [stats, setStats] = useState(null)
@@ -20,6 +21,8 @@ export default function Scanner() {
 
   async function check(code) {
     const res = await call('panel.checkin', { code })
+    // A short buzz for yes, a long one for no, so staff need not look down.
+    navigator.vibrate?.(res.ok ? 80 : [250, 80, 250])
     if (res.ok) setResult({ kind: 'ok', ...res })
     else if (res.error === 'ticket_used') setResult({ kind: 'used', ...res })
     else if (res.error === 'ticket_not_valid') setResult({ kind: 'bad', ...res, text: 'Pesanan tiket ini belum lunas atau sudah dibatalkan.' })
@@ -130,11 +133,14 @@ export default function Scanner() {
 
       {camera === 'on' && <video ref={videoRef} className="scan-video" muted playsInline aria-label="Tampilan kamera" />}
       {camera === 'blocked' && <p className="tix-error">Kamera tidak bisa dibuka. Izinkan akses kamera di browser, atau ketik kode tiket di bawah.</p>}
-      <div className="tix-actions">
-        <button type="button" className="btn btn-primary btn-lg" onClick={() => setCamera(camera === 'on' ? 'off' : 'on')}>
-          {camera === 'on' ? 'Matikan kamera' : 'Nyalakan kamera'}
-        </button>
-      </div>
+      {camera === 'insecure' && <p className="tix-error">Kamera hanya bisa dipakai lewat alamat https. Buka panel dari alamat https, atau ketik kode tiket di bawah.</p>}
+      {camera !== 'insecure' && (
+        <div className="tix-actions">
+          <button type="button" className="btn btn-primary btn-lg" onClick={() => setCamera(camera === 'on' ? 'off' : 'on')}>
+            {camera === 'on' ? 'Matikan kamera' : 'Nyalakan kamera'}
+          </button>
+        </div>
+      )}
 
       <form
         className="tix-form"

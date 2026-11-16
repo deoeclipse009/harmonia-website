@@ -1,5 +1,5 @@
 Stage: build-4
-Next: Deo creates Turso database and sets Vercel env vars (docs/ticketing.md), then checks seat rows in /panel
+Next: Jorge tries the scanner on a phone (`npm run dev:phone`); Deo creates Turso database and sets Vercel env vars (docs/ticketing.md), then checks seat rows and sends the real hall plan
 
 # Harmonia
 
@@ -11,4 +11,5 @@ Next: Deo creates Turso database and sets Vercel env vars (docs/ticketing.md), t
 - Read docs/audit-report.md for every check and what is open.
 - Ticketing: real backend built and tested locally on branch `ticketing-prototype`. Not deployed. Read docs/ticketing.md first.
 - Local panel login: user `admin`, password in `.env.local` (ADMIN_PASSWORD).
-- Local dev server for this copy: launch config `harmonia-developer`, port 5180.
+- Local dev server for this copy: launch config `harmonia-developer`, port 5180. Phone/camera testing: `harmonia-phone`, https on port 5443.
+- graphify is on: hooks in .claude/settings.json and .githooks; run `graphify update .` after code changes.

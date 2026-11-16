@@ -1,5 +1,6 @@
 import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
+import basicSsl from '@vitejs/plugin-basic-ssl'
 
 // Serves POST /api/tix from the same handler the Vercel function uses, so
 // the ticketing backend runs under `npm run dev` with no extra process.
@@ -41,10 +42,13 @@ function tixApi(env) {
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => ({
-  plugins: [react(), tixApi(loadEnv(mode, process.cwd(), ''))],
+  // `npm run dev:phone` adds a self-signed certificate. Phone browsers only
+  // open the camera on https, so the door scanner needs this to be tried on
+  // a real phone over Wi-Fi. The phone shows a certificate warning once.
+  plugins: [react(), tixApi(loadEnv(mode, process.cwd(), '')), ...(mode === 'phone' ? [basicSsl()] : [])],
   server: {
     // Listen on every interface so phones and tablets on the same Wi-Fi
-    // can reach the dev server at http://<your-mac-ip>:5173
+    // can reach the dev server at the Network address Vite prints.
     host: true,
   },
 }))
