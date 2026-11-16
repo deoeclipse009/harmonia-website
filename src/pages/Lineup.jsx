@@ -1,49 +1,52 @@
 import { useLanguage } from '../i18n/LanguageContext.jsx'
 import { performers, program } from '../data/performers.js'
-import { getPerformerPhoto } from '../data/performerPhotos.js'
 import { team, teamCount } from '../data/team.js'
-import { getTeamPhoto } from '../data/teamPhotos.js'
 import { photographer } from '../data/gallery.js'
 import PageHero from '../components/PageHero.jsx'
 import Figure from '../components/Figure.jsx'
-import Avatar from '../components/Avatar.jsx'
 import './Lineup.css'
 
 const DIVISION_ORDER = ['lead', 'stage', 'ops', 'creative']
 
-function PerformerCard({ p, lang }) {
+// Each performer shown with a photo from their own act on the 2025 stage
+// (public/photos/performances). The four-hands pair share their act.
+const STAGE_PHOTO = {
+  'adi-utarini': 'adi-utarini-0155.jpg',
+  'muhammad-khidir': 'adi-utarini-0160.jpg',
+  'gregorius-wikan-herdwiyogatama': 'wikan-jorge-0285.jpg',
+  'jodi-visnu': 'jodi-jorge-0190.jpg',
+  'jorge-amadeo-benavides': 'jorge-0250.jpg',
+  'felice-voce': 'felice-voce-0309.jpg',
+  'psm-ugm': 'psm-ugm-0390.jpg',
+  syncro5: 'syncro5-0411.jpg',
+}
+
+function Performer({ p, id, wide }) {
+  const photo = STAGE_PHOTO[p.id]
   return (
-    <article className="performer">
-      <Avatar src={getPerformerPhoto(p.id)} name={p.name} />
-      <div className="performer__body">
-        <h3>{p.name}</h3>
-        <p className="performer__role">{lang === 'id' ? p.roleId : p.roleEn}</p>
-        {(p.noteId || p.noteEn) && (
-          <p className="performer__note">{lang === 'id' ? p.noteId : p.noteEn}</p>
-        )}
+    <article className={`lu-act${wide ? ' lu-act--wide' : ''}`}>
+      <Figure src={photo ? `/photos/performances/${photo}` : null} alt={p.name} ratio={wide ? '16 / 10' : '4 / 5'} />
+      <div className="lu-act__text">
+        <h3 className="lu-act__name">{p.name}</h3>
+        <p className="lu-act__role">{id ? p.roleId : p.roleEn}</p>
+        {(p.noteId || p.noteEn) && <p className="lu-act__note">{id ? p.noteId : p.noteEn}</p>}
         {p.members && (
-          <ul className="performer__members">
+          <ul className="lu-act__members">
             {p.members.map((m) => (
               <li key={m.name}>
                 {m.instagram ? (
                   <a href={`https://instagram.com/${m.instagram}`} target="_blank" rel="noreferrer">
-                    <span className="performer__member-name">{m.name}</span>
-                    <span className="performer__member-ig">@{m.instagram}</span>
+                    {m.name}
                   </a>
                 ) : (
-                  <span className="performer__member-name">{m.name}</span>
+                  m.name
                 )}
               </li>
             ))}
           </ul>
         )}
         {p.instagram && (
-          <a
-            className="performer__ig"
-            href={`https://instagram.com/${p.instagram}`}
-            target="_blank"
-            rel="noreferrer"
-          >
+          <a className="lu-act__ig" href={`https://instagram.com/${p.instagram}`} target="_blank" rel="noreferrer">
             @{p.instagram}
           </a>
         )}
@@ -56,127 +59,121 @@ export default function Lineup() {
   const { lang, t } = useLanguage()
   const pf = t.performers
   const a = t.about
-  const byOrder = (a, b) => (a.order ?? 99) - (b.order ?? 99)
+  const id = lang === 'id'
+  const byOrder = (x, y) => (x.order ?? 99) - (y.order ?? 99)
   const solos = performers.filter((p) => p.kind === 'solo').sort(byOrder)
   const ensembles = performers.filter((p) => p.kind === 'ensemble').sort(byOrder)
 
   return (
-    <>
-      <PageHero title={pf.title} lede={pf.lede} />
+    <div className="stg">
+      <PageHero
+        title={pf.title}
+        lede={pf.lede}
+        photo="/photos/performances/felice-voce-0309.jpg"
+        alt={id ? 'Felice Voce di panggung Harmonia 2025' : 'Felice Voce on the Harmonia 2025 stage'}
+      />
 
-      {/* ---------- The artists lead the page ---------- */}
-      <section className="section--tight">
+      <section className="stg-sec">
         <div className="container">
-          <div className="lineup-head">
+          <div className="stg-head">
             <h2>{pf.soloTitle}</h2>
-            <span className="lineup-head__count">{solos.length}</span>
           </div>
-          <div className="performers">
+          <div className="lu-grid">
             {solos.map((p) => (
-              <PerformerCard key={p.id} p={p} lang={lang} />
+              <Performer key={p.id} p={p} id={id} />
             ))}
           </div>
         </div>
       </section>
 
-      <section className="section--tight">
+      <section className="stg-sec stg-sec--flush">
         <div className="container">
-          <div className="lineup-head">
+          <div className="stg-head">
             <h2>{pf.ensembleTitle}</h2>
-            <span className="lineup-head__count">{ensembles.length}</span>
           </div>
-          <div className="performers performers--wide">
+          <div className="lu-grid lu-grid--wide">
             {ensembles.map((p) => (
-              <PerformerCard key={p.id} p={p} lang={lang} />
+              <Performer key={p.id} p={p} id={id} wide />
             ))}
           </div>
         </div>
       </section>
 
-      {/* ---------- Programme ---------- */}
-      <section className="section--tight">
+      {/* The repertoire, as a printed programme */}
+      <section className="stg-sec">
         <div className="container">
-          <div className="programme card-dark">
-            <div className="programme__head">
-              <h2>{pf.programTitle}</h2>
-            </div>
-            <div className="table-wrap">
-              <table className="programme__table">
-                <thead>
-                  <tr>
-                    <th>{pf.programCols.piece}</th>
-                    <th>{pf.programCols.composer}</th>
-                    <th>{pf.programCols.performedBy}</th>
-                    <th>{pf.programCols.arrangedBy}</th>
+          <div className="stg-head">
+            <h2>{pf.programTitle}</h2>
+          </div>
+          <div className="table-wrap">
+            <table className="lu-prog">
+              <thead>
+                <tr>
+                  <th>{pf.programCols.piece}</th>
+                  <th>{pf.programCols.composer}</th>
+                  <th>{pf.programCols.performedBy}</th>
+                  <th>{pf.programCols.arrangedBy}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {program.map((row) => (
+                  <tr key={row.piece}>
+                    <td className="lu-prog__piece">{row.piece}</td>
+                    <td>{row.composer || '·'}</td>
+                    <td>{row.performedBy}</td>
+                    <td>{row.arrangedBy}</td>
                   </tr>
-                </thead>
-                <tbody>
-                  {program.map((row) => (
-                    <tr key={row.piece}>
-                      <td className="programme__piece">{row.piece}</td>
-                      <td>{row.composer || '\u2013'}</td>
-                      <td>{row.performedBy}</td>
-                      <td>{row.arrangedBy}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </section>
 
-      {/* ---------- The crew behind them ---------- */}
-      <section className="section crew-section">
+      {/* The crew behind them */}
+      <section className="stg-sec stg-sec--flush">
         <div className="container">
-          <div className="crew-intro">
-            <div>
-              <h2>{a.familyTitle}</h2>
-              <p>{a.familyBody}</p>
-            </div>
+          <div className="lu-crew-intro">
             <Figure
               src="/photos/team.jpg"
-              alt={
-                lang === 'id'
-                  ? 'Panitia Harmonia berfoto bersama seusai acara'
-                  : 'The Harmonia committee photographed together after the event'
-              }
+              alt={id ? 'Panitia Harmonia berfoto bersama seusai acara' : 'The Harmonia committee photographed together after the event'}
               ratio="16 / 10"
               credit={`${t.home.photoCredit} ${photographer}`}
             />
+            <div>
+              <h2 className="stg-h2">{a.familyTitle}</h2>
+              <div className="stg-body">
+                <p>{a.familyBody}</p>
+              </div>
+              <p className="lu-crew-total">
+                {teamCount} {id ? 'panitia, Harmonia 2025' : 'organisers, Harmonia 2025'}
+              </p>
+            </div>
           </div>
 
-          {DIVISION_ORDER.map((div) => {
-            const members = team.filter((m) => m.division === div)
-            if (!members.length) return null
-            return (
-              <div key={div} className="crew-group">
-                <div className="crew-group__head">
-                  <h3>{a.familyDivisions[div]}</h3>
-                  <span className="crew-group__count">{members.length}</span>
+          <div className="lu-divisions">
+            {DIVISION_ORDER.map((div) => {
+              const members = team.filter((m) => m.division === div)
+              if (!members.length) return null
+              return (
+                <div key={div} className="lu-division">
+                  <h3>
+                    {a.familyDivisions[div]} <span>{members.length}</span>
+                  </h3>
+                  <ul>
+                    {members.map((m) => (
+                      <li key={m.id}>
+                        <span className="lu-division__name">{m.name}</span>
+                        <span className="lu-division__role">{id ? m.roleId : m.roleEn}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <ul className="crew">
-                  {members.map((m) => (
-                    <li key={m.id} className="crew__member">
-                      <Avatar src={getTeamPhoto(m.id)} name={m.name} />
-                      <div className="crew__text">
-                        <span className="crew__name">{m.name}</span>
-                        <span className="crew__role">
-                          {lang === 'id' ? m.roleId : m.roleEn}
-                        </span>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )
-          })}
-
-          <p className="crew__total">
-            {teamCount} {lang === 'id' ? 'panitia · Harmonia 2025' : 'organisers · Harmonia 2025'}
-          </p>
+              )
+            })}
+          </div>
         </div>
       </section>
-    </>
+    </div>
   )
 }

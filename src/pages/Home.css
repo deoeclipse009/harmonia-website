@@ -18,7 +18,6 @@
 .home-hero__img { position: absolute; inset: 0; z-index: -2; }
 .home-hero__shade { position: absolute; inset: 0; z-index: -1; background: linear-gradient(to top, rgba(21, 6, 8, 0.92) 8%, rgba(21, 6, 8, 0.35) 55%, rgba(21, 6, 8, 0.55)); }
 .home-hero__text { padding-block: 120px 64px; display: flex; flex-direction: column; gap: 20px; }
-.home-hero__kicker { margin: 0; font-weight: 600; letter-spacing: 0.04em; opacity: 0.85; }
 .home-hero__title { font-size: clamp(3.5rem, 13vw, 11rem); line-height: 0.88; letter-spacing: -0.04em; }
 .home-hero__title span { display: inline-block; }
 .home-hero__sub { margin: 0; max-width: 38ch; font-size: clamp(1.05rem, 1.6vw, 1.3rem); opacity: 0.9; }
@@ -113,13 +112,12 @@
 .home-close h2 { font-size: clamp(2.8rem, 9vw, 7.5rem); line-height: 0.92; letter-spacing: -0.04em; }
 
 /* Reveal base */
-.home [data-reveal] { transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1), clip-path 1s cubic-bezier(0.7, 0, 0.2, 1); }
+
 
 
 /* ================= ELEGANT: dark, photos lead, slow masked reveals ======== */
 .home { background: var(--dark); color: #f3ebe4; --accent: #8c2f39; }
 .home .home-hero__title { font-weight: 300; letter-spacing: -0.02em; }
-.home .home-hero__kicker { font-variant: all-small-caps; letter-spacing: 0.18em; }
 .home .home-btn { border-radius: 0; }
 .home .home-btn--main { background: #f3ebe4; color: var(--dark); }
 .home .home-btn--line { border-width: 1px; }
@@ -128,12 +126,6 @@
 .home .home-cause { background: #1f0a0d; }
 .home .home-close { background: #000; }
 .home .home-btn--inverse { background: #f3ebe4; }
-.home [data-reveal] { opacity: 0; transform: translateY(12px); transition-duration: 1.1s; }
-.home [data-reveal].is-in { opacity: 1; transform: none; }
-.home .home-plate[data-reveal], .home .home-card[data-reveal] .home-card__img,
-.home .home-cause__img[data-reveal], .home .home-founder > img[data-reveal] { clip-path: inset(100% 0 0 0); opacity: 1; transform: none; }
-.home .home-plate.is-in, .home .home-card.is-in .home-card__img,
-.home .home-cause__img.is-in, .home .home-founder > img.is-in { clip-path: inset(0 0 0 0); }
 
 
 @media (max-width: 760px) {
@@ -155,7 +147,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .home [data-reveal] { opacity: 1 !important; transform: none !important; clip-path: none !important; transition: none !important; }
 }
 
 /* ================= BLEND: elegant's dark stage and slow reveals, soft's

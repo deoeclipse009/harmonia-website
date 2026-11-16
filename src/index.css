@@ -363,7 +363,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   background: var(--obsidian);
   color: var(--snow);
   padding: var(--s-12) var(--s-20);
-  border-radius: var(--r-pill);
+  border-radius: var(--r-button);
 }
 
 .skip-link:focus { left: var(--s-16); top: var(--s-16); }
@@ -405,7 +405,7 @@ html.theme-stage {
   --iron: rgba(243, 235, 228, 0.78);
   --steel: rgba(243, 235, 228, 0.62);
   --fog: rgba(243, 235, 228, 0.62);
-  --ash: rgba(243, 235, 228, 0.45);
+  --ash: rgba(243, 235, 228, 0.62);
   --mist: rgba(243, 235, 228, 0.2);
   --cloud: rgba(243, 235, 228, 0.1);
   --paper: #150608;
@@ -433,5 +433,72 @@ html.theme-stage .site-footer { background: #000; }
 html.theme-stage .fig,
 html.theme-stage .fig img { border-radius: 16px; }
 html.theme-stage .recap__stage { background: #000; }
-html.theme-stage .carousel__arrow { background: rgba(34, 9, 13, 0.88); }
-html.theme-stage .carousel__arrow:hover { background: #2c0d12; }
+
+/* ============================================================
+   Stage parts shared by every dark page (docs/design-decisions.md).
+   Section rhythm, heads, the split statement, panels, numbered rows,
+   the maroon sheet, equal stat cells, logo tiles, the closing sheet.
+   ============================================================ */
+.stg-sec { padding-block: clamp(56px, 9vw, 120px); }
+.stg-sec--flush { padding-top: 0; }
+.stg-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 12px 24px; margin-bottom: clamp(24px, 3vw, 36px); }
+.stg-head h2, .stg-h2 { margin: 0; font-family: var(--font-display); font-size: clamp(2rem, 4.6vw, 3.5rem); font-weight: 300; line-height: 1.02; letter-spacing: -0.03em; color: inherit; }
+.stg-link { color: inherit; font-weight: 700; text-underline-offset: 4px; white-space: nowrap; }
+.stg-link:hover { color: var(--accent-text); }
+
+.stg-split { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(24px, 5vw, 72px); align-items: start; }
+.stg-line { margin: 0; font-family: var(--font-display); font-size: clamp(1.6rem, 3vw, 2.6rem); font-weight: 400; line-height: 1.12; letter-spacing: -0.02em; color: var(--accent-text); max-width: 20ch; }
+.stg-body p { margin: 0 0 1em; max-width: 60ch; font-size: clamp(1rem, 1.2vw, 1.1rem); line-height: 1.7; color: var(--iron); }
+.stg-body p:last-child { margin-bottom: 0; }
+
+.stg-panel { background: var(--snow); border-radius: 32px; padding: clamp(24px, 4vw, 48px); }
+.stg-quote::before { content: '\201C'; display: block; font: 300 4rem/0.6 var(--font-display); color: var(--accent-text); margin-bottom: 16px; }
+
+.stg-rows { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--mist); }
+.stg-rows > li { display: grid; grid-template-columns: minmax(88px, 0.25fr) minmax(0, 1fr) minmax(0, 1.2fr); gap: 8px clamp(16px, 3vw, 40px); padding: clamp(18px, 2.4vw, 28px) 0; border-bottom: 1px solid var(--mist); align-items: baseline; }
+.stg-rows__k { font-family: var(--font-display); font-size: clamp(1.1rem, 1.6vw, 1.4rem); font-weight: 400; color: var(--accent-text); font-variant-numeric: tabular-nums; }
+.stg-rows__t { margin: 0; font-family: var(--font-display); font-size: clamp(1.1rem, 1.8vw, 1.5rem); font-weight: 500; line-height: 1.25; color: var(--obsidian); }
+.stg-rows__d { margin: 0; color: var(--fog); line-height: 1.6; }
+
+.stg-sheet { background: var(--accent); color: #fff; border-radius: 32px 32px 0 0; padding-block: clamp(64px, 10vw, 128px); }
+.stg-sheet .stg-body p { color: rgba(255, 255, 255, 0.88); }
+.stg-sheet .stg-h2, .stg-sheet h2 { color: #fff; }
+
+.stg-cells { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr)); }
+.stg-cells li { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; padding: 4px 16px; border-left: 1px solid rgba(255, 255, 255, 0.25); }
+.stg-cells li:first-child { border-left: 0; }
+.stg-cells__v { font: 300 clamp(2.2rem, 4.4vw, 3.75rem) / 1 var(--font-display); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.stg-cells__k { font-size: 0.9375rem; opacity: 0.75; }
+
+.stg-tiles { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); gap: 12px; }
+.stg-tiles li { display: flex; flex-direction: column; gap: 8px; }
+.stg-tiles__logo { aspect-ratio: 1; background: #fff; border-radius: 16px; display: grid; place-items: center; transition: transform 0.25s ease; }
+.stg-tiles li:hover .stg-tiles__logo { transform: translateY(-3px); }
+.stg-tiles__logo img { width: 80%; height: 80%; object-fit: contain; }
+.stg-tiles__name { font-size: 0.8125rem; line-height: 1.35; color: var(--fog); }
+
+.stg-close { background: #000; color: #fff; border-radius: 32px 32px 0 0; padding-block: clamp(72px, 12vw, 150px); }
+.stg-close .container { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 28px; }
+.stg-close h2 { margin: 0; max-width: 16ch; font-family: var(--font-display); font-size: clamp(2.4rem, 6vw, 5rem); font-weight: 300; line-height: 0.98; letter-spacing: -0.035em; color: #fff; }
+.stg-close p { margin: 16px 0 0; max-width: 46ch; color: rgba(255, 255, 255, 0.72); line-height: 1.6; }
+
+/* Photos open behind a mask as they scroll in. Pure CSS, scroll-driven:
+   browsers without support, and anyone with reduced motion, simply see
+   the photo. Nothing is ever hidden waiting on a script. */
+@keyframes stg-mask { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0 0 0 0); } }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .stg .fig, .stg .stg-mask { animation: stg-mask linear both; animation-timeline: view(); animation-range: entry 0% entry 70%; }
+  }
+}
+
+@media (max-width: 760px) {
+  .stg-split { grid-template-columns: 1fr; }
+  .stg-rows > li { grid-template-columns: 1fr; gap: 6px; }
+  .stg-cells { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 28px; }
+  .stg-cells li:nth-child(odd) { border-left: 0; }
+  .stg-cells__v { font-size: 2.1rem; }
+  .stg-tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .stg-tiles__logo { border-radius: 12px; }
+  .stg-panel { border-radius: 24px; }
+}

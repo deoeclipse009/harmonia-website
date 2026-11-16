@@ -72,9 +72,9 @@ export default function Contact() {
     <>
       <PageHero title={c.title} lede={c.lede} />
 
-      <section className="section contact-section">
+      <section className="stg-sec stg-sec--flush">
         <div className="container contact-grid">
-          <form className="contact-form card" noValidate onSubmit={handleSubmit}>
+          <form className="contact-form stg-panel" noValidate onSubmit={handleSubmit}>
             {status === 'sent' ? (
               <div className="contact-form__sent">
                 <p>{lang === 'id' ? 'Terima kasih! Pesan tersimpan secara lokal di demo ini.' : 'Thanks! Your message is captured locally in this demo.'}</p>
@@ -166,29 +166,36 @@ export default function Contact() {
             )}
           </form>
 
-          <aside className="contact-aside card">
-            <div>
-              <p className="eyebrow">Email</p>
-              <a href={`mailto:${orgInfo.contactEmail}`}>{orgInfo.contactEmail}</a>
-            </div>
-            <div>
-              <p className="eyebrow">Instagram</p>
-              <a href={orgInfo.instagram} target="_blank" rel="noreferrer">
-                {orgInfo.instagramHandle}
-              </a>
-            </div>
+          <aside className="contact-direct">
+            <h2 className="stg-line">{lang === 'id' ? 'Atau langsung ke kami.' : 'Or reach us directly.'}</h2>
+            <dl>
+              <div>
+                <dt>Email</dt>
+                <dd>
+                  <a href={`mailto:${orgInfo.contactEmail}`}>{orgInfo.contactEmail}</a>
+                </dd>
+              </div>
+              <div>
+                <dt>Instagram</dt>
+                <dd>
+                  <a href={orgInfo.instagram} target="_blank" rel="noreferrer">
+                    {orgInfo.instagramHandle}
+                  </a>
+                </dd>
+              </div>
+            </dl>
           </aside>
         </div>
       </section>
 
-      <section className="section faq-section">
+      <section className="stg-sec">
         <div className="container">
-          <div className="section-head">
+          <div className="stg-head">
             <h2>{c.faqTitle}</h2>
           </div>
           <div className="faq-list">
             {c.faq.map((item) => (
-              <details key={item.q} name="harmonia-faq" className="faq-item card">
+              <details key={item.q} name="harmonia-faq" className="faq-item">
                 <summary>{item.q}</summary>
                 <p>{item.a}</p>
               </details>

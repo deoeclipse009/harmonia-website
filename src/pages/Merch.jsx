@@ -5,84 +5,72 @@ import PageHero from '../components/PageHero.jsx'
 import Figure from '../components/Figure.jsx'
 import './Merch.css'
 
+// One product, sold for the cause: the photo, the price, how to order.
 export default function Merch() {
   const { lang, t } = useLanguage()
   const m = t.merch
   const pick = (id, en) => (lang === 'id' ? id : en)
 
   return (
-    <>
+    <div className="stg">
       <PageHero title={m.title} lede={m.lede} />
 
-      <section className="section--tight">
-        <div className="container">
-          <div className="product card">
-            <Figure
-              src={merch.photo}
-              alt={pick(merch.descId, merch.descEn)}
-              ratio="4 / 3"
-              className="product__fig"
-              seed={2}
-            />
-            <div className="product__body">
-              <h2>{pick(merch.nameId, merch.nameEn)}</h2>
-              <p className="product__desc">{pick(merch.descId, merch.descEn)}</p>
+      <section className="stg-sec stg-sec--flush">
+        <div className="container mx-product">
+          <Figure src={merch.photo} alt={pick(merch.descId, merch.descEn)} ratio="4 / 5" seed={2} />
+          <div className="mx-product__body">
+            <h2 className="stg-h2">{pick(merch.nameId, merch.nameEn)}</h2>
+            <p className="mx-product__desc">{pick(merch.descId, merch.descEn)}</p>
 
-              <div className="product__prices">
-                <div>
-                  <span className="product__price-key">{m.normalLabel}</span>
-                  <span className="product__price product__price--was">{merch.price}</span>
-                </div>
-                <div>
-                  <span className="product__price-key">{m.promoLabel}</span>
-                  <span className="product__price">{merch.promoPrice}</span>
-                </div>
-              </div>
-
-              <div className="product__terms">
-                <p>
-                  <strong>{m.promoHow}:</strong> {pick(merch.promoTermsId, merch.promoTermsEn)}
-                </p>
-                <p>
-                  <strong>{m.cashbackLabel}:</strong> {pick(merch.cashbackId, merch.cashbackEn)}
-                </p>
-              </div>
-
-              <div className="product__actions">
-                <a className="btn btn-accent btn-lg" href={merch.orderForm} target="_blank" rel="noreferrer">
-                  {m.orderCta}
-                </a>
-                <a className="btn btn-ghost btn-lg" href={orgInfo.instagram} target="_blank" rel="noreferrer">
-                  DM {orgInfo.instagramHandle}
-                </a>
-              </div>
-
-              <p className="product__pickup">{m.pickupNote}</p>
+            <div className="mx-price">
+              <span className="mx-price__now">{merch.promoPrice}</span>
+              <span className="mx-price__was">
+                {m.normalLabel} <s>{merch.price}</s>
+              </span>
             </div>
+
+            <dl className="mx-terms">
+              <div>
+                <dt>{m.promoHow}</dt>
+                <dd>{pick(merch.promoTermsId, merch.promoTermsEn)}</dd>
+              </div>
+              <div>
+                <dt>{m.cashbackLabel}</dt>
+                <dd>{pick(merch.cashbackId, merch.cashbackEn)}</dd>
+              </div>
+            </dl>
+
+            <div className="mx-actions">
+              <a className="btn btn-primary btn-lg" href={merch.orderForm} target="_blank" rel="noreferrer">
+                {m.orderCta} <span aria-hidden="true">→</span>
+              </a>
+              <a className="btn btn-ghost btn-lg" href={orgInfo.instagram} target="_blank" rel="noreferrer">
+                DM {orgInfo.instagramHandle}
+              </a>
+            </div>
+            <p className="mx-product__pickup">{m.pickupNote}</p>
           </div>
         </div>
       </section>
 
-      <section className="section--tight">
+      <section className="stg-sec">
         <div className="container">
-          <div className="merch-order card--quiet card">
-            <div>
-              <h2 className="merch-order__title">{m.orderTitle}</h2>
-              <ol className="merch-order__list">
-                {m.orderWays.map((w, i) => (
-                  <li key={w}>
-                    <span className="merch-order__num">{String(i + 1).padStart(2, '0')}</span>
-                    {w}
-                  </li>
-                ))}
-              </ol>
-            </div>
-            <Link className="btn btn-primary" to="/contact">
-              {t.common.nav.contact}
+          <div className="stg-head">
+            <h2>{m.orderTitle}</h2>
+            <Link className="stg-link" to="/contact">
+              {t.common.nav.contact} <span aria-hidden="true">→</span>
             </Link>
           </div>
+          <ol className="stg-rows mx-ways">
+            {m.orderWays.map((w, i) => (
+              <li key={w}>
+                <span className="stg-rows__k">{String(i + 1).padStart(2, '0')}</span>
+                <p className="stg-rows__t">{w}</p>
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
-    </>
+    </div>
   )
 }

@@ -1,5 +1,5 @@
-Stage: build-2
-Next: Gate 2 for phase 2 (stage theme on every page but tickets and panel). On OK: commit, then the audit (docs/audit-report.md re-run, Lighthouse) before any deploy
+Stage: build-3
+Next: Jorge checks the rebuilt pages (About, 2025, Lineup, Gallery, Merch, Contact) on desktop and phone; then commit and run the audit + Lighthouse
 
 # Harmonia
 

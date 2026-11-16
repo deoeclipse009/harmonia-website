@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useLanguage } from '../i18n/LanguageContext.jsx'
 import { latestPastEdition } from '../data/editions.js'
@@ -22,23 +22,6 @@ const PHOTO = {
 }
 const PARTNERS = partnerGroups.flatMap((g) => g.items)
 const GALLERY = ['0041', '0207', '0315', '0548']
-
-// Adds `is-in` once an element scrolls into view; CSS decides what that does
-// (a fade and rise for text, a mask opening for photos).
-function useReveal() {
-  const ref = useRef(null)
-  useEffect(() => {
-    const root = ref.current
-    if (!root) return undefined
-    const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => e.isIntersecting && e.target.classList.add('is-in')),
-      { rootMargin: '0px 0px -12% 0px' },
-    )
-    root.querySelectorAll('[data-reveal]').forEach((el) => io.observe(el))
-    return () => io.disconnect()
-  }, [])
-  return ref
-}
 
 // When scrolling stops with the section's top within a third of the screen
 // of the header, glide it into place. Wide screens only: on a phone the list
@@ -81,7 +64,6 @@ function useSnap(selector) {
 
 export default function Home() {
   const { lang, t } = useLanguage()
-  const ref = useReveal()
   useSnap('.home-bill')
   const id = lang === 'id'
   const ed = latestPastEdition
@@ -92,20 +74,19 @@ export default function Home() {
   const relive = id ? 'Tonton kembali 2025' : 'Relive 2025'
 
   return (
-    <div className="home" ref={ref}>
+    <div className="home stg">
       {/* 1. Hero: what, when, one main action */}
       <section className="home-hero">
         <img className="home-hero__img" src="/photos/hero-band.jpg" alt={t.home.bandAlt} />
         <div className="home-hero__shade" />
         <div className="home-hero__text container">
-          <p className="home-hero__kicker" data-reveal>{id ? 'Konser musik amal' : 'Charity concert'}</p>
-          <h1 className="home-hero__title" data-reveal>
+          <h1 className="home-hero__title">
             Harmonia
           </h1>
-          <p className="home-hero__sub" data-reveal>
+          <p className="home-hero__sub">
             {id ? 'Edisi berikutnya sedang disiapkan. Tanggal diumumkan segera.' : 'The next edition is in the works. Date announced soon.'}
           </p>
-          <div className="home-hero__actions" data-reveal>
+          <div className="home-hero__actions">
             <Link className="home-btn home-btn--main" to={`/edition/${ed.slug}`}>
               {relive} <span aria-hidden="true">→</span>
             </Link>
@@ -116,8 +97,8 @@ export default function Home() {
 
       {/* 2. Statement: first sentence large, the rest at reading size */}
       <section className="home-statement container">
-        <p className="home-statement__line" data-reveal>{lead}</p>
-        <p className="home-statement__body" data-reveal>{rest}</p>
+        <p className="home-statement__line">{lead}</p>
+        <p className="home-statement__body">{rest}</p>
       </section>
 
       {/* 3. Earned numbers: four equal cells, the money in the brand pink */}
@@ -125,7 +106,7 @@ export default function Home() {
         <div className="home-numbers__panel">
           <ul className="home-stats">
             {t.home.stats.map((s) => (
-              <li key={s.k} data-reveal>
+              <li key={s.k}>
                 <span className="home-stats__v">{s.v}</span>
                 <span className="home-stats__k">{s.k}</span>
               </li>
@@ -141,13 +122,13 @@ export default function Home() {
           you point at or focus. No sideways scrolling. */}
       <section className="home-bill container">
         <div className="home-head">
-          <h2 data-reveal>{t.home.performersTitle}</h2>
+          <h2>{t.home.performersTitle}</h2>
           <Link className="home-link" to="/lineup">{t.home.performersCta} →</Link>
         </div>
         <div className="home-bill__grid">
           <ol className="home-acts">
             {performances.map((p, i) => (
-              <li key={p.key} data-reveal>
+              <li key={p.key}>
                 <Link
                   to="/lineup"
                   className={`home-act${i === act ? ' is-on' : ''}`}
@@ -162,7 +143,7 @@ export default function Home() {
               </li>
             ))}
           </ol>
-          <div className="home-bill__stage" aria-hidden="true" data-reveal>
+          <div className="home-bill__stage" aria-hidden="true">
             {performances.map((p, i) => (
               <img key={p.key} src={`/photos/performances/${PHOTO[p.key]}`} alt="" loading="lazy" className={i === act ? 'is-on' : ''} />
             ))}
@@ -178,13 +159,13 @@ export default function Home() {
       <section className="home-cause">
         <div className="container home-cause__grid">
           <div>
-            <h2 data-reveal>{t.home.missionTitle}</h2>
-            <p data-reveal>{t.home.missionBody}</p>
-            <Link className="home-btn home-btn--inverse" to="/about#partners" data-reveal>
+            <h2>{t.home.missionTitle}</h2>
+            <p>{t.home.missionBody}</p>
+            <Link className="home-btn home-btn--inverse" to="/about#partners">
               {t.common.nav.sponsors} <span aria-hidden="true">→</span>
             </Link>
           </div>
-          <div className="home-cause__img" data-reveal>
+          <div className="home-cause__img stg-mask">
             <img src="/photos/impact.jpg" alt="SOS Children’s Villages Indonesia" loading="lazy" />
           </div>
         </div>
@@ -193,12 +174,12 @@ export default function Home() {
       {/* 6. Gallery: four plates, revealed on scroll */}
       <section className="home-gallery container">
         <div className="home-head">
-          <h2 data-reveal>{id ? 'Dari malam itu' : 'From the night'}</h2>
+          <h2>{id ? 'Dari malam itu' : 'From the night'}</h2>
           <Link className="home-link" to="/gallery">{t.common.nav.gallery} →</Link>
         </div>
         <div className="home-plates">
           {GALLERY.map((g) => (
-            <Link key={g} to="/gallery" className="home-plate" data-reveal aria-label={t.common.nav.gallery}>
+            <Link key={g} to="/gallery" className="home-plate stg-mask" aria-label={t.common.nav.gallery}>
               <img src={`/photos/gallery/${g}.jpg`} alt="" loading="lazy" />
             </Link>
           ))}
@@ -207,7 +188,7 @@ export default function Home() {
 
       {/* 7. Founder: a card with the portrait and the opening of the letter */}
       <section className="home-founder container">
-        <figure className="home-founder__card" data-reveal>
+        <figure className="home-founder__card">
           <img src="/photos/hero-portrait.jpg" alt={t.home.founderName} loading="lazy" />
           <blockquote>
             <p>{t.home.founderParas[0]}</p>
@@ -224,7 +205,7 @@ export default function Home() {
       <section className="home-partners">
           <div className="container">
             <div className="home-head">
-              <h2 data-reveal>{id ? 'Didukung oleh' : 'Made possible by'}</h2>
+              <h2>{id ? 'Didukung oleh' : 'Made possible by'}</h2>
               <Link className="home-link" to="/about#partners">{t.common.nav.sponsors} →</Link>
             </div>
             <p className="home-partners__note">{t.sponsorsImpact.partnersNote}</p>
@@ -243,8 +224,8 @@ export default function Home() {
       {/* 9. Closing: the one action again */}
       <section className="home-close">
         <div className="container">
-          <h2 data-reveal>{id ? 'Sampai jumpa di 2027.' : 'See you in 2027.'}</h2>
-          <Link className="home-btn home-btn--main" to={`/edition/${ed.slug}`} data-reveal>
+          <h2>{id ? 'Sampai jumpa di 2027.' : 'See you in 2027.'}</h2>
+          <Link className="home-btn home-btn--main" to={`/edition/${ed.slug}`}>
             {relive} <span aria-hidden="true">→</span>
           </Link>
         </div>
